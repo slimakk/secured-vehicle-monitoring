@@ -1,4 +1,4 @@
-21297632302776739
+21302632542345390
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -89565,9 +89565,30 @@ TS-1092S
 2
 2
 tme_library
+VLS6045AF
+
+
+0
+2
+2
+tme_library
 XKB_SS-3235
 
 
 0
 3
 3
+tme_library
+XKB_SS-3292S
+
+
+0
+7
+3
+tme_library
+XKB_TS_1187A
+
+
+0
+4
+2
