@@ -1,0 +1,2 @@
+../Core/Src/OBD.c:9:6:OBD2_PrintResponse	24	static
+../Core/Src/OBD.c:18:6:OBD2_Request	24	static

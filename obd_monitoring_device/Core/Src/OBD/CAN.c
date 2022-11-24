@@ -4,61 +4,80 @@
  *  Created on: Nov 5, 2022
  *      Author: miros
  */
-#include "Inc/OBD/CAN.h"
+#include "CAN.h"
 
-CAN_FilterTypeDef canFil;
+
+CAN_HandleTypeDef hcan1;
+
 uint32_t txMailbox;
 
-void CAN_INIT(CAN_HandleTypeDef *hcan)
+void MX_CAN1_Init(void)
 {
-	canFil.FilterBank = 0;
-	canFil.FilterMode = CAN_FILTERMODE_IDMASK;
-	canFil.FilterFIFOAssignment = CAN_FILTER_FIFO0;
-	canFil.FilterScale = CAN_FILTERSCALE_32BIT;
-	canFil.FilterIdHigh = 0x7E8 << 5;
-	canFil.FilterIdLow = 0x0000;
-	canFil.FilterMaskIdHigh = 0xFFFF;
-	canFil.FilterMaskIdLow = 0x0000;
-	canFil.FilterActivation = ENABLE;
-
-	HAL_CAN_ConfigFilter(&hcan, &canFil);
-	HAL_CAN_Start(&hcan);
-	HAL_CAN_ActivateNotification(&hcan, CAN_IT_RX_FIFO0_MSG_PENDING);
-}
-
-void CAN_REQUEST(uint8_t serviceID, uint8_t lenght, uint8_t PID, CAN_HandleTypeDef *hcan)
-{
-	CAN_TxHeaderTypeDef requestHeader;
-	uint_8 requestFrame[8] = {lenght, serviceID, PID, 0x00, 0x00, 0x00, 0x00, 0x00};
-	requestHeader.DLC = 8;
-	requestHeader.StdId = 0x7DF;
-	requestHeader.IDE = CAN_ID_STD;
-	requestHeader.RTR = CAN_RTR_REMOTE;
-
-	HAL_CAN_AddTxMessage(&hcan, &requestHeader, requestFrame, &txMailbox);
-}
-
-uint8_t CAN_RESPONSE(CAN_HandleTypeDef *hcan)
-{
-	CAN_RxHeaderTypeDef responseHeader;
-	uint8_t responseFrame[8] = {0};
-
-	HAL_CAN_GetRxMessage(&hcan, CAN_RX_FIFO0, &responseHeader, responseFrame);
-
-	if(responseFrame[2] == 0x67)
+	hcan1.Instance = CAN1;
+	hcan1.Init.Prescaler = 16;
+	hcan1.Init.Mode = CAN_MODE_NORMAL;
+	hcan1.Init.SyncJumpWidth = CAN_SJW_1TQ;
+	hcan1.Init.TimeSeg1 = CAN_BS1_8TQ;
+	hcan1.Init.TimeSeg2 = CAN_BS2_1TQ;
+	hcan1.Init.TimeTriggeredMode = DISABLE;
+	hcan1.Init.AutoBusOff = DISABLE;
+	hcan1.Init.AutoWakeUp = DISABLE;
+	hcan1.Init.AutoRetransmission = DISABLE;
+	hcan1.Init.ReceiveFifoLocked = DISABLE;
+	hcan1.Init.TransmitFifoPriority = DISABLE;
+	if (HAL_CAN_Init(&hcan1) != HAL_OK)
 	{
-		if(responseFrame[3] == 0x01)
-			return resposneFrame[4] - 40;
-		else if(responseFrame[3] == 0x02)
-			return responseFrame[5] - 40;
+	  Error_Handler();
 	}
-	else
-		return 0;
+}
+
+void canConfig(void)
+{
+	CAN_FilterTypeDef canFilter;
+	canFilter.FilterBank = 0;
+	canFilter.FilterMode = CAN_FILTERMODE_IDMASK;
+	canFilter.FilterScale = CAN_FILTERSCALE_32BIT;
+	canFilter.FilterIdHigh = 0x7E8 << 5;
+	canFilter.FilterIdLow = 0x0000;
+	canFilter.FilterMaskIdHigh = 0x7F8 << 5;
+	canFilter.FilterMaskIdLow = 0x0000;
+	canFilter.FilterFIFOAssignment = CAN_RX_FIFO0;
+	canFilter.FilterActivation = ENABLE;
+
+	if(HAL_CAN_ConfigFilter(&hcan1, &canFilter) != HAL_OK)
+	{
+		Error_Handler();
+	}
+
+	if(HAL_CAN_Start(&hcan1) != HAL_OK)
+	{
+		Error_Handler();
+	}
 }
 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
-	uint8_t engineTemp = CAN_RESPONSE(&hcan);
+	CAN_RxHeaderTypeDef rxHeader;
+	uint8_t rxData[RX_DATA_LENGTH];
 
-	CAN_REQUEST(1, 2, 0x67, &hcan);
+	HAL_CAN_GetRxMessage(&hcan1, CAN_RX_FIFO0, &rxHeader, rxData);
+
+	OBD2_PrintResponse(rxData);
 }
+
+void CAN_SEND_MESSAGE(uint8_t* txFrame)
+{
+	CAN_TxHeaderTypeDef txHeader;
+	txHeader.StdId = DEVICE_CAN_ID;
+	txHeader.DLC = TX_DATA_LENGTH;
+	txHeader.IDE = CAN_ID_STD;
+	txHeader.RTR = CAN_RTR_REMOTE;
+
+	if(HAL_CAN_AddTxMessage(&hcan1, &txHeader, txFrame, &txMailbox) != HAL_OK)
+	{
+		Error_Handler();
+	}
+}
+
+
+

@@ -63,18 +63,10 @@ void Error_Handler(void);
 #define HSE_OUT_GPIO_Port GPIOH
 #define BAT_V_Pin GPIO_PIN_5
 #define BAT_V_GPIO_Port GPIOC
-#define OLED_SCL_Pin GPIO_PIN_10
-#define OLED_SCL_GPIO_Port GPIOB
-#define OLED_SDA_Pin GPIO_PIN_11
-#define OLED_SDA_GPIO_Port GPIOB
 #define CAN_S_Pin GPIO_PIN_8
 #define CAN_S_GPIO_Port GPIOC
 #define LLine_Pin GPIO_PIN_8
 #define LLine_GPIO_Port GPIOA
-#define KLine_TX_Pin GPIO_PIN_9
-#define KLine_TX_GPIO_Port GPIOA
-#define KLine_RX_Pin GPIO_PIN_10
-#define KLine_RX_GPIO_Port GPIOA
 #define CAN_RX_Pin GPIO_PIN_11
 #define CAN_RX_GPIO_Port GPIOA
 #define CAN_TX_Pin GPIO_PIN_12
@@ -87,8 +79,6 @@ void Error_Handler(void);
 #define SWO_GPIO_Port GPIOB
 #define LCD_BTN_Pin GPIO_PIN_5
 #define LCD_BTN_GPIO_Port GPIOB
-#define BOOT0_Pin GPIO_PIN_3
-#define BOOT0_GPIO_Port GPIOH
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */
