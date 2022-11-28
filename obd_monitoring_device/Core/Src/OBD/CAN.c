@@ -53,6 +53,7 @@ void canConfig(void)
 	{
 		Error_Handler();
 	}
+	HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
 }
 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
@@ -63,9 +64,12 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 	HAL_CAN_GetRxMessage(&hcan1, CAN_RX_FIFO0, &rxHeader, rxData);
 
 	OBD2_PrintResponse(rxData);
+
+	int respValue = OBD2_PID_Parse(rxData);
+	OBD2_ShowOnDisplay(respValue);
 }
 
-void CAN_SEND_MESSAGE(uint8_t* txFrame)
+void CAN_SEND_MESSAGE(uint8_t *txFrame)
 {
 	CAN_TxHeaderTypeDef txHeader;
 	txHeader.StdId = DEVICE_CAN_ID;
@@ -78,6 +82,3 @@ void CAN_SEND_MESSAGE(uint8_t* txFrame)
 		Error_Handler();
 	}
 }
-
-
-

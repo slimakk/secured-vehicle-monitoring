@@ -29,7 +29,10 @@ Core/Src/OBD.o: ../Core/Src/OBD.c ../Core/Inc/OBD.h ../Core/Inc/CAN.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_i2c_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr_ex.h \
- ../Core/Inc/OBD.h
+ ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
+ ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
+ ../Drivers/OLED/ssd1306.h ../Drivers/OLED/ssd1306_conf.h \
+ ../Drivers/OLED/ssd1306_fonts.h ../Core/Inc/OBD.h ../Core/Inc/KLine.h
 ../Core/Inc/OBD.h:
 ../Core/Inc/CAN.h:
 ../Core/Inc/main.h:
@@ -63,4 +66,10 @@ Core/Src/OBD.o: ../Core/Src/OBD.c ../Core/Inc/OBD.h ../Core/Inc/CAN.h \
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_i2c_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr_ex.h:
+../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:
+../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h:
+../Drivers/OLED/ssd1306.h:
+../Drivers/OLED/ssd1306_conf.h:
+../Drivers/OLED/ssd1306_fonts.h:
 ../Core/Inc/OBD.h:
+../Core/Inc/KLine.h:

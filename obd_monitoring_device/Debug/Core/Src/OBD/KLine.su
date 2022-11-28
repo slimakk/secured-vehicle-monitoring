@@ -1,0 +1,6 @@
+../Core/Src/OBD/KLine.c:14:14:KLine_Init	16	static
+../Core/Src/OBD/KLine.c:64:14:KWP2000_Fast_Init	32	static
+../Core/Src/OBD/KLine.c:96:6:MX_GPIO_KLineUART_Init	32	static
+../Core/Src/OBD/KLine.c:106:6:UART_PIN_State	16	static
+../Core/Src/OBD/KLine.c:121:6:KLine_SEND_MESSAGE	32	static
+../Core/Src/OBD/KLine.c:134:6:KWP2000_SEND_MESSAGE	32	static

@@ -1,0 +1,23 @@
+/*
+ * OBD.c
+ *
+ *  Created on: 23. 11. 2022
+ *      Author: miros
+ */
+#include "OBD.h"
+
+UART_HandleTypeDef huart2;
+
+void OBD2_PrintResponse(uint8_t* rxFrame)
+{
+	HAL_UART_Transmit(&huart2, rxFrame, sizeof(txTest),10);
+}
+
+void OBD2_Request(obd_protocol obd, uint8_t pid)
+{
+	uint8_t txData[TX_DATA_LENGTH] = {0x02, 0x01, pid, 0x00, 0x00, 0x00, 0x00, 0x00};
+	if(obd == OBD_PROTO_CAN)
+	{
+		CAN_SEND_MESSAGE(txData);
+	}
+}

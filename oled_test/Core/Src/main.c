@@ -96,19 +96,16 @@ int main(void)
   ssd1306_Init();
   ssd1306_Fill(White);
   ssd1306_UpdateScreen();
-  ssd1306_SetCursor(60, 30);
+  //ssd1306_SetCursor(60, 30);
+  char* text = "cigi";
+  ssd1306_WriteString(text, Font_16x26, White);
+  ssd1306_UpdateScreen();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	  char[]
-	  for(int i = 0; i < 100; i++)
-	  {
-	  		  ssd1306_WriteString(, Font_16x26, Black);
-	  		  ssd1306_UpdateScreen();
- 	  }
 
 	  /* USER CODE END WHILE */
 

@@ -6,20 +6,139 @@
  */
 #include "OBD.h"
 
+UART_HandleTypeDef huart2;
+obd_protocol usedProtocol;
+
 void OBD2_PrintResponse(uint8_t* rxFrame)
 {
-	for(int i = 0; i < RX_DATA_LENGTH; i++)
+	char txTest2 [TX_DATA_LENGTH] = {0};
+
+	for(int i = 0; i < sizeof(rxFrame); i++)
 	{
-		printf("%2x", rxFrame[i]);
+		char value[2];
+		snprintf(value, 2, "%x", rxFrame[i]);
+		strcat(txTest2, value);
 	}
-	printf("\r\n");
+	strcat(txTest2, "\r\n");
+	HAL_UART_Transmit(&huart2, txTest2, sizeof(txTest2),10);
 }
 
 void OBD2_Request(obd_protocol obd, uint8_t pid)
 {
-	uint8_t txData[TX_DATA_LENGTH] = {0x02, 0x01, pid, 0x00, 0x00, 0x00, 0x00, 0x00};;
+	//char *debug = "OBD REQUEST\r\n";
+	//HAL_UART_Transmit(&huart2, debug, sizeof(debug),10);
 	if(obd == OBD_PROTO_CAN)
 	{
-		CAN_SEND_MESSAGE(&txData);
+		uint8_t txDataCAN[TX_DATA_LENGTH] = {0x02, 0x01, pid, 0x00, 0x00, 0x00, 0x00, 0x00};
+		CAN_SEND_MESSAGE(txDataCAN);
 	}
+	else if(obd == OBD_PROTO_ISO9141 || OBD_PROTO_KWP2000_SLOW || OBD_PROTO_KWP2000_FAST)
+	{
+		uint8_t txDataISO[2] = {0x01, pid};
+		if(obd == OBD_PROTO_ISO9141)
+		{
+			KLine_SEND_MESSAGE(txDataISO);
+		}
+		else
+		{
+			KWP2000_SEND_MESSAGE(txDataISO);
+		}
+	}
+}
+
+int OBD2_PID_Parse(uint8_t* rxFrame)
+{
+	int value = 0;
+	switch(rxFrame[2])
+	{
+	case 0x04:
+		value = (100/255)*rxFrame[3];
+		break;
+	case 0x05:
+		value = rxFrame[3] - 40;
+		break;
+	case 0x06: case 0x07: case 0x08: case 0x09:
+		value = (100/128)*rxFrame[3] - 100;
+		break;
+	case 0x0A:
+		value = 3 * rxFrame[3];
+		break;
+	case 0x0B:
+		value = rxFrame[3];
+		break;
+	case 0x0C:
+		value = (256*rxFrame[3] + rxFrame[4])/4;
+		break;
+	case 0x0D:
+		value = rxFrame[3];
+		break;
+	case 0x0E:
+		value = (rxFrame[3]/2) - 64;
+		break;
+	case 0x0F:
+		value = rxFrame[3] - 40;
+		break;
+	case 0x10:
+		value = (256*rxFrame[3] + rxFrame[4])/100;
+		break;
+	case 0x11:
+		value = (100/255)*rxFrame[3];
+		break;
+	case 0x14: case 0x15: case 0x16: case 0x17: case 0x18: case 0x19: case 0x1A: case 0x1B:
+		value = rxFrame[3] / 200;
+		break;
+	case 0x1F: case 0x21:
+		value = 256*rxFrame[3] + rxFrame[4];
+		break;
+	case 0x23:
+		value = 10*(256*rxFrame[3] + rxFrame[4]);
+		break;
+	case 0x24: case 0x25: case 0x26: case 0x27: case 0x28: case 0x29: case 0x2A: case 0x2B:
+		value = (2/65536)*(256*rxFrame[3] + rxFrame[4]);
+		break;
+	case 0x2C:
+		value = (100/255)*rxFrame[3];
+		break;
+	case 0x2D:
+		value = (100/128)*rxFrame[3]-100;
+		break;
+	case 0x2E: case 0x2F:
+		value = (100/255)*rxFrame[3];
+		break;
+	case 0x30:
+		value = rxFrame[3];
+		break;
+	case 0x31:
+		value = 256*rxFrame[3] + rxFrame[4];
+		break;
+	}
+	return value;
+}
+
+void OBD2_Init(void)
+{
+	//usedProtocol = KLine_Init();
+	usedProtocol = OBD_NONE;
+	if(usedProtocol == OBD_NONE)
+	{
+		//usedProtocol = KWP2000_Fast_Init();
+		if(usedProtocol == OBD_NONE)
+		{
+			usedProtocol = OBD_PROTO_CAN;
+			MX_CAN1_Init();
+			canConfig();
+		}
+	}
+}
+
+void OBD2_ShowOnDisplay(int value)
+{
+	char str[10];
+	snprintf(str, 10, "%d", value);
+	ssd1306_SetCursor(0,0);
+	ssd1306_Fill(Black);
+	ssd1306_WriteString("Teplota", Font_7x10, White);
+	ssd1306_SetCursor(40, 20);
+	ssd1306_WriteString(str, Font_16x26, White);
+	ssd1306_UpdateScreen();
 }

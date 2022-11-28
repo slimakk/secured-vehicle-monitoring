@@ -27,9 +27,9 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
- C:/Users/miros/Desktop/Skola/Bakalarka/STM_variant/secured-vehicle-monitoring/oled_test/Drivers/OLED/ssd1306.h \
- C:/Users/miros/Desktop/Skola/Bakalarka/STM_variant/secured-vehicle-monitoring/oled_test/Drivers/OLED/ssd1306_conf.h \
- C:/Users/miros/Desktop/Skola/Bakalarka/STM_variant/secured-vehicle-monitoring/oled_test/Drivers/OLED/ssd1306_fonts.h
+ D:/Bakalarka/secured-vehicle-monitoring/oled_test/Drivers/OLED/ssd1306.h \
+ D:/Bakalarka/secured-vehicle-monitoring/oled_test/Drivers/OLED/ssd1306_conf.h \
+ D:/Bakalarka/secured-vehicle-monitoring/oled_test/Drivers/OLED/ssd1306_fonts.h
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -59,6 +59,6 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h:
-C:/Users/miros/Desktop/Skola/Bakalarka/STM_variant/secured-vehicle-monitoring/oled_test/Drivers/OLED/ssd1306.h:
-C:/Users/miros/Desktop/Skola/Bakalarka/STM_variant/secured-vehicle-monitoring/oled_test/Drivers/OLED/ssd1306_conf.h:
-C:/Users/miros/Desktop/Skola/Bakalarka/STM_variant/secured-vehicle-monitoring/oled_test/Drivers/OLED/ssd1306_fonts.h:
+D:/Bakalarka/secured-vehicle-monitoring/oled_test/Drivers/OLED/ssd1306.h:
+D:/Bakalarka/secured-vehicle-monitoring/oled_test/Drivers/OLED/ssd1306_conf.h:
+D:/Bakalarka/secured-vehicle-monitoring/oled_test/Drivers/OLED/ssd1306_fonts.h:
