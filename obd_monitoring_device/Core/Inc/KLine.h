@@ -22,5 +22,11 @@ void KLine_SEND_MESSAGE(uint8_t* txFrame);
 
 void KWP2000_SEND_MESSAGE(uint8_t* txFrame);
 
+int Verify_Checksum (uint8_t *data, uint8_t lenght);
+
+void MX_USART1_UART_Init(int baudRate);
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
+
 
 #endif /* INC_OBD_KLINE_H_ */

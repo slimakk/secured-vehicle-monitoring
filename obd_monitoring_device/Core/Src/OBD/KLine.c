@@ -5,16 +5,26 @@
  *      Author: miros
  */
 #include "KLine.h"
+#include "main.h"
 
-uint8_t UART_RX_Buf[3] = {0};
-static uint8_t ECU_Addr = 0;
+extern uint8_t uartBuf[10];
+uint8_t KLine_RX_Buf[16];
+uint8_t messageFrame_KLine[6] = {0x68, 0x6A, 0xF1, 0, 0, 0};
+uint8_t rxFrame[5];
+
+uint8_t checksum;
+uint8_t ECU_Addr;
+uint8_t invRX = 0;
+uint8_t KlineKB = 0;
+uint8_t recLenght = 0;
+uint8_t pidLenght = 0;
 
 UART_HandleTypeDef huart1;
 
 obd_protocol KLine_Init(void){
-	HAL_UART_DeInit(&huart1);
+	//HAL_UART_DeInit(&huart1);
 	MX_GPIO_KLineUART_Init();
-	UART_PIN_State(1);
+	//ART_PIN_State(1);
 	HAL_Delay(3000);
 	UART_PIN_State(0); //0
 	HAL_Delay(200);
@@ -27,35 +37,36 @@ obd_protocol KLine_Init(void){
 	UART_PIN_State(0);//00
 	HAL_Delay(400);
 	UART_PIN_State(1);//1
-	HAL_Delay(200);
-	if (HAL_UART_Init(&huart1) != HAL_OK)
-	{
-	    Error_Handler();
-	}
-	HAL_Delay(20);
+	//HAL_Delay(200);
+	MX_USART1_UART_Init(10400);
 
-	HAL_UART_Receive(&huart1, UART_RX_Buf, 3, 200);
+	HAL_UART_Receive(&huart1, uartBuf, 3, 500);
 
-	if(UART_RX_Buf[0] != 0x55)
+	if(uartBuf[0] != 0x55)
 	{
 		return OBD_NONE;
 	}
-	else if(UART_RX_Buf[1] == UART_RX_Buf[2])
+	else if(uartBuf[1] == uartBuf[2])
 	{
-		if(UART_RX_Buf[1] == 0x08 || 0x94)
+		if(uartBuf[1] == 0x08 || 0x94)
 		{
-			uint8_t inv_RX = ~UART_RX_Buf[1];
+			invRX = ~uartBuf[1];
 			HAL_Delay(25);
-			HAL_UART_Transmit(&huart1, &inv_RX, 1, 50);
+			HAL_UART_Transmit(&huart1, &invRX, 1, 50);
+			HAL_Delay(25);
+			__HAL_UART_SEND_REQ(&huart1, UART_RXDATA_FLUSH_REQUEST);
 			HAL_UART_Receive(&huart1, &ECU_Addr, 1, 100);
+//			__HAL_UART_SEND_REQ(&huart1, UART_RXDATA_FLUSH_REQUEST);
+			KlineKB = uartBuf[1];
 			return OBD_PROTO_ISO9141;
 		}
 	}
 	else
 	{
-		uint8_t inv_RX = ~UART_RX_Buf[1];
+		invRX = ~uartBuf[1];
 		HAL_Delay(25);
-		HAL_UART_Transmit(&huart1, &inv_RX, 1, 50);
+		HAL_UART_Transmit(&huart1, &invRX, 1, 50);
+		__HAL_UART_SEND_REQ(&huart1, UART_RXDATA_FLUSH_REQUEST);
 		HAL_UART_Receive(&huart1, &ECU_Addr, 1, 100);
 		return OBD_PROTO_KWP2000_SLOW;
 	}
@@ -68,9 +79,9 @@ obd_protocol KWP2000_Fast_Init(void)
 	uint8_t crc = 0;
 	HAL_UART_DeInit(&huart1);
 	MX_GPIO_KLineUART_Init();
-	UART_PIN_State(1);
-	HAL_Delay(25);
 	UART_PIN_State(0);
+	HAL_Delay(25);
+	UART_PIN_State(1);
 	HAL_Delay(25);
 	if (HAL_UART_Init(&huart1) != HAL_OK)
 	{
@@ -78,7 +89,8 @@ obd_protocol KWP2000_Fast_Init(void)
 	}
 	HAL_UART_Transmit(&huart1, startCom, 5, 50);
 	HAL_Delay(20);
-	HAL_UART_Receive_IT(&huart1, respCom, 7);
+	__HAL_UART_SEND_REQ(&huart1, UART_RXDATA_FLUSH_REQUEST);
+	HAL_UART_Receive(&huart1, uartBuf, 7, 500);
 	for(int i = 0; i<6; i++)
 	{
 		crc = crc + respCom[i];
@@ -120,15 +132,43 @@ void UART_PIN_State(int state)
 
 void KLine_SEND_MESSAGE(uint8_t* txFrame)
 {
-	uint8_t messageFrame[] = {0x68, 0x6A, 0xF1, txFrame[0], txFrame[1], 0};
-	uint8_t checksum = 0;
-	for(int i = 0; i < sizeof(messageFrame); i++)
-	{
-		checksum += messageFrame[i];
-	}
-	messageFrame[sizeof(messageFrame)-1] = checksum;
+	messageFrame_KLine[3] = txFrame[0];
+	messageFrame_KLine[4] = txFrame[1];
+	checksum = 0;
+//	for(int i = 0; i < sizeof(messageFrame_KLine)-1; i++)
+//	{
+//		checksum += messageFrame_KLine[i];
+//	}
+	messageFrame_KLine[5] = 0xC9;
+//	HAL_UART_DeInit(&huart1);
+//	MX_USART1_UART_Init(5400);
 
-	HAL_UART_Transmit(&huart1, messageFrame, sizeof(messageFrame), 10);
+//	for(int i = 0; i < sizeof(messageFrame_KLine); i++)
+//	{
+//		HAL_UART_Transmit(&huart1, &messageFrame_KLine[i], 1, 5);
+//	}
+
+	HAL_UART_Transmit(&huart1, messageFrame_KLine, sizeof(messageFrame_KLine), 12);
+
+//	if(KlineKB == 0x08)
+//	{
+//		HAL_Delay(25);
+//	}
+	__HAL_UART_SEND_REQ(&huart1, UART_RXDATA_FLUSH_REQUEST);
+
+//	HAL_UART_Receive(&huart1, uartBuf, 7, 50);
+	HAL_UART_Receive_DMA(&huart1, KLine_RX_Buf, 7);
+	pidLenght = PID_Get_Lenght(txFrame[1]);
+
+	HAL_Delay(60);
+//	int j = 0;
+//	for(int i = 3; i <= pidLenght + 3; i++)
+//	{
+//
+//		rxFrame[j] = KLine_RX_Buf[i];
+//		j++;
+//	}
+
 }
 
 void KWP2000_SEND_MESSAGE(uint8_t* txFrame)
@@ -142,4 +182,61 @@ void KWP2000_SEND_MESSAGE(uint8_t* txFrame)
 	messageFrame[sizeof(messageFrame)-1] = checksum;
 
 	HAL_UART_Transmit(&huart1, messageFrame, sizeof(messageFrame), 10);
+
+	uint16_t rxLen = 0;
+	uint8_t rxFrame[8];
+
+	HAL_UARTEx_ReceiveToIdle(&huart1, KLine_RX_Buf, 8, &rxLen, 1000);
+
+	if(Verify_Checksum(KLine_RX_Buf, rxLen))
+	{
+		OBD2_ShowOnDisplay(OBD2_PID_Parse(rxFrame));
+	}
+}
+
+int Verify_Checksum (uint8_t *data, uint8_t lenght)
+{
+	uint8_t checksum = 0;
+	for(int i = 0; i < lenght; i++)
+	{
+		checksum += data[i];
+	}
+	if(data[lenght - 1] == checksum)
+	{
+		return 1;
+	}
+	return 0;
+}
+
+void MX_USART1_UART_Init(int baudRate)
+{
+  huart1.Instance = USART1;
+  huart1.Init.BaudRate = baudRate;
+  huart1.Init.WordLength = UART_WORDLENGTH_8B;
+  huart1.Init.StopBits = UART_STOPBITS_1;
+  huart1.Init.Parity = UART_PARITY_NONE;
+  huart1.Init.Mode = UART_MODE_TX_RX;
+  huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+  huart1.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+  huart1.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_TXINVERT_INIT;
+  huart1.AdvancedInit.TxPinLevelInvert = UART_ADVFEATURE_TXINV_ENABLE;
+  if (HAL_UART_Init(&huart1) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+//	rxFrame[0] = KLine_RX_Buf[3];
+//	rxFrame[1] = KLine_RX_Buf[4];
+//	rxFrame[2] = KLine_RX_Buf[5];
+	uint8_t j = 0;
+	for(uint8_t i = 2; i <= pidLenght + 3; i++)
+	{
+		rxFrame[j] = KLine_RX_Buf[i];
+		j++;
+	}
+	OBD2_ShowOnDisplay(OBD2_PID_Parse(rxFrame));
 }

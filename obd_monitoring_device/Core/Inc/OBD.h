@@ -16,12 +16,11 @@ typedef enum{
 	OBD_PROTO_CAN = 4,
 } obd_protocol;
 
-//void obd_init(obd_protocol first_protocol);
-
 #include "CAN.h"
 #include "KLine.h"
 #include "main.h"
-#include <string.h>
+#include "OBD_PID.h"
+//#include <string.h>
 #include <stdio.h>
 
 extern UART_HandleTypeDef huart2;
@@ -31,14 +30,14 @@ extern UART_HandleTypeDef huart2;
 #define TX_DATA_LENGTH    (8)
 #define RX_DATA_LENGTH    (8)
 
-void OBD2_PrintResponse(uint8_t *rxFrame);
+//void OBD2_PrintResponse(uint8_t *rxFrame);
 
 void OBD2_Request(obd_protocol obd, uint8_t pid);
 
-int OBD2_PID_Parse(uint8_t *rxFrame);
+float OBD2_PID_Parse(uint8_t *rxFrame);
 
-void OBD2_Init(void);
+obd_protocol OBD2_Init(void);
 
-void OBD2_ShowOnDisplay(int value);
+void OBD2_ShowOnDisplay(float value);
 
 #endif /* INC_OBD_OBD_H_ */

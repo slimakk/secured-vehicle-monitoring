@@ -1,5 +1,4 @@
-../Core/Src/OBD.c:12:6:OBD2_PrintResponse	32	static
 ../Core/Src/OBD.c:26:6:OBD2_Request	32	static
-../Core/Src/OBD.c:49:5:OBD2_PID_Parse	24	static
-../Core/Src/OBD.c:118:6:OBD2_Init	8	static
-../Core/Src/OBD.c:134:6:OBD2_ShowOnDisplay	32	static
+../Core/Src/OBD.c:47:7:OBD2_PID_Parse	24	static
+../Core/Src/OBD.c:202:14:OBD2_Init	8	static
+../Core/Src/OBD.c:218:6:OBD2_ShowOnDisplay	40	static
