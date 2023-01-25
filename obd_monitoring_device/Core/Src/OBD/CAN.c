@@ -5,11 +5,12 @@
  *      Author: miros
  */
 #include "CAN.h"
+#include "OBD.h"
 
-
+extern OBD obd_comm;
+extern IWDG_HandleTypeDef hiwdg;
 CAN_HandleTypeDef hcan1;
-
-uint32_t txMailbox;
+uint32_t tx_mailbox;
 
 void MX_CAN1_Init(void)
 {
@@ -33,18 +34,18 @@ void MX_CAN1_Init(void)
 
 void canConfig(void)
 {
-	CAN_FilterTypeDef canFilter;
-	canFilter.FilterBank = 0;
-	canFilter.FilterMode = CAN_FILTERMODE_IDMASK;
-	canFilter.FilterScale = CAN_FILTERSCALE_32BIT;
-	canFilter.FilterIdHigh = 0x7E8 << 5;
-	canFilter.FilterIdLow = 0x0000;
-	canFilter.FilterMaskIdHigh = 0x7F8 << 5;
-	canFilter.FilterMaskIdLow = 0x0000;
-	canFilter.FilterFIFOAssignment = CAN_RX_FIFO0;
-	canFilter.FilterActivation = ENABLE;
+	CAN_FilterTypeDef can_filter;
+	can_filter.FilterBank = 0;
+	can_filter.FilterMode = CAN_FILTERMODE_IDMASK;
+	can_filter.FilterScale = CAN_FILTERSCALE_32BIT;
+	can_filter.FilterIdHigh = 0x7E8 << 5;
+	can_filter.FilterIdLow = 0x0000;
+	can_filter.FilterMaskIdHigh = 0x7F8 << 5;
+	can_filter.FilterMaskIdLow = 0x0000;
+	can_filter.FilterFIFOAssignment = CAN_RX_FIFO0;
+	can_filter.FilterActivation = ENABLE;
 
-	if(HAL_CAN_ConfigFilter(&hcan1, &canFilter) != HAL_OK)
+	if(HAL_CAN_ConfigFilter(&hcan1, &can_filter) != HAL_OK)
 	{
 		Error_Handler();
 	}
@@ -58,27 +59,29 @@ void canConfig(void)
 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
-	CAN_RxHeaderTypeDef rxHeader;
-	uint8_t rxData[RX_DATA_LENGTH];
+	CAN_RxHeaderTypeDef rx_header;
+	uint8_t rx_data[RX_DATA_LENGTH];
 
-	HAL_CAN_GetRxMessage(&hcan1, CAN_RX_FIFO0, &rxHeader, rxData);
+	HAL_CAN_GetRxMessage(&hcan1, CAN_RX_FIFO0, &rx_header, rx_data);
 
-//	OBD2_PrintResponse(rxData);
+	float resp_value = OBD2_PID_Parse(rx_data);
 
-	float respValue = OBD2_PID_Parse(rxData);
-	OBD2_ShowOnDisplay(respValue);
+	OBD2_ShowOnDisplay(resp_value);
+
+	HAL_IWDG_Refresh(&hiwdg);
 }
 
 void CAN_SEND_MESSAGE(uint8_t *txFrame)
 {
-	CAN_TxHeaderTypeDef txHeader;
-	txHeader.StdId = DEVICE_CAN_ID;
-	txHeader.DLC = TX_DATA_LENGTH;
-	txHeader.IDE = CAN_ID_STD;
-	txHeader.RTR = CAN_RTR_DATA;
+	CAN_TxHeaderTypeDef tx_header;
+	tx_header.StdId = DEVICE_CAN_ID;
+	tx_header.DLC = TX_DATA_LENGTH;
+	tx_header.IDE = CAN_ID_STD;
+	tx_header.RTR = CAN_RTR_DATA;
 
-	if(HAL_CAN_AddTxMessage(&hcan1, &txHeader, txFrame, &txMailbox) != HAL_OK)
+	if(HAL_CAN_AddTxMessage(&hcan1, &tx_header, txFrame, &tx_mailbox) != HAL_OK)
 	{
 		Error_Handler();
 	}
+
 }

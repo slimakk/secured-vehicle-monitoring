@@ -1,6 +1,6 @@
-Core/Src/OBD/KLine.o: ../Core/Src/OBD/KLine.c ../Core/Inc/KLine.h \
- ../Core/Inc/OBD.h ../Core/Inc/CAN.h ../Core/Inc/main.h \
- ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h \
+Core/Src/OBD/KLine.o: ../Core/Src/OBD/KLine.c \
+ D:/Bakalarka/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/KLine.h \
+ ../Core/Inc/main.h ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h \
  ../Core/Inc/stm32l4xx_hal_conf.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_def.h \
@@ -25,16 +25,17 @@ Core/Src/OBD/KLine.o: ../Core/Src/OBD/KLine.c ../Core/Inc/KLine.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_flash_ramfunc.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_i2c.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_i2c_ex.h \
+ ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_iwdg.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
  ../Drivers/OLED/ssd1306.h ../Drivers/OLED/ssd1306_conf.h \
- ../Drivers/OLED/ssd1306_fonts.h ../Core/Inc/KLine.h \
- ../Core/Inc/OBD_PID.h ../Core/Inc/main.h
-../Core/Inc/KLine.h:
-../Core/Inc/OBD.h:
-../Core/Inc/CAN.h:
+ ../Drivers/OLED/ssd1306_fonts.h \
+ D:/Bakalarka/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD.h \
+ D:/Bakalarka/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD.h \
+ D:/Bakalarka/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD_PID.h
+D:/Bakalarka/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/KLine.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -61,6 +62,7 @@ Core/Src/OBD/KLine.o: ../Core/Src/OBD/KLine.c ../Core/Inc/KLine.h \
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_flash_ramfunc.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_i2c.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_i2c_ex.h:
+../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_iwdg.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_pwr_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:
@@ -68,6 +70,6 @@ Core/Src/OBD/KLine.o: ../Core/Src/OBD/KLine.c ../Core/Inc/KLine.h \
 ../Drivers/OLED/ssd1306.h:
 ../Drivers/OLED/ssd1306_conf.h:
 ../Drivers/OLED/ssd1306_fonts.h:
-../Core/Inc/KLine.h:
-../Core/Inc/OBD_PID.h:
-../Core/Inc/main.h:
+D:/Bakalarka/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD.h:
+D:/Bakalarka/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD.h:
+D:/Bakalarka/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD_PID.h:
