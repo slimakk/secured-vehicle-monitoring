@@ -15,9 +15,9 @@ obd_protocol KLine_Init(void);
 
 obd_protocol KWP2000_Fast_Init(void);
 
-void KLine_SEND_MESSAGE(uint8_t* txFrame);
+void KLine_SEND_MESSAGE(uint8_t* tx_frame);
 
-void KWP2000_SEND_MESSAGE(uint8_t* txFrame);
+void KWP2000_SEND_MESSAGE(uint8_t* tx_frame);
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
 
