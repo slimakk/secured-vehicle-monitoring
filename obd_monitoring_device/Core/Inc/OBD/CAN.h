@@ -16,6 +16,6 @@ void MX_CAN1_Init(void);
 
 void canConfig(void);
 
-void CAN_SEND_MESSAGE(uint8_t* txFrame);
+void CAN_SEND_MESSAGE(uint8_t* tx_frame);
 
 #endif /* INC_CAN_H_ */

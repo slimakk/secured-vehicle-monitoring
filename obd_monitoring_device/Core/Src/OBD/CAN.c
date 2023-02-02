@@ -71,7 +71,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 	HAL_IWDG_Refresh(&hiwdg);
 }
 
-void CAN_SEND_MESSAGE(uint8_t *txFrame)
+void CAN_SEND_MESSAGE(uint8_t *tx_frame)
 {
 	CAN_TxHeaderTypeDef tx_header;
 	tx_header.StdId = DEVICE_CAN_ID;
@@ -79,7 +79,7 @@ void CAN_SEND_MESSAGE(uint8_t *txFrame)
 	tx_header.IDE = CAN_ID_STD;
 	tx_header.RTR = CAN_RTR_DATA;
 
-	if(HAL_CAN_AddTxMessage(&hcan1, &tx_header, txFrame, &tx_mailbox) != HAL_OK)
+	if(HAL_CAN_AddTxMessage(&hcan1, &tx_header, tx_frame, &tx_mailbox) != HAL_OK)
 	{
 		Error_Handler();
 	}

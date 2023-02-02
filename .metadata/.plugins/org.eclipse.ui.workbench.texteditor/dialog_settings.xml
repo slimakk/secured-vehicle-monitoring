@@ -1,16 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="UARTEx"/>
+		<item key="selection" value="kline_rx_buf"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
-			<item value="UARTEx"/>
+			<item value="KLine_RX_Buf"/>
+			<item value="rxFrame"/>
+			<item value="txFrame"/>
+			<item value="canFilter"/>
+			<item value="txHeader"/>
+			<item value="txMailbox"/>
+			<item value="pidLenght"/>
+			<item value="KlineKB"/>
+			<item value="respCom"/>
+			<item value="startCom"/>
+			<item value="message_frame"/>
+			<item value="ECU_Addr"/>
+			<item value="messageFrame_KLine"/>
+			<item value="obd"/>
+			<item value="usedProtocol"/>
 		</list>
 		<list key="replacehistory">
+			<item value="kline_rx_buf"/>
+			<item value="rx_frame"/>
+			<item value="tx_frame"/>
+			<item value="can_filter"/>
+			<item value="tx_header"/>
+			<item value="tx_mailbox"/>
+			<item value="pid_length"/>
+			<item value="kline_kb"/>
+			<item value="resp_msg"/>
+			<item value="start_msg"/>
+			<item value="kwp_msg"/>
+			<item value="ecu_addr"/>
+			<item value="kline_msg"/>
+			<item value="obd_comm"/>
+			<item value="used_protocol"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
