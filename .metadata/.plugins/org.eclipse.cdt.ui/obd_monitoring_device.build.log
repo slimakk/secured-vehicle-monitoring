@@ -1,17 +1,17 @@
-00:59:58 **** Incremental Build of configuration Debug for project obd_monitoring_device ****
+22:06:46 **** Incremental Build of configuration Debug for project obd_monitoring_device ****
 make -j8 all 
-arm-none-eabi-gcc "../Core/Src/OBD/KLine.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"D:/Bakalarka/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD" -I../Drivers/OLED -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/OBD/KLine.d" -MT"Core/Src/OBD/KLine.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/OBD/KLine.o"
+arm-none-eabi-gcc "../Core/Src/stm32l4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"D:/Bakalarka/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD" -I../Drivers/OLED -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/stm32l4xx_it.d" -MT"Core/Src/stm32l4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32l4xx_it.o"
 arm-none-eabi-gcc -o "obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"D:\Bakalarka\secured-vehicle-monitoring\obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: obd_monitoring_device.elf
  
 arm-none-eabi-size   obd_monitoring_device.elf 
 arm-none-eabi-objdump -h -S  obd_monitoring_device.elf  > "obd_monitoring_device.list"
    text	   data	    bss	    dec	    hex	filename
-  50148	    500	   3020	  53668	   d1a4	obd_monitoring_device.elf
+  51812	    500	   3020	  55332	   d824	obd_monitoring_device.elf
 Finished building: default.size.stdout
  
 Finished building: obd_monitoring_device.list
  
 
-00:59:59 Build Finished. 0 errors, 0 warnings. (took 1s.286ms)
+22:06:48 Build Finished. 0 errors, 0 warnings. (took 1s.296ms)
 
