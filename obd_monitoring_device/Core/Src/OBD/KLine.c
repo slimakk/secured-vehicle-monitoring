@@ -102,7 +102,7 @@ obd_protocol KWP2000_Fast_Init(void)
 		checksum = checksum + resp_msg[i];
 	}
 	checksum = checksum % 256;
-	if(checksum == resp_msg[6])
+	if(checksum == resp_msg[6] && checksum != 0)
 	{
 		ecu_addr = resp_msg[2];
 		return OBD_PROTO_KWP2000_FAST;
@@ -227,7 +227,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 			j++;
 		}
 
-		OBD2_ShowOnDisplay(OBD2_PID_Parse(rx_frame));
+		obd_comm.current_value = OBD2_PID_Parse(rx_frame);
+
+		OBD2_ShowOnDisplay(obd_comm.current_value);
 
 		HAL_IWDG_Refresh(&hiwdg);
 	}

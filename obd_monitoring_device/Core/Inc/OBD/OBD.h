@@ -24,6 +24,8 @@ typedef enum{
 typedef struct {
 	obd_protocol used_protocol;
 	uint8_t pid;
+	uint8_t pid_index;
+	float current_value;
 } OBD;
 
 //void OBD2_PrintResponse(uint8_t *rxFrame);

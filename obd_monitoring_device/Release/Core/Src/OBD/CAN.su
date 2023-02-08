@@ -1,0 +1,5 @@
+../Core/Src/OBD/CAN.c:15:6:MX_CAN1_Init	8	static
+../Core/Src/OBD/CAN.c:35:6:canConfig	48	static
+../Core/Src/OBD/CAN.c:60:6:HAL_CAN_RxFifo0MsgPendingCallback	48	static
+../Core/Src/OBD/CAN.c:74:6:CAN_SEND_MESSAGE	32	static
+../Core/Src/OBD/CAN.c:89:6:HAL_CAN_ErrorCallback	0	static

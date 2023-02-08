@@ -33,6 +33,7 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 #include "ssd1306.h"
 #include "OBD.h"
+#include "button_handler.h"
 
 /* USER CODE END Includes */
 
@@ -87,8 +88,9 @@ void Error_Handler(void);
 #define SWCLK_GPIO_Port GPIOA
 #define SWO_Pin GPIO_PIN_3
 #define SWO_GPIO_Port GPIOB
-#define LCD_BTN_Pin GPIO_PIN_5
-#define LCD_BTN_GPIO_Port GPIOB
+#define MENU_BTN_Pin GPIO_PIN_6
+#define MENU_BTN_GPIO_Port GPIOB
+#define MENU_BTN_EXTI_IRQn EXTI9_5_IRQn
 /* USER CODE BEGIN Private defines */
 
 /* USER CODE END Private defines */

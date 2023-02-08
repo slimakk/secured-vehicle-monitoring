@@ -64,11 +64,11 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 
 	HAL_CAN_GetRxMessage(&hcan1, CAN_RX_FIFO0, &rx_header, rx_data);
 
-	float resp_value = OBD2_PID_Parse(rx_data);
+	obd_comm.current_value = OBD2_PID_Parse(rx_data);
 
-	OBD2_ShowOnDisplay(resp_value);
+	OBD2_ShowOnDisplay(obd_comm.current_value);
 
-	HAL_IWDG_Refresh(&hiwdg);
+	//HAL_IWDG_Refresh(&hiwdg);
 }
 
 void CAN_SEND_MESSAGE(uint8_t *tx_frame)
@@ -84,4 +84,10 @@ void CAN_SEND_MESSAGE(uint8_t *tx_frame)
 		Error_Handler();
 	}
 
+}
+
+void HAL_CAN_ErrorCallback(CAN_HandleTypeDef *hcan)
+{
+	__HAL_CAN_CLEAR_FLAG(hcan, CAN_FLAG_FOV0);
+//	__HAL_CAN_Receive_IT(hcan, CAN_RX_FIFO0);
 }

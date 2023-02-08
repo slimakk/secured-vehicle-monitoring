@@ -11,6 +11,7 @@
 #include <stdio.h>
 
 static obd_protocol used_protocol;
+extern DMA_HandleTypeDef hdma_usart1_rx;
 
 //void OBD2_PrintResponse(uint8_t* rx_frame)
 //{
@@ -28,6 +29,7 @@ static obd_protocol used_protocol;
 
 void OBD2_Request(OBD obd)
 {
+	HAL_Delay(10);
 	if(obd.used_protocol == OBD_PROTO_CAN)
 	{
 		uint8_t tx_data_CAN[TX_DATA_LENGTH] = {0x02, 0x01, obd.pid, 0x00, 0x00, 0x00, 0x00, 0x00};
@@ -211,6 +213,7 @@ obd_protocol OBD2_Init(void)
 		if(used_protocol == OBD_NONE)
 		{
 			used_protocol = OBD_PROTO_CAN;
+			HAL_DMA_DeInit(&hdma_usart1_rx);
 			MX_CAN1_Init();
 			canConfig();
 		}

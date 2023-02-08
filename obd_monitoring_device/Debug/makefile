@@ -62,8 +62,8 @@ all: main-build
 main-build: obd_monitoring_device.elf secondary-outputs
 
 # Tool invocations
-obd_monitoring_device.elf obd_monitoring_device.map: $(OBJS) $(USER_OBJS) D:\Bakalarka\secured-vehicle-monitoring\obd_monitoring_device\STM32L431RCTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "obd_monitoring_device.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"D:\Bakalarka\secured-vehicle-monitoring\obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+obd_monitoring_device.elf obd_monitoring_device.map: $(OBJS) $(USER_OBJS) C:\Users\Miro\Desktop\bakalarka_latest\secured-vehicle-monitoring\obd_monitoring_device\STM32L431RCTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "obd_monitoring_device.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Miro\Desktop\bakalarka_latest\secured-vehicle-monitoring\obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
