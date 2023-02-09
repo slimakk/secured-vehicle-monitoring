@@ -5,6 +5,7 @@
  *      Author: Miro
  */
 #include "button_handler.h"
+#include "OBD_PID.h"
 
 extern TIM_HandleTypeDef htim1;
 extern OBD obd_comm;

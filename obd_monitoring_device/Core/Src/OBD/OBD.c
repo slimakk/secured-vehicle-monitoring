@@ -12,6 +12,10 @@
 
 static obd_protocol used_protocol;
 extern DMA_HandleTypeDef hdma_usart1_rx;
+extern OBD obd_comm;
+extern char *pid_names[90];
+
+static void OBD2_PID_Decode(uint8_t* rx_frame);
 
 //void OBD2_PrintResponse(uint8_t* rx_frame)
 //{
@@ -26,6 +30,30 @@ extern DMA_HandleTypeDef hdma_usart1_rx;
 //	strcat(txTest2, "\r\n");
 //	HAL_UART_Transmit(&huart2, (uint8_t *)txTest2, sizeof(txTest2),10);
 //}
+
+static void OBD2_PID_Decode(uint8_t* rx_frame)
+{
+	int number = (rx_frame[3] << 24) | (rx_frame[4] << 16) | (rx_frame[5] << 8) | rx_frame[6];
+	int j = 0;
+	for(int i = 31; i >= 0; i--)
+	{
+		int digit = number >> i;
+		digit &= 1;
+		if(obd_comm.pid == 0x00)
+		{
+			obd_comm.available_pids_1[j] = digit;
+		}
+		else if(obd_comm.pid == 0x20)
+		{
+			obd_comm.available_pids_2[j] = digit;
+		}
+		else
+		{
+			obd_comm.available_pids_3[j] = digit;
+		}
+		j++;
+	}
+}
 
 void OBD2_Request(OBD obd)
 {
@@ -54,6 +82,10 @@ float OBD2_PID_Parse(uint8_t* rx_frame)
 	float value = 0;
 	switch(rx_frame[2])
 	{
+	case 0x00:
+		OBD2_PID_Decode(rx_frame);
+		value = 0;
+		break;
 	case 0x04:
 		value = (100/255)*rx_frame[3];
 		break;
@@ -93,6 +125,10 @@ float OBD2_PID_Parse(uint8_t* rx_frame)
 	case 0x1F: case 0x21:
 		value = (rx_frame[3] << 8) | rx_frame[4];
 		break;
+	case 0x20:
+		OBD2_PID_Decode(rx_frame);
+		value = 0;
+		break;
 	case 0x22:
 		value = ((rx_frame[3] << 8) | rx_frame[4])*0.079;
 	case 0x23:
@@ -127,6 +163,10 @@ float OBD2_PID_Parse(uint8_t* rx_frame)
 		break;
 	case 0x3C: case 0x3D: case 0x3E: case 0x3F:
 		value = (((rx_frame[3] << 8) | rx_frame[4]) / 100) - 40;
+		break;
+	case 0x40:
+		OBD2_PID_Decode(rx_frame);
+		value = 0;
 		break;
 	case 0x42:
 		value = ((rx_frame[3] << 8) | rx_frame[4]) / 1000;
@@ -227,7 +267,7 @@ void OBD2_ShowOnDisplay(float value)
 	snprintf(str, 10, "%f", value);
 	ssd1306_SetCursor(0,0);
 	ssd1306_Fill(Black);
-	ssd1306_WriteString("Teplota", Font_7x10, White);
+	ssd1306_WriteString(pid_names[obd_comm.pid_index], Font_7x10, White);
 	ssd1306_SetCursor(40, 20);
 	ssd1306_WriteString(str, Font_16x26, White);
 	ssd1306_UpdateScreen();

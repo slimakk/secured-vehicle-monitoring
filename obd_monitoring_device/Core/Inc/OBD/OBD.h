@@ -25,6 +25,9 @@ typedef struct {
 	obd_protocol used_protocol;
 	uint8_t pid;
 	uint8_t pid_index;
+	uint8_t available_pids_1 [32];
+	uint8_t available_pids_2 [32];
+	uint8_t available_pids_3 [32];
 	float current_value;
 } OBD;
 

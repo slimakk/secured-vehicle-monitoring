@@ -12,7 +12,7 @@ extern OBD obd_comm;
 extern IWDG_HandleTypeDef hiwdg;
 uint8_t kline_rx_buf[16];
 
-uint8_t rx_frame[5];
+uint8_t rx_frame[7];
 
 static uint8_t checksum;
 static uint8_t ecu_addr;
