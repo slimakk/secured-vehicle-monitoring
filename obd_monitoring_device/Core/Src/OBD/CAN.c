@@ -9,7 +9,7 @@
 
 extern OBD obd_comm;
 extern IWDG_HandleTypeDef hiwdg;
-CAN_HandleTypeDef hcan1;
+extern CAN_HandleTypeDef hcan1;
 uint32_t tx_mailbox;
 
 void MX_CAN1_Init(void)

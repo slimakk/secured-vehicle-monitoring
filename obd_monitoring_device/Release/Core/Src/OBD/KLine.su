@@ -1,8 +1,9 @@
-../Core/Src/OBD/KLine.c:114:13:MX_GPIO_KLineUART_Init	32	static
-../Core/Src/OBD/KLine.c:124:13:UART_PIN_State.part.0	8	static
-../Core/Src/OBD/KLine.c:124:13:UART_PIN_State.constprop	8	static
+../Core/Src/OBD/KLine.c:116:13:MX_GPIO_KLineUART_Init	32	static
+../Core/Src/OBD/KLine.c:126:13:UART_PIN_State.part.0	8	static
+../Core/Src/OBD/KLine.c:126:13:UART_PIN_State.constprop	8	static
+../Core/Src/OBD/KLine.c:202:6:MX_USART1_UART_Init.constprop	8	static
 ../Core/Src/OBD/KLine.c:29:14:KLine_Init	24	static
 ../Core/Src/OBD/KLine.c:79:14:KWP2000_Fast_Init	32	static
-../Core/Src/OBD/KLine.c:139:6:KLine_SEND_MESSAGE	24	static
-../Core/Src/OBD/KLine.c:162:6:KWP2000_SEND_MESSAGE	24	static
-../Core/Src/OBD/KLine.c:219:6:HAL_UART_RxCpltCallback	16	static
+../Core/Src/OBD/KLine.c:141:6:KLine_SEND_MESSAGE	24	static
+../Core/Src/OBD/KLine.c:164:6:KWP2000_SEND_MESSAGE	24	static
+../Core/Src/OBD/KLine.c:221:6:HAL_UART_RxCpltCallback	16	static

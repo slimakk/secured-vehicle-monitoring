@@ -39,12 +39,15 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+CAN_HandleTypeDef hcan1;
+
 I2C_HandleTypeDef hi2c2;
 
 IWDG_HandleTypeDef hiwdg;
 
 TIM_HandleTypeDef htim1;
 
+UART_HandleTypeDef huart1;
 DMA_HandleTypeDef hdma_usart1_rx;
 
 /* USER CODE BEGIN PV */
@@ -102,7 +105,6 @@ int main(void)
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_I2C2_Init();
-  MX_IWDG_Init();
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
 
@@ -111,11 +113,9 @@ int main(void)
   ssd1306_WriteString("Teplota", Font_7x10, White);
   ssd1306_UpdateScreen();
 
-
-
   obd_comm.used_protocol = OBD2_Init();
 
-  obd_comm.pid = 0x0C;
+  obd_comm.pid = 0x04;
 
   //MX_IWDG_Init();
 
@@ -135,6 +135,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+
 	  OBD2_Request(obd_comm);
 
   }
@@ -313,6 +314,7 @@ static void MX_TIM1_Init(void)
   /* USER CODE END TIM1_Init 2 */
 
 }
+
 /**
   * Enable DMA controller clock
   */

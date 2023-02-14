@@ -1,3 +1,4 @@
 uartBuf
-ECU_Addr
-invRX
+ecu_addr
+checksum
+used_protocol

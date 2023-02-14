@@ -1,5 +1,5 @@
-Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_iwdg.o: \
- ../Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_iwdg.c \
+Core/Src/button_handler.o: ../Core/Src/button_handler.c \
+ ../Core/Inc/button_handler.h ../Core/Inc/main.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h \
  ../Core/Inc/stm32l4xx_hal_conf.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h \
@@ -31,7 +31,14 @@ Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_iwdg.o: \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
- ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h
+ ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
+ ../Drivers/OLED/ssd1306.h ../Drivers/OLED/ssd1306_conf.h \
+ ../Drivers/OLED/ssd1306_fonts.h \
+ C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD.h \
+ ../Core/Inc/main.h ../Core/Inc/button_handler.h \
+ C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD_PID.h
+../Core/Inc/button_handler.h:
+../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h:
@@ -64,3 +71,10 @@ Drivers/STM32L4xx_HAL_Driver/Src/stm32l4xx_hal_iwdg.o: \
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h:
+../Drivers/OLED/ssd1306.h:
+../Drivers/OLED/ssd1306_conf.h:
+../Drivers/OLED/ssd1306_fonts.h:
+C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD.h:
+../Core/Inc/main.h:
+../Core/Inc/button_handler.h:
+C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD_PID.h:
