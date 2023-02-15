@@ -33,7 +33,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if(HAL_GPIO_ReadPin(MENU_BTN_GPIO_Port, MENU_BTN_Pin)== GPIO_PIN_SET)
 	{
 		state = 1;
-		obd_comm.pid_index++;
+		if(obd_comm.pid_index == 89)
+		{
+			obd_comm.pid_index = 0;
+		}
+		else
+		{
+			obd_comm.pid_index++;
+		}
 		obd_comm.pid = Get_PID(obd_comm.pid_index);
 		HAL_TIM_Base_Stop_IT(&htim1);
 	}

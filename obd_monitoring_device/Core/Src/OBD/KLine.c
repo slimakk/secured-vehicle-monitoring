@@ -19,6 +19,7 @@ static uint8_t ecu_addr;
 static uint8_t kline_kb;
 static uint8_t pid_length;
 static uint8_t msg_type = 0;
+static uint8_t timeout = 0;
 
 extern UART_HandleTypeDef huart1;
 
@@ -83,6 +84,7 @@ obd_protocol KWP2000_Fast_Init(void)
 //	uint8_t resp_msg[7]={0};
 	checksum = 0;
 	msg_type = 1;
+	timeout = 0;
 
 	HAL_UART_DeInit(&huart1);
 	HAL_Delay(3000);
@@ -256,7 +258,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 			OBD2_ShowOnDisplay(obd_comm.current_value);
 
-	//		HAL_IWDG_Refresh(&hiwdg);
+			HAL_IWDG_Refresh(&hiwdg);
 		}
 	}
 

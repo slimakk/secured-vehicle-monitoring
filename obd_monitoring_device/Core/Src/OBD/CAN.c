@@ -68,7 +68,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 
 	OBD2_ShowOnDisplay(obd_comm.current_value);
 
-	//HAL_IWDG_Refresh(&hiwdg);
+	HAL_IWDG_Refresh(&hiwdg);
 }
 
 void CAN_SEND_MESSAGE(uint8_t *tx_frame)

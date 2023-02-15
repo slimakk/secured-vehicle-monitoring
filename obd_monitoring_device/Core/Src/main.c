@@ -115,9 +115,9 @@ int main(void)
 
   obd_comm.used_protocol = OBD2_Init();
 
-  obd_comm.pid = 0x04;
+  obd_comm.pid = 0x05;
 
-  //MX_IWDG_Init();
+  MX_IWDG_Init();
 
   OBD2_Request(obd_comm);
 
