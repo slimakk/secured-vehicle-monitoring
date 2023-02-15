@@ -10,18 +10,18 @@
 extern uint8_t uartBuf[10];
 extern OBD obd_comm;
 extern IWDG_HandleTypeDef hiwdg;
+extern TIM_HandleTypeDef htim15;
+extern UART_HandleTypeDef huart1;
 uint8_t kline_rx_buf[16];
 
 uint8_t rx_frame[7];
 
 static uint8_t checksum;
 static uint8_t ecu_addr;
-static uint8_t kline_kb;
+//static uint8_t kline_kb;
 static uint8_t pid_length;
-static uint8_t msg_type = 0;
-static uint8_t timeout = 0;
 
-extern UART_HandleTypeDef huart1;
+
 
 static void MX_GPIO_KLineUART_Init(void);
 static void UART_PIN_State(uint8_t state);
@@ -63,7 +63,7 @@ obd_protocol KLine_Init(void){
 			__HAL_UART_SEND_REQ(&huart1, UART_RXDATA_FLUSH_REQUEST);
 			HAL_UART_Receive(&huart1, &ecu_addr, 1, 100);
 //			__HAL_UART_SEND_REQ(&huart1, UART_RXDATA_FLUSH_REQUEST);
-			kline_kb = uartBuf[1];
+			//kline_kb = uartBuf[1];
 			return OBD_PROTO_ISO9141;
 		}
 	}
@@ -83,8 +83,7 @@ obd_protocol KWP2000_Fast_Init(void)
 	uint8_t start_msg[5]={0xC1, 0x33, 0xF1, 0x81, 0x66};
 //	uint8_t resp_msg[7]={0};
 	checksum = 0;
-	msg_type = 1;
-	timeout = 0;
+	obd_comm.msg_type = 1;
 
 	HAL_UART_DeInit(&huart1);
 	HAL_Delay(3000);
@@ -102,13 +101,8 @@ obd_protocol KWP2000_Fast_Init(void)
 //	__HAL_UART_SEND_REQ(&huart1, UART_RXDATA_FLUSH_REQUEST);
 //	HAL_Delay(20);
 	HAL_UART_Receive_DMA(&huart1, uartBuf, 8);
-//	int j = 1;
-//	for(int i = 0; i < 7; i++)
-//	{
-//		resp_msg[i] = uartBuf[j];
-//		j++;
-//	}
-	while(msg_type != 0)
+	HAL_TIM_Base_Start_IT(&htim15);
+	while(obd_comm.msg_type != 0)
 	{
 		__NOP();
 	}
@@ -181,7 +175,7 @@ void KWP2000_SEND_MESSAGE(uint8_t* tx_frame)
 
 	pid_length = PID_Get_Lenght(tx_frame[1]);
 	checksum = 0;
-	msg_type = 2;
+	obd_comm.msg_type = 2;
 
 	for(int i = 0; i < sizeof(kwp_msg) - 1; i++)
 	{
@@ -237,11 +231,11 @@ void MX_USART1_UART_Init(uint16_t baud_rate)
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-	if(msg_type == 1)
+	if(obd_comm.msg_type == 1)
 	{
-		msg_type = 0;
+		obd_comm.msg_type = 0;
 	}
-	else if (msg_type == 2)
+	else if (obd_comm.msg_type == 2)
 	{
 		if(Verify_Checksum(kline_rx_buf, pid_length + 5))
 		{
@@ -252,7 +246,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 				j++;
 			}
 
-			msg_type = 0;
+			obd_comm.msg_type = 0;
 
 			obd_comm.current_value = OBD2_PID_Parse(rx_frame);
 

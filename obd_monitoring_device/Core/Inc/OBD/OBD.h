@@ -28,6 +28,8 @@ typedef struct {
 	uint8_t available_pids_1 [32];
 	uint8_t available_pids_2 [32];
 	uint8_t available_pids_3 [32];
+	uint8_t button_state;
+	uint8_t msg_type;
 	float current_value;
 } OBD;
 

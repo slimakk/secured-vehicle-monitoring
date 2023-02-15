@@ -1,5 +1,5 @@
 Core/Src/OBD/CAN.o: ../Core/Src/OBD/CAN.c \
- C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/CAN.h \
+ C:/Users/Miro/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/CAN.h \
  ../Core/Inc/main.h ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h \
  ../Core/Inc/stm32l4xx_hal_conf.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h \
@@ -34,9 +34,10 @@ Core/Src/OBD/CAN.o: ../Core/Src/OBD/CAN.c \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
  ../Drivers/OLED/ssd1306.h ../Drivers/OLED/ssd1306_conf.h \
  ../Drivers/OLED/ssd1306_fonts.h \
- C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD.h \
- ../Core/Inc/button_handler.h ../Core/Inc/main.h
-C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/CAN.h:
+ C:/Users/Miro/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD.h \
+ ../Core/Inc/button_handler.h ../Core/Inc/main.h \
+ ../Core/Inc/it_callbacks.h
+C:/Users/Miro/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/CAN.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -73,6 +74,7 @@ C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/obd_monitorin
 ../Drivers/OLED/ssd1306.h:
 ../Drivers/OLED/ssd1306_conf.h:
 ../Drivers/OLED/ssd1306_fonts.h:
-C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD.h:
+C:/Users/Miro/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD.h:
 ../Core/Inc/button_handler.h:
 ../Core/Inc/main.h:
+../Core/Inc/it_callbacks.h:

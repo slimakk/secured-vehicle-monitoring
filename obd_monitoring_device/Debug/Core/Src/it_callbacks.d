@@ -1,4 +1,5 @@
-Core/Src/stm32l4xx_it.o: ../Core/Src/stm32l4xx_it.c ../Core/Inc/main.h \
+Core/Src/it_callbacks.o: ../Core/Src/it_callbacks.c \
+ ../Core/Inc/it_callbacks.h ../Core/Inc/main.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h \
  ../Core/Inc/stm32l4xx_hal_conf.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h \
@@ -34,8 +35,10 @@ Core/Src/stm32l4xx_it.o: ../Core/Src/stm32l4xx_it.c ../Core/Inc/main.h \
  ../Drivers/OLED/ssd1306.h ../Drivers/OLED/ssd1306_conf.h \
  ../Drivers/OLED/ssd1306_fonts.h \
  C:/Users/Miro/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD.h \
- ../Core/Inc/button_handler.h ../Core/Inc/main.h \
- ../Core/Inc/it_callbacks.h ../Core/Inc/stm32l4xx_it.h
+ ../Core/Inc/main.h ../Core/Inc/button_handler.h \
+ ../Core/Inc/it_callbacks.h \
+ C:/Users/Miro/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD_PID.h
+../Core/Inc/it_callbacks.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -73,7 +76,7 @@ Core/Src/stm32l4xx_it.o: ../Core/Src/stm32l4xx_it.c ../Core/Inc/main.h \
 ../Drivers/OLED/ssd1306_conf.h:
 ../Drivers/OLED/ssd1306_fonts.h:
 C:/Users/Miro/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD.h:
-../Core/Inc/button_handler.h:
 ../Core/Inc/main.h:
+../Core/Inc/button_handler.h:
 ../Core/Inc/it_callbacks.h:
-../Core/Inc/stm32l4xx_it.h:
+C:/Users/Miro/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD_PID.h:

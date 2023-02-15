@@ -34,6 +34,7 @@ extern "C" {
 #include "ssd1306.h"
 #include "OBD.h"
 #include "button_handler.h"
+#include "it_callbacks.h"
 
 /* USER CODE END Includes */
 
