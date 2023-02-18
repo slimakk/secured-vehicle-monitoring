@@ -31,6 +31,7 @@ typedef struct {
 	uint8_t button_state;
 	uint8_t msg_type;
 	float current_value;
+	float voltage;
 } OBD;
 
 //void OBD2_PrintResponse(uint8_t *rxFrame);

@@ -8,7 +8,7 @@
 #include "OBD_PID.h"
 
 extern TIM_HandleTypeDef htim1;
-extern TIM_HandleTypeDef htim15;
+extern TIM_HandleTypeDef htim6;
 extern OBD obd_comm;
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
@@ -30,10 +30,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 			HAL_TIM_Base_Stop_IT(&htim1);
 		}
 	}
-	if(htim->Instance == TIM15)
+	if(htim->Instance == TIM6)
 	{
 		obd_comm.msg_type = 0;
-		HAL_TIM_Base_Stop_IT(&htim15);
+		HAL_TIM_Base_Stop_IT(&htim6);
 	}
 }
 

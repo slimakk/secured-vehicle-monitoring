@@ -10,13 +10,13 @@
 extern uint8_t uartBuf[10];
 extern OBD obd_comm;
 extern IWDG_HandleTypeDef hiwdg;
-extern TIM_HandleTypeDef htim15;
+extern TIM_HandleTypeDef htim6;
 extern UART_HandleTypeDef huart1;
 uint8_t kline_rx_buf[16];
 
 uint8_t rx_frame[7];
 
-static uint8_t checksum;
+//static uint8_t checksum;
 static uint8_t ecu_addr;
 //static uint8_t kline_kb;
 static uint8_t pid_length;
@@ -82,7 +82,7 @@ obd_protocol KWP2000_Fast_Init(void)
 {
 	uint8_t start_msg[5]={0xC1, 0x33, 0xF1, 0x81, 0x66};
 //	uint8_t resp_msg[7]={0};
-	checksum = 0;
+	uint8_t checksum = 0;
 	obd_comm.msg_type = 1;
 
 	HAL_UART_DeInit(&huart1);
@@ -100,8 +100,10 @@ obd_protocol KWP2000_Fast_Init(void)
 	HAL_UART_Transmit(&huart1, start_msg, 5, 10);
 //	__HAL_UART_SEND_REQ(&huart1, UART_RXDATA_FLUSH_REQUEST);
 //	HAL_Delay(20);
+
 	HAL_UART_Receive_DMA(&huart1, uartBuf, 8);
-	HAL_TIM_Base_Start_IT(&htim15);
+	//HAL_TIM_Base_Start_IT(&htim6);
+
 	while(obd_comm.msg_type != 0)
 	{
 		__NOP();
@@ -146,12 +148,12 @@ static void UART_PIN_State(uint8_t state)
 	}
 }
 
-void KLine_SEND_MESSAGE(uint8_t* tx_frame)
+void KLine_SEND_MESSAGE(uint8_t *tx_frame)
 {
 	uint8_t kline_msg[6] = {0x68, 0x6A, 0xF1, tx_frame[0], tx_frame[1], 0};
 
 	pid_length = PID_Get_Lenght(tx_frame[1]);
-	checksum = 0;
+	uint8_t checksum = 0;
 
 	for(int i = 0; i < sizeof(kline_msg) - 1; i++)
 	{
@@ -169,12 +171,12 @@ void KLine_SEND_MESSAGE(uint8_t* tx_frame)
 	HAL_Delay(60);
 }
 
-void KWP2000_SEND_MESSAGE(uint8_t* tx_frame)
+void KWP2000_SEND_MESSAGE(uint8_t *tx_frame)
 {
 	uint8_t kwp_msg[] = {0xC2, 0x33, 0xF1, tx_frame[0], tx_frame[1], 0};
 
 	pid_length = PID_Get_Lenght(tx_frame[1]);
-	checksum = 0;
+	uint8_t checksum = 0;
 	obd_comm.msg_type = 2;
 
 	for(int i = 0; i < sizeof(kwp_msg) - 1; i++)
@@ -234,6 +236,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	if(obd_comm.msg_type == 1)
 	{
 		obd_comm.msg_type = 0;
+		//HAL_TIM_Base_Stop_IT(&htim6);
 	}
 	else if (obd_comm.msg_type == 2)
 	{

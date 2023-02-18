@@ -17,6 +17,9 @@ Core/Src/stm32l4xx_hal_msp.o: ../Core/Src/stm32l4xx_hal_msp.c \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_cortex.h \
+ ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_adc.h \
+ ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_adc.h \
+ ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_adc_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_can.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_exti.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_flash.h \
@@ -33,7 +36,7 @@ Core/Src/stm32l4xx_hal_msp.o: ../Core/Src/stm32l4xx_hal_msp.c \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
  ../Drivers/OLED/ssd1306.h ../Drivers/OLED/ssd1306_conf.h \
  ../Drivers/OLED/ssd1306_fonts.h \
- C:/Users/Miro/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD.h \
+ C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD.h \
  ../Core/Inc/button_handler.h ../Core/Inc/main.h \
  ../Core/Inc/it_callbacks.h
 ../Core/Inc/main.h:
@@ -55,6 +58,9 @@ Core/Src/stm32l4xx_hal_msp.o: ../Core/Src/stm32l4xx_hal_msp.c \
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_gpio_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_dma.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_cortex.h:
+../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_adc.h:
+../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_ll_adc.h:
+../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_adc_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_can.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_exti.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_flash.h:
@@ -72,7 +78,7 @@ Core/Src/stm32l4xx_hal_msp.o: ../Core/Src/stm32l4xx_hal_msp.c \
 ../Drivers/OLED/ssd1306.h:
 ../Drivers/OLED/ssd1306_conf.h:
 ../Drivers/OLED/ssd1306_fonts.h:
-C:/Users/Miro/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD.h:
+C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD/OBD.h:
 ../Core/Inc/button_handler.h:
 ../Core/Inc/main.h:
 ../Core/Inc/it_callbacks.h:

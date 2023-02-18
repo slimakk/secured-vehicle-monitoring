@@ -214,3 +214,7 @@ uint8_t Get_PID(uint8_t index)
 {
 	return PID_list[index];
 }
+void Get_Name(uint8_t index, char *name)
+{
+	name = pid_names[index];
+}

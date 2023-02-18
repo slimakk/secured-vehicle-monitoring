@@ -35,6 +35,7 @@ extern "C" {
 #include "OBD.h"
 #include "button_handler.h"
 #include "it_callbacks.h"
+#include <math.h>
 
 /* USER CODE END Includes */
 
@@ -93,6 +94,7 @@ void Error_Handler(void);
 #define MENU_BTN_GPIO_Port GPIOB
 #define MENU_BTN_EXTI_IRQn EXTI9_5_IRQn
 /* USER CODE BEGIN Private defines */
+#define ADC_SAMPLE_TIME 1000
 
 /* USER CODE END Private defines */
 

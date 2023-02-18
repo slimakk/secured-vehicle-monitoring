@@ -10,10 +10,11 @@
 #include "KLine.h"
 #include <stdio.h>
 
-static obd_protocol used_protocol;
+//static obd_protocol used_protocol;
 extern DMA_HandleTypeDef hdma_usart1_rx;
 extern OBD obd_comm;
 extern char *pid_names[90];
+extern uint32_t adc_buffer;
 
 static void OBD2_PID_Decode(uint8_t* rx_frame);
 
@@ -246,14 +247,14 @@ float OBD2_PID_Parse(uint8_t* rx_frame)
 
 obd_protocol OBD2_Init(void)
 {
-	used_protocol = KLine_Init();
+	obd_protocol used_protocol = KLine_Init();
 	if(used_protocol == OBD_NONE)
 	{
 		used_protocol = KWP2000_Fast_Init();
 		if(used_protocol == OBD_NONE)
 		{
 			used_protocol = OBD_PROTO_CAN;
-			HAL_DMA_DeInit(&hdma_usart1_rx);
+			//HAL_DMA_DeInit(&hdma_usart1_rx);
 			MX_CAN1_Init();
 			canConfig();
 		}
@@ -264,11 +265,18 @@ obd_protocol OBD2_Init(void)
 void OBD2_ShowOnDisplay(float value)
 {
 	char str[10];
+	char str2[13];
+	char str3[32];
+	Get_Name(obd_comm.pid_index, str3);
+	//char str3 = Get_Name(obd_comm.pid_index);
 	snprintf(str, 10, "%f", value);
+	snprintf(str2, 13, "BAT %.2f V", obd_comm.voltage);
 	ssd1306_SetCursor(0,0);
 	ssd1306_Fill(Black);
 	ssd1306_WriteString(pid_names[obd_comm.pid_index], Font_7x10, White);
-	ssd1306_SetCursor(40, 20);
+	ssd1306_SetCursor(40, 12);
 	ssd1306_WriteString(str, Font_16x26, White);
+	ssd1306_SetCursor(0, 40);
+	ssd1306_WriteString(str2, Font_11x18, White);
 	ssd1306_UpdateScreen();
 }

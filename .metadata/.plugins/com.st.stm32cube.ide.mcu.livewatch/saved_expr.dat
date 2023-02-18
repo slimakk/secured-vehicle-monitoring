@@ -2,3 +2,9 @@ uartBuf
 ecu_addr
 checksum
 used_protocol
+kline_rx_buf
+msg_type
+pid_length
+obd_comm
+state
+timeout

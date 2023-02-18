@@ -1,5 +1,5 @@
-../Core/Src/OBD/OBD.c:34:13:OBD2_PID_Decode	32	static
-../Core/Src/OBD/OBD.c:58:6:OBD2_Request	24	static
-../Core/Src/OBD/OBD.c:80:7:OBD2_PID_Parse	24	static
-../Core/Src/OBD/OBD.c:247:14:OBD2_Init	8	static
-../Core/Src/OBD/OBD.c:264:6:OBD2_ShowOnDisplay	40	static
+../Core/Src/OBD/OBD.c:35:13:OBD2_PID_Decode	32	static
+../Core/Src/OBD/OBD.c:59:6:OBD2_Request	24	static
+../Core/Src/OBD/OBD.c:81:7:OBD2_PID_Parse	24	static
+../Core/Src/OBD/OBD.c:248:14:OBD2_Init	16	static
+../Core/Src/OBD/OBD.c:265:6:OBD2_ShowOnDisplay	88	static
