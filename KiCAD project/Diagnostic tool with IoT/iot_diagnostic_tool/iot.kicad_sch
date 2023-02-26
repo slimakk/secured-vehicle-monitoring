@@ -1,0 +1,16 @@
+(kicad_sch (version 20230121) (generator eeschema)
+
+  (uuid a763026b-495b-44c3-900b-6ba2561a3840)
+
+  (paper "A4")
+
+  (title_block
+    (title "OBD Monitoring Device")
+    (date "2023-02-27")
+    (company "VUT")
+  )
+
+  (lib_symbols
+  )
+
+)
