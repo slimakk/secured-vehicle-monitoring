@@ -342,6 +342,18 @@
     [
       "7d43596b-0e17-496e-8cfa-ffe2eb0cb57d",
       "car_comm"
+    ],
+    [
+      "a397f45e-7c85-4a05-9c16-800457052804",
+      "sim"
+    ],
+    [
+      "401224e3-6c07-410d-920e-c406f96df1f1",
+      "usb"
+    ],
+    [
+      "a9f4de20-a6a8-4e37-a4a0-4184be57e0e6",
+      "antenna"
     ]
   ],
   "text_variables": {}
