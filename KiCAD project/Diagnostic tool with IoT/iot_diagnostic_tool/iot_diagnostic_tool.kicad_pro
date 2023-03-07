@@ -34,9 +34,9 @@
         "other_text_thickness": 0.15,
         "other_text_upright": false,
         "pads": {
-          "drill": 0.762,
-          "height": 1.524,
-          "width": 1.524
+          "drill": 0.0,
+          "height": 0.64,
+          "width": 0.54
         },
         "silk_line_width": 0.15,
         "silk_text_italic": false,
@@ -55,7 +55,24 @@
           "width": 0.0
         }
       ],
-      "drc_exclusions": [],
+      "drc_exclusions": [
+        "unconnected_items|137510000|86900001|7b764faa-00ae-46e9-8f3f-82575978cf45|15e8a7b9-c1d8-4d96-b6fe-eca5e582153f",
+        "unconnected_items|137510000|86900001|7b764faa-00ae-46e9-8f3f-82575978cf45|3137a210-984e-462f-9b36-769858215294",
+        "unconnected_items|137510000|88200001|15e8a7b9-c1d8-4d96-b6fe-eca5e582153f|273b02f8-626d-4992-8750-dd9e4e89bf04",
+        "unconnected_items|137510000|88200001|15e8a7b9-c1d8-4d96-b6fe-eca5e582153f|b117d33b-fe8b-4746-b88e-5e1caa4cf182",
+        "unconnected_items|138660000|88850001|9dcb1a14-73e8-42ef-bb5d-a711230163e3|b117d33b-fe8b-4746-b88e-5e1caa4cf182",
+        "unconnected_items|138660000|90150001|5446045c-0068-4aed-ab64-1db4216627e9|9dcb1a14-73e8-42ef-bb5d-a711230163e3",
+        "unconnected_items|139810000|84300001|e9d1cfa8-f35f-4d66-8c7e-aa14484a0b75|80fcd440-5206-40d4-867e-98a3a5b744df",
+        "unconnected_items|139810000|84300001|e9d1cfa8-f35f-4d66-8c7e-aa14484a0b75|d15eff3c-2d45-4b08-81a9-e576ef487627",
+        "unconnected_items|139810000|85600001|80fcd440-5206-40d4-867e-98a3a5b744df|64fb8ed8-3d68-4a88-980b-5490d4ee6ec6",
+        "unconnected_items|139810000|86900001|64fb8ed8-3d68-4a88-980b-5490d4ee6ec6|b117d33b-fe8b-4746-b88e-5e1caa4cf182",
+        "unconnected_items|139810000|88200001|359a00b4-b523-4398-8312-632d4013fa15|16d4d667-1885-43d4-b22f-18f4694faff1",
+        "unconnected_items|139810000|88200001|359a00b4-b523-4398-8312-632d4013fa15|4e5b7abe-ccfe-47dd-ace9-7e03db95ca98",
+        "unconnected_items|139810000|88200001|359a00b4-b523-4398-8312-632d4013fa15|64fb8ed8-3d68-4a88-980b-5490d4ee6ec6",
+        "unconnected_items|140960000|86250001|ad37ef3e-9042-4395-952c-c9b4579c069f|b38fd9c9-d43e-4474-9b9f-0151e076fd26",
+        "unconnected_items|140960000|87550001|4e5b7abe-ccfe-47dd-ace9-7e03db95ca98|ad37ef3e-9042-4395-952c-c9b4579c069f",
+        "unconnected_items|140960000|88850001|a8590852-be24-4509-b35b-298fd66f3dde|4e5b7abe-ccfe-47dd-ace9-7e03db95ca98"
+      ],
       "meta": {
         "version": 2
       },
@@ -81,7 +98,7 @@
         "items_not_allowed": "error",
         "length_out_of_range": "error",
         "lib_footprint_issues": "warning",
-        "lib_footprint_mismatch": "warning",
+        "lib_footprint_mismatch": "ignore",
         "malformed_courtyard": "error",
         "microvia_drill_out_of_range": "error",
         "missing_courtyard": "ignore",
@@ -195,7 +212,7 @@
           "drill": 0.0
         },
         {
-          "diameter": 0.45,
+          "diameter": 0.46,
           "drill": 0.2
         }
       ],
@@ -467,6 +484,40 @@
       },
       {
         "bus_width": 12,
+        "clearance": 0.2,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.2,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "ANT_GNSS",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.268,
+        "via_diameter": 0.8,
+        "via_drill": 0.4,
+        "wire_width": 6
+      },
+      {
+        "bus_width": 12,
+        "clearance": 0.2,
+        "diff_pair_gap": 0.25,
+        "diff_pair_via_gap": 0.25,
+        "diff_pair_width": 0.2,
+        "line_style": 0,
+        "microvia_diameter": 0.3,
+        "microvia_drill": 0.1,
+        "name": "ANT_MAIN",
+        "pcb_color": "rgba(0, 0, 0, 0.000)",
+        "schematic_color": "rgba(0, 0, 0, 0.000)",
+        "track_width": 0.268,
+        "via_diameter": 0.8,
+        "via_drill": 0.4,
+        "wire_width": 6
+      },
+      {
+        "bus_width": 12,
         "clearance": 0.308,
         "diff_pair_gap": 0.308,
         "diff_pair_via_gap": 0.25,
@@ -488,7 +539,16 @@
     },
     "net_colors": null,
     "netclass_assignments": null,
-    "netclass_patterns": []
+    "netclass_patterns": [
+      {
+        "netclass": "ANT_MAIN",
+        "pattern": "ANT_MAIN"
+      },
+      {
+        "netclass": "ANT_GNSS",
+        "pattern": "ANT_GNSS"
+      }
+    ]
   },
   "pcbnew": {
     "last_paths": {

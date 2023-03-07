@@ -291,6 +291,15 @@
     (uuid c68f53e0-758e-4a89-b2d3-064e37781aee)
   )
 
+  (label "ANT_MAIN" (at 116.84 93.98 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 46a37da9-eb08-4388-a454-b6117881a5e6)
+  )
+  (label "ANT_GNSS" (at 187.96 93.98 0) (fields_autoplaced)
+    (effects (font (size 1.27 1.27)) (justify left bottom))
+    (uuid 6bad2b30-eb63-453f-8749-3b14d83de70c)
+  )
+
   (global_label "ANT_GNSS" (shape input) (at 161.29 93.98 180) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify right))
     (uuid 03cc1683-d858-48f4-adc6-d8321896fb52)
