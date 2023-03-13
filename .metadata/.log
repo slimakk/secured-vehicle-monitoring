@@ -4055,3 +4055,33 @@ Command-line arguments:  -os win32 -ws win32 -arch x86_64
 
 !ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2023-03-02 16:37:38.727
 !MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2023-03-09 20:57:34.295 -----------------------------------------------
+eclipse.buildId=Version 1.10.1
+java.version=11.0.14.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=sk_SK
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2023-03-09 20:57:55.279
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2023-03-09 20:57:55.374
+!MESSAGE Log4j initialized with config file C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2023-03-09 20:58:45.278
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2023-03-13 00:24:57.381 -----------------------------------------------
+eclipse.buildId=Version 1.10.1
+java.version=11.0.14.1
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=sk_SK
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2023-03-13 00:25:17.351
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2023-03-13 00:25:17.461
+!MESSAGE Log4j initialized with config file C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2023-03-13 00:25:31.894
+!MESSAGE Started RMI Server, listening on port 41337

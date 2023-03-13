@@ -986,7 +986,7 @@
     (effects (font (size 1.27 1.27)) (justify right bottom))
     (uuid 28619645-c98c-47a5-bab7-f1751262b1c7)
   )
-  (label "SIM_RST" (at 129.54 119.38 0) (fields_autoplaced)
+  (label "SIM_RES" (at 129.54 119.38 0) (fields_autoplaced)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 40c7ebf0-99b7-4e4c-8f9d-8848540a993b)
   )
