@@ -905,7 +905,7 @@
     (property "Value" "OBD" (at 158.115 90.17 90)
       (effects (font (size 1.27 1.27)) (justify right))
     )
-    (property "Footprint" "MOLEX_436500827" (at 143.51 92.075 0)
+    (property "Footprint" "436500827:MOLEX_436500827" (at 143.51 92.075 0)
       (effects (font (size 1.27 1.27)) (justify bottom) hide)
     )
     (property "Datasheet" "" (at 143.51 92.075 0)

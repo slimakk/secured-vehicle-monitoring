@@ -128,7 +128,7 @@ int main(void)
   HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
   HAL_ADC_Start_DMA(&hadc1, adc_buffer, 64);
 
-    while(obd_comm.voltage <= 12.9)
+    while(obd_comm.voltage <= 12.75)
     {
   	  if((HAL_GetTick() - timer_adc) >= ADC_SAMPLE_TIME)
   	  {
@@ -173,7 +173,7 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  if(obd_comm.voltage >= 12.9)
+	  if(obd_comm.voltage >= 12.75)
 	  {
 		  OBD2_Request(obd_comm);
 	  }
