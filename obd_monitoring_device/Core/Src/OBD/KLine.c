@@ -16,12 +16,8 @@ uint8_t kline_rx_buf[16];
 
 uint8_t rx_frame[7];
 
-//static uint8_t checksum;
 static uint8_t ecu_addr;
-//static uint8_t kline_kb;
 static uint8_t pid_length;
-
-
 
 static void MX_GPIO_KLineUART_Init(void);
 static void UART_PIN_State(uint8_t state);
@@ -63,7 +59,6 @@ obd_protocol KLine_Init(void){
 			__HAL_UART_SEND_REQ(&huart1, UART_RXDATA_FLUSH_REQUEST);
 			HAL_UART_Receive(&huart1, &ecu_addr, 1, 100);
 //			__HAL_UART_SEND_REQ(&huart1, UART_RXDATA_FLUSH_REQUEST);
-			//kline_kb = uartBuf[1];
 			return OBD_PROTO_ISO9141;
 		}
 	}
@@ -102,22 +97,26 @@ obd_protocol KWP2000_Fast_Init(void)
 //	HAL_Delay(20);
 
 	HAL_UART_Receive_DMA(&huart1, uartBuf, 8);
-	//HAL_TIM_Base_Start_IT(&htim6);
+	HAL_TIM_Base_Start_IT(&htim6);
 
-	while(obd_comm.msg_type != 0)
+	while((obd_comm.msg_type != 0) && (obd_comm.msg_type != 3))
 	{
 		__NOP();
 	}
-
-	for(int i = 1; i < 7; i++)
+	if(obd_comm.msg_type == 0)
 	{
-		checksum = checksum + uartBuf[i];
-	}
-	checksum = checksum % 256;
-	if(checksum == uartBuf[7] && checksum != 0)
-	{
-		ecu_addr = uartBuf[3];
-		return OBD_PROTO_KWP2000_FAST;
+		for(int i = 1; i < 7; i++)
+		{
+			checksum = checksum + uartBuf[i];
+		}
+		checksum = checksum % 256;
+		if(checksum == uartBuf[7] && checksum != 0)
+		{
+			ecu_addr = uartBuf[3];
+			return OBD_PROTO_KWP2000_FAST;
+		}
+		else
+			return OBD_NONE;
 	}
 	else
 		return OBD_NONE;
@@ -235,8 +234,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
 	if(obd_comm.msg_type == 1)
 	{
+		HAL_TIM_Base_Stop_IT(&htim6);
 		obd_comm.msg_type = 0;
-		//HAL_TIM_Base_Stop_IT(&htim6);
 	}
 	else if (obd_comm.msg_type == 2)
 	{

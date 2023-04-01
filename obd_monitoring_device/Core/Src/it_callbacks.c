@@ -32,7 +32,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	}
 	if(htim->Instance == TIM6)
 	{
-		obd_comm.msg_type = 0;
+		if(obd_comm.msg_type == 0)
+		{
+			__NOP();
+		}
+		else
+			obd_comm.msg_type = 3;
 		HAL_TIM_Base_Stop_IT(&htim6);
 	}
 }

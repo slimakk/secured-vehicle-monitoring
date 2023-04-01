@@ -1,41 +1,14 @@
-14:28:14 **** Build of configuration Debug for project obd_monitoring_device ****
+01:52:41 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
 make -j8 all 
-arm-none-eabi-size   obd_monitoring_device.elf 
+arm-none-eabi-gcc "../Drivers/BG77/bg77.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/BG77/bg77.d" -MT"Drivers/BG77/bg77.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/BG77/bg77.o"
+arm-none-eabi-gcc -o "iot_obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="iot_obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: iot_obd_monitoring_device.elf
+ 
+arm-none-eabi-size   iot_obd_monitoring_device.elf 
+arm-none-eabi-objdump -h -S  iot_obd_monitoring_device.elf  > "iot_obd_monitoring_device.list"
    text	   data	    bss	    dec	    hex	filename
-  66372	    868	   3572	  70812	  1149c	obd_monitoring_device.elf
+  23356	     20	   2268	  25644	   642c	iot_obd_monitoring_device.elf
 Finished building: default.size.stdout
  
-14:46:26 **** Incremental Build of configuration Debug for project obd_monitoring_device ****
-make -j8 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/obd_monitoring_device/Core/Inc/OBD" -I../Drivers/OLED -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:129:29: warning: passing argument 2 of 'HAL_ADC_Start_DMA' from incompatible pointer type [-Wincompatible-pointer-types]
-  129 |   HAL_ADC_Start_DMA(&hadc1, adc_buffer, 64);
-      |                             ^~~~~~~~~~
-      |                             |
-      |                             uint16_t * {aka short unsigned int *}
-In file included from ../Core/Inc/stm32l4xx_hal_conf.h:278,
-                 from ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:29,
-                 from ../Core/Inc/main.h:30,
-                 from ../Core/Src/main.c:20:
-../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_adc.h:1752:78: note: expected 'uint32_t *' {aka 'long unsigned int *'} but argument is of type 'uint16_t *' {aka 'short unsigned int *'}
- 1752 | HAL_StatusTypeDef       HAL_ADC_Start_DMA(ADC_HandleTypeDef *hadc, uint32_t *pData, uint32_t Length);
-      |                                                                    ~~~~~~~~~~^~~~~
-arm-none-eabi-gcc -o "obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: obd_monitoring_device.elf
- 
-arm-none-eabi-size   obd_monitoring_device.elf 
-arm-none-eabi-objdump -h -S  obd_monitoring_device.elf  > "obd_monitoring_device.list"
-   text	   data	    bss	    dec	    hex	filename
-  66348	    868	   3572	  70788	  11484	obd_monitoring_device.elf
-Finished building: default.size.stdout
- 
-Finished building: obd_monitoring_device.list
- 
-14:58:45 **** Incremental Build of configuration Debug for project obd_monitoring_device ****
-make -j8 all 
-arm-none-eabi-size   obd_monitoring_device.elf 
-   text	   data	    bss	    dec	    hex	filename
-  66348	    868	   3572	  70788	  11484	obd_monitoring_device.elf
-Finished building: default.size.stdout
+Finished building: iot_obd_monitoring_device.list
  

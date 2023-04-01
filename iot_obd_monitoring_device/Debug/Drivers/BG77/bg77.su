@@ -1,0 +1,7 @@
+../Drivers/BG77/bg77.c:21:9:module_init	16	static
+../Drivers/BG77/bg77.c:29:9:send_command	24	static
+../Drivers/BG77/bg77.c:45:6:nb_rx_callback	8	static
+../Drivers/BG77/bg77.c:51:6:gps_rx_callback	4	static
+../Drivers/BG77/bg77.c:57:16:wake_up	8	static
+../Drivers/BG77/bg77.c:69:13:power_on	8	static
+../Drivers/BG77/bg77.c:76:13:clear_rx_buff	8	static

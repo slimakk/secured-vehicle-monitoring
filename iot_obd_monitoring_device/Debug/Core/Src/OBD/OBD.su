@@ -1,0 +1,4 @@
+../Core/Src/OBD/OBD.c:21:13:OBD2_PID_Decode	32	static
+../Core/Src/OBD/OBD.c:45:6:OBD2_Request	24	static
+../Core/Src/OBD/OBD.c:67:7:OBD2_PID_Parse	24	static
+../Core/Src/OBD/OBD.c:234:14:OBD2_Init	16	static
