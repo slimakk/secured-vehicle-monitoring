@@ -55,6 +55,8 @@ uint16_t adc_buffer[64];
 
 OBD obd_comm;
 
+BG77 module;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/

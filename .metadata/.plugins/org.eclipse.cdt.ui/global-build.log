@@ -1,6 +1,20 @@
-01:52:41 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
+18:50:37 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
 make -j8 all 
 arm-none-eabi-gcc "../Drivers/BG77/bg77.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Drivers/BG77/bg77.d" -MT"Drivers/BG77/bg77.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/BG77/bg77.o"
+../Drivers/BG77/bg77.c: In function 'mqtt_connect':
+../Drivers/BG77/bg77.c:95:20: warning: passing argument 2 of 'snprintf' makes integer from pointer without a cast [-Wint-conversion]
+   95 |  snprintf(command, "AT+QMTOPEN=1,\"%s\",%d\r\n", broker_address, port);
+      |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      |                    |
+      |                    char *
+In file included from ../Drivers/BG77/bg77.c:10:
+c:\st\stm32cubeide_1.10.1\stm32cubeide\plugins\com.st.stm32cube.ide.mcu.externaltools.gnu-tools-for-stm32.10.3-2021.10.win32_1.0.0.202111181127\tools\arm-none-eabi\include\stdio.h:266:33: note: expected 'size_t' {aka 'unsigned int'} but argument is of type 'char *'
+  266 | int snprintf (char *__restrict, size_t, const char *__restrict, ...)
+      |                                 ^~~~~~
+../Drivers/BG77/bg77.c: At top level:
+../Drivers/BG77/bg77.c:22:13: warning: 'get_reply' declared 'static' but never defined [-Wunused-function]
+   22 | static void get_reply(char *info[], uint8_t num_of_info);
+      |             ^~~~~~~~~
 arm-none-eabi-gcc -o "iot_obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="iot_obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: iot_obd_monitoring_device.elf
  
