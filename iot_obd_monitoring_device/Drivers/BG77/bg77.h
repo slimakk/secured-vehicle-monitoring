@@ -29,6 +29,7 @@ uint8_t check_status(void);
 void nb_rx_callback(void);
 void gps_rx_callback(void);
 
-uint8_t mqtt_connect(char* broker_address, uint8_t port);
+uint8_t mqtt_open(const char* broker_address, uint8_t port, uint8_t id);
+uint8_t mqtt_connect(uint8_t id, const char* client_id);
 
 #endif /* BG77_BG77_H_ */

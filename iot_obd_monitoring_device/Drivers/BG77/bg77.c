@@ -88,16 +88,60 @@ uint8_t check_status(void)
 	return 9;
 }
 //TODO
-uint8_t mqtt_connect(char* broker_address, uint8_t port)
+uint8_t mqtt_open(const char* broker_address, uint8_t port, uint8_t id)
 {
 	wake_up();
-	char* command = "";
-	snprintf(command, "AT+QMTOPEN=1,\"%s\",%d\r\n", broker_address, port);
-	if(!send_command(command, "OK\r\n", 1000, NB))
+	char command [255];
+	sprintf(command, "AT+QMTOPEN=%d,\"%s\",%d\r\n", id, broker_address, port);
+	if(send_command(command, "OK\r\n", 1000, NB))
 	{
-		return 1;
+		char *token = strtok((char *)rx_buff, " ");
+		if(token)
+		{
+			token = strtok(NULL,",");
+			if(token)
+			{
+				token = strtok(NULL, "\n");
+				if(token)
+				{
+					char *ptr;
+					uint8_t status;
+					status = strtol(token, &ptr, 10);
+					if(status == 0)
+					{
+						return TRUE;
+					}
+					else
+					{
+						return FALSE;
+					}
+				}
+			}
+		}
 	}
-	return 0;
+	return FALSE;
+}
+
+uint8_t mqtt_connect(uint8_t id, const char* client_id)
+{
+	char command [255];
+	sprintf(command, "AT+QMTCONN=%d,\"%s\"\r\n",id,client_id);
+	if(send_command(command, "OK\r\n", 1000, NB))
+	{
+		return TRUE;
+	}
+	return FALSE;
+}
+
+uint8_t mqtt_close(uint8_t id)
+{
+	char command [255];
+	sprintf(command,"AT+QMTCLOSE=%d",id);
+	if(send_command(command, "OK\r\n", 1000, NB))
+	{
+		return TRUE;
+	}
+	return FALSE;
 }
 
 //TODO

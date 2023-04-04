@@ -3,7 +3,7 @@
 ../Drivers/BG77/bg77.c:55:6:nb_rx_callback	4	static
 ../Drivers/BG77/bg77.c:62:6:gps_rx_callback	4	static
 ../Drivers/BG77/bg77.c:66:9:check_status	24	static
-../Drivers/BG77/bg77.c:91:9:mqtt_connect	24	static
+../Drivers/BG77/bg77.c:91:9:mqtt_connect	120	static
 ../Drivers/BG77/bg77.c:104:16:wake_up	8	static
 ../Drivers/BG77/bg77.c:120:13:power_on	8	static
 ../Drivers/BG77/bg77.c:127:13:clear_rx_buff	8	static
