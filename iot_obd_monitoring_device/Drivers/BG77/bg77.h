@@ -21,6 +21,7 @@ typedef struct {
 	uint8_t received;
 	uint8_t sleep;
 	uint8_t status;
+	uint8_t error;
 }BG77;
 
 uint8_t module_init(BG77 module);
@@ -30,6 +31,10 @@ void nb_rx_callback(void);
 void gps_rx_callback(void);
 
 uint8_t mqtt_open(const char* broker_address, uint8_t port, uint8_t id);
-uint8_t mqtt_connect(uint8_t id, const char* client_id);
+uint8_t mqtt_connect(uint8_t id, const char* client_id, BG77 module);
+uint8_t mqtt_disconnect(uint8_t id);
+uint8_t mqtt_close(uint8_t id);
+uint8_t mqtt_subscribe(uint8_t id, uint8_t msg_id, const char *topic, uint8_t qos);
+uint8_t mqtt_publish(uint8_t id);
 
 #endif /* BG77_BG77_H_ */
