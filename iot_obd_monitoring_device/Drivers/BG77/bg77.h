@@ -22,11 +22,13 @@ typedef struct {
 	uint8_t sleep;
 	uint8_t status;
 	uint8_t error;
+	uint8_t rssi;
 }BG77;
 
-uint8_t module_init(BG77 module);
+uint8_t module_init(void);
 uint8_t send_command(char *command, char *reply, uint16_t timeout, UART_HandleTypeDef *interface);
 uint8_t check_status(void);
+uint8_t check_signal(void);
 void nb_rx_callback(void);
 void gps_rx_callback(void);
 

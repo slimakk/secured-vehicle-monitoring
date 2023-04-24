@@ -18,28 +18,25 @@ uint8_t rx_buff[1500] = {0};
 uint8_t rx_index = 0;
 
 static uint8_t wake_up(void);
-//TODO
-static uint8_t get_reply(const char *info, uint8_t num_of_info);
 static void clear_rx_buff(void);
 static void power_on(void);
 //TODO
-uint8_t module_init(BG77 module)
+uint8_t module_init(void)
 {
-	power_on();
+	//power_on();
 	send_command("AT\r\n", "OK\r\n", 1000, NB);
-	send_command("ATE0\r\n", "OK\r\n", 1000, NB);
+	send_command("ATI\r\n", "OK\r\n", 1000, NB);
 	return 1;
 }
 
 uint8_t send_command(char *command, char *reply, uint16_t timeout, UART_HandleTypeDef *interface)
 {
 	module.received = 0;
-	wake_up();
+//	wake_up();
 	clear_rx_buff();
-	HAL_UART_Transmit_DMA(interface, (unsigned char *)command, (uint16_t)strlen(command));
-	HAL_Delay(timeout);
-//	HAL_UART_Receive_IT(interface, &rx_data, 1);
-	HAL_UARTEx_ReceiveToIdle_DMA(interface, rx_buff, 100);
+	HAL_UARTEx_ReceiveToIdle_DMA(interface, rx_buff, 200);
+	HAL_UART_Transmit(interface, (unsigned char *)command, sizeof(command), timeout);
+
 	while(module.received == 0)
 	{
 		__NOP();
@@ -54,8 +51,6 @@ uint8_t send_command(char *command, char *reply, uint16_t timeout, UART_HandleTy
 
 void nb_rx_callback(void)
 {
-//	rx_buff[rx_index++] = rx_data;
-//	HAL_UART_Receive_IT(NB, &rx_data, 1);
 	module.received = 1;
 }
 //TODO
@@ -87,6 +82,28 @@ uint8_t check_status(void)
 	}
 	return 9;
 }
+uint8_t check_signal(void)
+{
+	if(send_command("AT+CSQ\r\n","OK\r\n",1000,NB))
+	{
+		char *token = strtok((char *)rx_buff, " ");
+		if(token)
+		{
+			token = strtok(NULL,",");
+			if(token)
+			{
+				char *ptr;
+				uint8_t rssi = strtol(token, &ptr, 10);
+				return rssi;
+			}
+		}
+	}
+	return FALSE;
+}
+
+/*********************************************************************************************/
+/****************************************MQTT*************************************************/
+/*********************************************************************************************/
 
 uint8_t mqtt_open(const char* broker_address, uint8_t port, uint8_t id)
 {
@@ -220,11 +237,9 @@ uint8_t mqtt_subscribe(uint8_t id, uint8_t msg_id, const char *topic, uint8_t qo
 	return FALSE;
 }
 
-//TODO
-static uint8_t get_reply(const char *info, uint8_t num_of_info)
-{
-	return 1;
-}
+/*********************************************************************************************/
+/***************************************STATIC************************************************/
+/*********************************************************************************************/
 
 //TODO
 static uint8_t wake_up(void)

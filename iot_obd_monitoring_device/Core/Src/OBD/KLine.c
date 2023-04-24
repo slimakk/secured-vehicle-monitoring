@@ -228,7 +228,7 @@ void kline_rx_callback(void)
 			}
 			obd_comm.msg_type = 0;
 			obd_comm.current_value = OBD2_PID_Parse(rx_frame);
-			OBD2_ShowOnDisplay(obd_comm.current_value);
+//			OBD2_ShowOnDisplay(obd_comm.current_value);
 			HAL_IWDG_Refresh(&hiwdg);
 		}
 	}

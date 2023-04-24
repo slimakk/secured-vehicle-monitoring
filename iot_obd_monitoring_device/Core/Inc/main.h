@@ -104,6 +104,7 @@ void Error_Handler(void);
 #define K_Line_RX_GPIO_Port GPIOB
 #define BOOT0_Pin GPIO_PIN_3
 #define BOOT0_GPIO_Port GPIOH
+
 /* USER CODE BEGIN Private defines */
 #define TRUE 1
 #define FALSE 0
