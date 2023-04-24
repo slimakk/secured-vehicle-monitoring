@@ -20,12 +20,14 @@ uint8_t rx_index = 0;
 static uint8_t wake_up(void);
 static void clear_rx_buff(void);
 static void power_on(void);
+static void power_off(void);
 //TODO
 uint8_t module_init(void)
 {
-	//power_on();
+	power_on();
 	send_command("AT\r\n", "OK\r\n", 1000, NB);
 	send_command("ATI\r\n", "OK\r\n", 1000, NB);
+//	power_off();
 	return 1;
 }
 
@@ -34,8 +36,9 @@ uint8_t send_command(char *command, char *reply, uint16_t timeout, UART_HandleTy
 	module.received = 0;
 //	wake_up();
 	clear_rx_buff();
+	uint8_t length = strlen(command);
 	HAL_UARTEx_ReceiveToIdle_DMA(interface, rx_buff, 200);
-	HAL_UART_Transmit(interface, (unsigned char *)command, sizeof(command), timeout);
+	HAL_UART_Transmit(interface, (unsigned char *)command, length, timeout);
 
 	while(module.received == 0)
 	{
@@ -262,6 +265,13 @@ static void power_on(void)
 {
 	HAL_GPIO_WritePin(IoT_PWR_GPIO_Port, IoT_PWR_Pin, GPIO_PIN_SET);
 	HAL_Delay(600);
+	HAL_GPIO_WritePin(IoT_PWR_GPIO_Port, IoT_PWR_Pin, GPIO_PIN_RESET);
+}
+
+static void power_off(void)
+{
+	HAL_GPIO_WritePin(IoT_PWR_GPIO_Port, IoT_PWR_Pin, GPIO_PIN_SET);
+	HAL_Delay(1000);
 	HAL_GPIO_WritePin(IoT_PWR_GPIO_Port, IoT_PWR_Pin, GPIO_PIN_RESET);
 }
 

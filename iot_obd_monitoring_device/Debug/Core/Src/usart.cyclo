@@ -5,3 +5,4 @@ usart.c:129:6:HAL_UART_MspInit	9
 usart.c:286:6:HAL_UART_MspDeInit	4
 usart.c:358:6:HAL_UART_RxCpltCallback	4
 usart.c:374:6:HAL_UARTEx_RxEventCallback	1
+usart.c:379:6:HAL_UART_TxCpltCallback	1

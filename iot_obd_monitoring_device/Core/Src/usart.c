@@ -376,4 +376,9 @@ void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)
 	nb_rx_callback();
 }
 
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
+	__NOP();
+}
+
 /* USER CODE END 1 */

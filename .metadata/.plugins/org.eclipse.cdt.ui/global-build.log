@@ -1,233 +1,130 @@
-21:54:06 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
-make -j8 all 
-arm-none-eabi-gcc "../Core/Src/usart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/usart.d" -MT"Core/Src/usart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/usart.o"
-arm-none-eabi-gcc -o "iot_obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="iot_obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: iot_obd_monitoring_device.elf
- 
-arm-none-eabi-size   iot_obd_monitoring_device.elf 
-arm-none-eabi-objdump -h -S  iot_obd_monitoring_device.elf  > "iot_obd_monitoring_device.list"
-   text	   data	    bss	    dec	    hex	filename
-  29912	     20	   4140	  34072	   8518	iot_obd_monitoring_device.elf
-Finished building: default.size.stdout
- 
-Finished building: iot_obd_monitoring_device.list
- 
-21:54:11 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
-make -j8 all 
-arm-none-eabi-size   iot_obd_monitoring_device.elf 
-   text	   data	    bss	    dec	    hex	filename
-  29912	     20	   4140	  34072	   8518	iot_obd_monitoring_device.elf
-Finished building: default.size.stdout
- 
-21:56:55 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
-make -j8 all 
-arm-none-eabi-size   iot_obd_monitoring_device.elf 
-   text	   data	    bss	    dec	    hex	filename
-  29912	     20	   4140	  34072	   8518	iot_obd_monitoring_device.elf
-Finished building: default.size.stdout
- 
-23:06:28 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
-make -j8 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc "../Core/Src/usart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/usart.d" -MT"Core/Src/usart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/usart.o"
-arm-none-eabi-gcc -o "iot_obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="iot_obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: iot_obd_monitoring_device.elf
- 
-arm-none-eabi-size   iot_obd_monitoring_device.elf 
-arm-none-eabi-objdump -h -S  iot_obd_monitoring_device.elf  > "iot_obd_monitoring_device.list"
-   text	   data	    bss	    dec	    hex	filename
-  29912	     20	   4140	  34072	   8518	iot_obd_monitoring_device.elf
-Finished building: default.size.stdout
- 
-Finished building: iot_obd_monitoring_device.list
- 
-23:58:04 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
-make -j8 all 
-arm-none-eabi-gcc "../Core/Src/dma.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/dma.d" -MT"Core/Src/dma.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/dma.o"
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc "../Core/Src/usart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/usart.d" -MT"Core/Src/usart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/usart.o"
-arm-none-eabi-gcc -o "iot_obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="iot_obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: iot_obd_monitoring_device.elf
- 
-arm-none-eabi-size   iot_obd_monitoring_device.elf 
-arm-none-eabi-objdump -h -S  iot_obd_monitoring_device.elf  > "iot_obd_monitoring_device.list"
-   text	   data	    bss	    dec	    hex	filename
-  29920	     20	   4140	  34080	   8520	iot_obd_monitoring_device.elf
-Finished building: default.size.stdout
- 
-Finished building: iot_obd_monitoring_device.list
- 
-00:43:58 **** Incremental Build of configuration Debug for project TEST2 ****
-make -j8 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L433xx -c -I../Core/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-../Core/Src/main.c: In function 'main':
-../Core/Src/main.c:108:30: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
-  108 |   HAL_UART_Transmit(&huart1, "ahoj", 5, 1000);
-      |                              ^~~~~~
-      |                              |
-      |                              char *
-In file included from ../Core/Inc/stm32l4xx_hal_conf.h:450,
-                 from ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:29,
-                 from ../Core/Inc/main.h:30,
-                 from ../Core/Src/main.c:20:
-../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:1674:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
- 1674 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
-      |                                                                ~~~~~~~~~~~~~~~^~~~~
-../Core/Src/main.c:110:30: warning: pointer targets in passing argument 2 of 'HAL_UART_Transmit' differ in signedness [-Wpointer-sign]
-  110 |   HAL_UART_Transmit(&huart1, "test", 5, 1000);
-      |                              ^~~~~~
-      |                              |
-      |                              char *
-In file included from ../Core/Inc/stm32l4xx_hal_conf.h:450,
-                 from ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:29,
-                 from ../Core/Inc/main.h:30,
-                 from ../Core/Src/main.c:20:
-../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:1674:79: note: expected 'const uint8_t *' {aka 'const unsigned char *'} but argument is of type 'char *'
- 1674 | HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, const uint8_t *pData, uint16_t Size, uint32_t Timeout);
-      |                                                                ~~~~~~~~~~~~~~~^~~~~
-arm-none-eabi-gcc -o "TEST2.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\TEST2\STM32L433RCTXP_FLASH.ld" --specs=nosys.specs -Wl,-Map="TEST2.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: TEST2.elf
- 
-arm-none-eabi-size   TEST2.elf 
-arm-none-eabi-objdump -h -S  TEST2.elf  > "TEST2.list"
-   text	   data	    bss	    dec	    hex	filename
-  16536	     20	   1916	  18472	   4828	TEST2.elf
-Finished building: default.size.stdout
- 
-Finished building: TEST2.list
- 
-00:48:55 **** Incremental Build of configuration Debug for project TEST2 ****
-make -j8 all 
-arm-none-eabi-size   TEST2.elf 
-   text	   data	    bss	    dec	    hex	filename
-  16536	     20	   1916	  18472	   4828	TEST2.elf
-Finished building: default.size.stdout
- 
-00:51:33 **** Incremental Build of configuration Debug for project TEST2 ****
-make -j8 all 
-arm-none-eabi-size   TEST2.elf 
-   text	   data	    bss	    dec	    hex	filename
-  16536	     20	   1916	  18472	   4828	TEST2.elf
-Finished building: default.size.stdout
- 
-00:57:39 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
-make -j8 all 
-arm-none-eabi-size   iot_obd_monitoring_device.elf 
-   text	   data	    bss	    dec	    hex	filename
-  29920	     20	   4140	  34080	   8520	iot_obd_monitoring_device.elf
-Finished building: default.size.stdout
- 
-00:59:45 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
-make -j8 all 
-arm-none-eabi-size   iot_obd_monitoring_device.elf 
-   text	   data	    bss	    dec	    hex	filename
-  29920	     20	   4140	  34080	   8520	iot_obd_monitoring_device.elf
-Finished building: default.size.stdout
- 
-01:01:39 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
-make -j8 all 
-arm-none-eabi-size   iot_obd_monitoring_device.elf 
-   text	   data	    bss	    dec	    hex	filename
-  29920	     20	   4140	  34080	   8520	iot_obd_monitoring_device.elf
-Finished building: default.size.stdout
- 
-01:02:10 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
-make -j8 all 
-arm-none-eabi-size   iot_obd_monitoring_device.elf 
-   text	   data	    bss	    dec	    hex	filename
-  29920	     20	   4140	  34080	   8520	iot_obd_monitoring_device.elf
-Finished building: default.size.stdout
- 
-01:04:52 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
+13:26:44 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
 make -j8 all 
 arm-none-eabi-gcc "../Drivers/BG77/bg77.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/BG77/bg77.d" -MT"Drivers/BG77/bg77.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/BG77/bg77.o"
-arm-none-eabi-gcc -o "iot_obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="iot_obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: iot_obd_monitoring_device.elf
- 
-arm-none-eabi-size   iot_obd_monitoring_device.elf 
-arm-none-eabi-objdump -h -S  iot_obd_monitoring_device.elf  > "iot_obd_monitoring_device.list"
-   text	   data	    bss	    dec	    hex	filename
-  29920	     20	   4140	  34080	   8520	iot_obd_monitoring_device.elf
-Finished building: default.size.stdout
- 
-Finished building: iot_obd_monitoring_device.list
- 
-01:05:39 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
-make -j8 all 
-arm-none-eabi-size   iot_obd_monitoring_device.elf 
-   text	   data	    bss	    dec	    hex	filename
-  29920	     20	   4140	  34080	   8520	iot_obd_monitoring_device.elf
-Finished building: default.size.stdout
- 
-01:08:33 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
-make -j8 all 
-arm-none-eabi-gcc "../Drivers/BG77/bg77.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/BG77/bg77.d" -MT"Drivers/BG77/bg77.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/BG77/bg77.o"
-../Drivers/BG77/bg77.c:248:13: warning: 'power_on' defined but not used [-Wunused-function]
-  248 | static void power_on(void)
-      |             ^~~~~~~~
-arm-none-eabi-gcc -o "iot_obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="iot_obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
-Finished building target: iot_obd_monitoring_device.elf
- 
-arm-none-eabi-size   iot_obd_monitoring_device.elf 
-arm-none-eabi-objdump -h -S  iot_obd_monitoring_device.elf  > "iot_obd_monitoring_device.list"
-   text	   data	    bss	    dec	    hex	filename
-  29804	     20	   4140	  33964	   84ac	iot_obd_monitoring_device.elf
-Finished building: default.size.stdout
- 
-Finished building: iot_obd_monitoring_device.list
- 
-01:57:47 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
-make -j8 all 
-arm-none-eabi-gcc "../Drivers/BG77/bg77.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/BG77/bg77.d" -MT"Drivers/BG77/bg77.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/BG77/bg77.o"
-arm-none-eabi-gcc "../Core/Src/OBD/KLine.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/OBD/KLine.d" -MT"Core/Src/OBD/KLine.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/OBD/KLine.o"
-arm-none-eabi-gcc "../Core/Src/OBD/OBD.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/OBD/OBD.d" -MT"Core/Src/OBD/OBD.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/OBD/OBD.o"
-arm-none-eabi-gcc "../Core/Src/OBD/OBD_PID.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/OBD/OBD_PID.d" -MT"Core/Src/OBD/OBD_PID.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/OBD/OBD_PID.o"
-arm-none-eabi-gcc "../Core/Src/OBD/can.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/OBD/can.d" -MT"Core/Src/OBD/can.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/OBD/can.o"
-arm-none-eabi-gcc "../Core/Src/adc.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/adc.d" -MT"Core/Src/adc.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/adc.o"
-arm-none-eabi-gcc "../Core/Src/dma.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/dma.d" -MT"Core/Src/dma.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/dma.o"
-arm-none-eabi-gcc "../Core/Src/gpio.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/gpio.d" -MT"Core/Src/gpio.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/gpio.o"
 ../Drivers/BG77/bg77.c: In function 'mqtt_connect':
-../Drivers/BG77/bg77.c:168:9: warning: implicit declaration of function 'get_reply' [-Wimplicit-function-declaration]
-  168 |      if(get_reply((char *)rx_buff, 3))
+../Drivers/BG77/bg77.c:171:9: warning: implicit declaration of function 'get_reply' [-Wimplicit-function-declaration]
+  171 |      if(get_reply((char *)rx_buff, 3))
+      |         ^~~~~~~~~
+arm-none-eabi-gcc -o "iot_obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="iot_obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: iot_obd_monitoring_device.elf
+ 
+arm-none-eabi-size   iot_obd_monitoring_device.elf 
+arm-none-eabi-objdump -h -S  iot_obd_monitoring_device.elf  > "iot_obd_monitoring_device.list"
+   text	   data	    bss	    dec	    hex	filename
+  35796	    120	   4160	  40076	   9c8c	iot_obd_monitoring_device.elf
+Finished building: default.size.stdout
+ 
+Finished building: iot_obd_monitoring_device.list
+ 
+13:26:54 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
+make -j8 all 
+arm-none-eabi-size   iot_obd_monitoring_device.elf 
+   text	   data	    bss	    dec	    hex	filename
+  35796	    120	   4160	  40076	   9c8c	iot_obd_monitoring_device.elf
+Finished building: default.size.stdout
+ 
+13:29:01 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
+make -j8 all 
+arm-none-eabi-gcc "../Drivers/BG77/bg77.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/BG77/bg77.d" -MT"Drivers/BG77/bg77.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/BG77/bg77.o"
+../Drivers/BG77/bg77.c: In function 'mqtt_connect':
+../Drivers/BG77/bg77.c:171:9: warning: implicit declaration of function 'get_reply' [-Wimplicit-function-declaration]
+  171 |      if(get_reply((char *)rx_buff, 3))
       |         ^~~~~~~~~
 At top level:
-../Drivers/BG77/bg77.c:261:13: warning: 'power_on' defined but not used [-Wunused-function]
-  261 | static void power_on(void)
+../Drivers/BG77/bg77.c:264:13: warning: 'power_on' defined but not used [-Wunused-function]
+  264 | static void power_on(void)
       |             ^~~~~~~~
-../Core/Src/OBD/OBD.c: In function 'OBD2_Request':
-../Core/Src/OBD/OBD.c:51:3: warning: implicit declaration of function 'can_send_msg' [-Wimplicit-function-declaration]
-   51 |   can_send_msg(tx_data_CAN);
-      |   ^~~~~~~~~~~~
-../Core/Src/OBD/OBD.c: In function 'OBD2_Init':
-../Core/Src/OBD/OBD.c:245:4: warning: implicit declaration of function 'can_config' [-Wimplicit-function-declaration]
-  245 |    can_config();
-      |    ^~~~~~~~~~
-../Core/Src/OBD/OBD_PID.c: In function 'Get_Name':
-../Core/Src/OBD/OBD_PID.c:219:7: warning: assignment discards 'const' qualifier from pointer target type [-Wdiscarded-qualifiers]
-  219 |  name = pid_names[index];
-      |       ^
-arm-none-eabi-gcc "../Core/Src/it_callbacks.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/it_callbacks.d" -MT"Core/Src/it_callbacks.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/it_callbacks.o"
-arm-none-eabi-gcc "../Core/Src/iwdg.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/iwdg.d" -MT"Core/Src/iwdg.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/iwdg.o"
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
-arm-none-eabi-gcc "../Core/Src/stm32l4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32l4xx_hal_msp.d" -MT"Core/Src/stm32l4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32l4xx_hal_msp.o"
-arm-none-eabi-gcc "../Core/Src/stm32l4xx_it.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32l4xx_it.d" -MT"Core/Src/stm32l4xx_it.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32l4xx_it.o"
-arm-none-eabi-gcc "../Core/Src/tim.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/tim.d" -MT"Core/Src/tim.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/tim.o"
-arm-none-eabi-gcc "../Core/Src/usart.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/usart.d" -MT"Core/Src/usart.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/usart.o"
 arm-none-eabi-gcc -o "iot_obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="iot_obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: iot_obd_monitoring_device.elf
  
 arm-none-eabi-size   iot_obd_monitoring_device.elf 
 arm-none-eabi-objdump -h -S  iot_obd_monitoring_device.elf  > "iot_obd_monitoring_device.list"
    text	   data	    bss	    dec	    hex	filename
-  35628	    120	   4160	  39908	   9be4	iot_obd_monitoring_device.elf
+  35768	    120	   4160	  40048	   9c70	iot_obd_monitoring_device.elf
 Finished building: default.size.stdout
  
 Finished building: iot_obd_monitoring_device.list
  
-01:58:55 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
+13:31:31 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
+make -j8 all 
+arm-none-eabi-gcc "../Drivers/BG77/bg77.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/BG77/bg77.d" -MT"Drivers/BG77/bg77.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/BG77/bg77.o"
+../Drivers/BG77/bg77.c: In function 'mqtt_connect':
+../Drivers/BG77/bg77.c:171:9: warning: implicit declaration of function 'get_reply' [-Wimplicit-function-declaration]
+  171 |      if(get_reply((char *)rx_buff, 3))
+      |         ^~~~~~~~~
+At top level:
+../Drivers/BG77/bg77.c:271:13: warning: 'power_off' defined but not used [-Wunused-function]
+  271 | static void power_off(void)
+      |             ^~~~~~~~~
+../Drivers/BG77/bg77.c:264:13: warning: 'power_on' defined but not used [-Wunused-function]
+  264 | static void power_on(void)
+      |             ^~~~~~~~
+arm-none-eabi-gcc -o "iot_obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="iot_obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: iot_obd_monitoring_device.elf
+ 
+arm-none-eabi-size   iot_obd_monitoring_device.elf 
+arm-none-eabi-objdump -h -S  iot_obd_monitoring_device.elf  > "iot_obd_monitoring_device.list"
+   text	   data	    bss	    dec	    hex	filename
+  35656	    120	   4160	  39936	   9c00	iot_obd_monitoring_device.elf
+Finished building: default.size.stdout
+ 
+Finished building: iot_obd_monitoring_device.list
+ 
+13:32:41 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
+make -j8 all 
+arm-none-eabi-gcc "../Drivers/BG77/bg77.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/BG77/bg77.d" -MT"Drivers/BG77/bg77.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/BG77/bg77.o"
+../Drivers/BG77/bg77.c: In function 'mqtt_connect':
+../Drivers/BG77/bg77.c:171:9: warning: implicit declaration of function 'get_reply' [-Wimplicit-function-declaration]
+  171 |      if(get_reply((char *)rx_buff, 3))
+      |         ^~~~~~~~~
+At top level:
+../Drivers/BG77/bg77.c:271:13: warning: 'power_off' defined but not used [-Wunused-function]
+  271 | static void power_off(void)
+      |             ^~~~~~~~~
+arm-none-eabi-gcc -o "iot_obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="iot_obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: iot_obd_monitoring_device.elf
+ 
+arm-none-eabi-size   iot_obd_monitoring_device.elf 
+arm-none-eabi-objdump -h -S  iot_obd_monitoring_device.elf  > "iot_obd_monitoring_device.list"
+   text	   data	    bss	    dec	    hex	filename
+  35772	    120	   4160	  40052	   9c74	iot_obd_monitoring_device.elf
+Finished building: default.size.stdout
+ 
+Finished building: iot_obd_monitoring_device.list
+ 
+13:34:48 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
 make -j8 all 
 arm-none-eabi-size   iot_obd_monitoring_device.elf 
    text	   data	    bss	    dec	    hex	filename
-  35628	    120	   4160	  39908	   9be4	iot_obd_monitoring_device.elf
+  35772	    120	   4160	  40052	   9c74	iot_obd_monitoring_device.elf
+Finished building: default.size.stdout
+ 
+13:36:03 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
+make -j8 all 
+arm-none-eabi-gcc "../Drivers/BG77/bg77.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/BG77/bg77.d" -MT"Drivers/BG77/bg77.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/BG77/bg77.o"
+../Drivers/BG77/bg77.c: In function 'mqtt_connect':
+../Drivers/BG77/bg77.c:171:9: warning: implicit declaration of function 'get_reply' [-Wimplicit-function-declaration]
+  171 |      if(get_reply((char *)rx_buff, 3))
+      |         ^~~~~~~~~
+At top level:
+../Drivers/BG77/bg77.c:271:13: warning: 'power_off' defined but not used [-Wunused-function]
+  271 | static void power_off(void)
+      |             ^~~~~~~~~
+arm-none-eabi-gcc -o "iot_obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="iot_obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: iot_obd_monitoring_device.elf
+ 
+arm-none-eabi-size   iot_obd_monitoring_device.elf 
+arm-none-eabi-objdump -h -S  iot_obd_monitoring_device.elf  > "iot_obd_monitoring_device.list"
+   text	   data	    bss	    dec	    hex	filename
+  35776	    120	   4160	  40056	   9c78	iot_obd_monitoring_device.elf
+Finished building: default.size.stdout
+ 
+Finished building: iot_obd_monitoring_device.list
+ 
+13:36:50 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
+make -j8 all 
+arm-none-eabi-size   iot_obd_monitoring_device.elf 
+   text	   data	    bss	    dec	    hex	filename
+  35776	    120	   4160	  40056	   9c78	iot_obd_monitoring_device.elf
 Finished building: default.size.stdout
  
