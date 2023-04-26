@@ -365,10 +365,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	{
 		nb_rx_callback();
 	}
-	else if (huart == GPS)
-	{
-		gps_rx_callback();
-	}
 }
 
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size)

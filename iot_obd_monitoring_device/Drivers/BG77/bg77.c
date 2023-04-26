@@ -13,10 +13,6 @@
 
 extern BG77 module;
 
-uint8_t rx_data = 0;
-uint8_t rx_buff[1500] = {0};
-uint8_t rx_index = 0;
-
 static uint8_t wake_up(void);
 static void clear_rx_buff(void);
 static void power_on(void);
@@ -37,14 +33,14 @@ uint8_t send_command(char *command, char *reply, uint16_t timeout, UART_HandleTy
 //	wake_up();
 	clear_rx_buff();
 	uint8_t length = strlen(command);
-	HAL_UARTEx_ReceiveToIdle_DMA(interface, rx_buff, 200);
+	HAL_UARTEx_ReceiveToIdle_DMA(interface, module.rx_buff, 200);
 	HAL_UART_Transmit(interface, (unsigned char *)command, length, timeout);
 
 	while(module.received == 0)
 	{
 		__NOP();
 	}
-	if(strstr((char *)rx_buff, reply) != NULL)
+	if(strstr((char *)module.rx_buff, reply) != NULL)
 	{
 		return TRUE;
 	}
@@ -56,17 +52,13 @@ void nb_rx_callback(void)
 {
 	module.received = 1;
 }
-//TODO
-void gps_rx_callback(void)
-{
 
-}
 uint8_t check_status(void)
 {
 	wake_up();
 	if(send_command("AT+CEREG?\r\n", "OK\r\n", 1000, NB))
 	{
-		char *token = strtok((char *)rx_buff," ");
+		char *token = strtok((char *)module.rx_buff," ");
 		if(token)
 		{
 			token = strtok(NULL,",");
@@ -89,7 +81,7 @@ uint8_t check_signal(void)
 {
 	if(send_command("AT+CSQ\r\n","OK\r\n",1000,NB))
 	{
-		char *token = strtok((char *)rx_buff, " ");
+		char *token = strtok((char *)module.rx_buff, " ");
 		if(token)
 		{
 			token = strtok(NULL,",");
@@ -115,7 +107,7 @@ uint8_t mqtt_open(const char* broker_address, uint8_t port, uint8_t id)
 	sprintf(command, "AT+QMTOPEN=%d,\"%s\",%d\r\n", id, broker_address, port);
 	if(send_command(command, "OK\r\n", 1000, NB))
 	{
-		char *token = strtok((char *)rx_buff, " ");
+		char *token = strtok((char *)module.rx_buff, " ");
 		if(token)
 		{
 			token = strtok(NULL,",");
@@ -149,7 +141,7 @@ uint8_t mqtt_connect(uint8_t id, const char* client_id, BG77 module)
 	sprintf(command, "AT+QMTCONN=%d,\"%s\"\r\n",id,client_id);
 	if(send_command(command, "OK\r\n", 1000, NB))
 	{
-		char *token = strtok((char *)rx_buff, " ");
+		char *token = strtok((char *)module.rx_buff, " ");
 		if(token)
 		{
 			token = strtok(NULL, ",");
@@ -168,7 +160,7 @@ uint8_t mqtt_connect(uint8_t id, const char* client_id, BG77 module)
 					return TRUE;
 				case 1:
 					module.error = ret[2];
-					if(get_reply((char *)rx_buff, 3))
+					if(get_reply((char *)module.rx_buff, 3))
 					{
 						return TRUE;
 					}
@@ -194,7 +186,7 @@ uint8_t mqtt_disconnect(uint8_t id)
 	sprintf(command,"AT+QMTDISC=%d\r\n",id);
 	if(send_command(command, "OK\r\n", 1000, NB))
 	{
-		char *token = strtok((char *)rx_buff, " ");
+		char *token = strtok((char *)module.rx_buff, " ");
 		if(token)
 		{
 			token = strtok(NULL, ",");
@@ -272,7 +264,8 @@ uint8_t acquire_position(BG77 module)
 	{
 		if(send_command("AT+QGPSLOC?\r\n", "OK\r\n", 1000, NB))
 		{
-
+			parse_location(module);
+			return TRUE;
 		}
 		else
 			return FALSE;
@@ -280,9 +273,45 @@ uint8_t acquire_position(BG77 module)
 	return FALSE;
 }
 
-void parse_location(uint8_t buff[])
+void parse_location(BG77 module)
 {
-
+	char *token = strtok((char *)module.rx_buff, " ");
+	if(token)
+	{
+		token = strtok(NULL, ",");
+		uint8_t i = 0;
+		while(token != NULL)
+		{
+			char *ptr;
+			switch(i)
+			{
+				case 0:
+					module.pos.time = strtol(token, &ptr, 10);
+					break;
+				case 1:
+					module.pos.latitude = strtod(token, &ptr);
+					module.pos.lat_ort = ptr;
+					break;
+				case 2:
+					module.pos.longitude = strtod(token, &ptr);
+					module.pos.long_ort = ptr;
+					break;
+				case 4:
+					module.pos.altitude = strtod(token, &ptr);
+					break;
+				case 7:
+					module.pos.speed = strtod(token, &ptr);
+					break;
+				case 9:
+					module.pos.date = strtol(token, &ptr, 10);
+					break;
+				default:
+					break;
+			}
+			token = strtok(NULL, ",");
+			i++;
+		}
+	}
 }
 /*********************************************************************************************/
 /***************************************STATIC************************************************/
@@ -321,6 +350,6 @@ static void power_off(void)
 
 static void clear_rx_buff(void)
 {
-	rx_index = 0;
-	memset(rx_buff, 0, sizeof(rx_buff));
+	module.rx_index = 0;
+	memset(module.rx_buff, 0, sizeof(module.rx_buff));
 }
