@@ -240,6 +240,50 @@ uint8_t mqtt_subscribe(uint8_t id, uint8_t msg_id, const char *topic, uint8_t qo
 	return FALSE;
 }
 
+uint8_t mqtt_unsubscribe(uint8_t id, uint8_t msg_id, const char *topic, uint8_t qos)
+{
+	char command[255];
+	sprintf(command, "AT+QMTUNS=%d,%d,\"%s\",%d\r\n",id, msg_id, topic, qos);
+	if(send_command(command, "OK\r\n", 1000, NB))
+	{
+		return TRUE;
+	}
+	return FALSE;
+}
+
+uint8_t mqtt_publish(uint8_t id, uint8_t msg_id, uint8_t qos, uint8_t retain, const char *topic, const char *msg)
+{
+	char command[255];
+	uint8_t msg_length = strlen(msg);
+	sprintf(command, "AT+QMTPUB=%d,%d,%d,%d,\"%s\",%d,\"%s\"\r\n",id, msg_id, qos, retain, topic, msg_length, msg);
+	if(send_command(command, "OK\r\n", 1000, NB))
+	{
+		return TRUE;
+	}
+	return FALSE;
+}
+
+/*********************************************************************************************/
+/****************************************GNSS*************************************************/
+/*********************************************************************************************/
+uint8_t acquire_position(BG77 module)
+{
+	if(send_command("AT+QGPS=1\r\n","OK\r\n", 1000, NB))
+	{
+		if(send_command("AT+QGPSLOC?\r\n", "OK\r\n", 1000, NB))
+		{
+
+		}
+		else
+			return FALSE;
+	}
+	return FALSE;
+}
+
+void parse_location(uint8_t buff[])
+{
+
+}
 /*********************************************************************************************/
 /***************************************STATIC************************************************/
 /*********************************************************************************************/

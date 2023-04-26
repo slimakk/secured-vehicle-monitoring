@@ -23,7 +23,16 @@ typedef struct {
 	uint8_t status;
 	uint8_t error;
 	uint8_t rssi;
+	position pos;
 }BG77;
+
+typedef struct{
+	double latitude;
+	char lat_orientation;
+	double longitude;
+	char lat_orientation;
+	double altitude;
+}position;
 
 uint8_t module_init(void);
 uint8_t send_command(char *command, char *reply, uint16_t timeout, UART_HandleTypeDef *interface);
@@ -37,6 +46,7 @@ uint8_t mqtt_connect(uint8_t id, const char* client_id, BG77 module);
 uint8_t mqtt_disconnect(uint8_t id);
 uint8_t mqtt_close(uint8_t id);
 uint8_t mqtt_subscribe(uint8_t id, uint8_t msg_id, const char *topic, uint8_t qos);
-uint8_t mqtt_publish(uint8_t id);
+uint8_t mqtt_unsubscribe(uint8_t id, uint8_t msg_id, const char *topic, uint8_t qos);
+uint8_t mqtt_publish(uint8_t id, uint8_t msg_id, uint8_t qos, uint8_t retain, const char *topic, const char *msg);
 
 #endif /* BG77_BG77_H_ */
