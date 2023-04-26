@@ -89,7 +89,6 @@ obd_protocol KWP2000_Fast_Init(void)
 	{
 		Error_Handler();
 	}
-//	MX_USART1_UART_Init(10400);
 	HAL_UART_Transmit(KLINE, start_msg, 5, 10);
 //	__HAL_UART_SEND_REQ(KLINE, UART_RXDATA_FLUSH_REQUEST);
 //	HAL_Delay(20);

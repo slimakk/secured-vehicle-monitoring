@@ -18,12 +18,11 @@ static void clear_rx_buff(void);
 static void power_on(void);
 static void power_off(void);
 //TODO
-uint8_t module_init(void)
+uint8_t module_init(BG77 module)
 {
 	power_on();
-	send_command("AT\r\n", "OK\r\n", 1000, NB);
-	send_command("ATI\r\n", "OK\r\n", 1000, NB);
-//	power_off();
+	send_command("AT\r\n", "OK\r\n", DEFAULT_TIMEOUT, NB);
+	send_command("ATI\r\n", "OK\r\n", DEFAULT_TIMEOUT, NB);
 	return 1;
 }
 
@@ -53,10 +52,10 @@ void nb_rx_callback(void)
 	module.received = 1;
 }
 
-uint8_t check_status(void)
+uint8_t check_status(BG77 module)
 {
 	wake_up();
-	if(send_command("AT+CEREG?\r\n", "OK\r\n", 1000, NB))
+	if(send_command("AT+CEREG?\r\n", "OK\r\n", DEFAULT_TIMEOUT, NB))
 	{
 		char *token = strtok((char *)module.rx_buff," ");
 		if(token)
@@ -77,9 +76,9 @@ uint8_t check_status(void)
 	}
 	return 9;
 }
-uint8_t check_signal(void)
+uint8_t check_signal(BG77 module)
 {
-	if(send_command("AT+CSQ\r\n","OK\r\n",1000,NB))
+	if(send_command("AT+CSQ\r\n","OK\r\n",DEFAULT_TIMEOUT,NB))
 	{
 		char *token = strtok((char *)module.rx_buff, " ");
 		if(token)
@@ -96,16 +95,27 @@ uint8_t check_signal(void)
 	return FALSE;
 }
 
+uint8_t set_psm(BG77 module, const char* tau, const char* active_time, uint8_t mode)
+{
+	char command[COMMAND_SIZE];
+	sprintf(command, "AT+CPSMS=%d,,,\"%s\",\"%s\"",mode, tau, active_time);
+	if(send_command(command, "OK\n\r", DEFAULT_TIMEOUT, NB))
+	{
+		return TRUE;
+	}
+	return FALSE;
+}
+
 /*********************************************************************************************/
 /****************************************MQTT*************************************************/
 /*********************************************************************************************/
 
-uint8_t mqtt_open(const char* broker_address, uint8_t port, uint8_t id)
+uint8_t mqtt_open(const char* broker_address, uint8_t port, uint8_t id, BG77 module)
 {
 	wake_up();
-	char command [255];
+	char command [COMMAND_SIZE];
 	sprintf(command, "AT+QMTOPEN=%d,\"%s\",%d\r\n", id, broker_address, port);
-	if(send_command(command, "OK\r\n", 1000, NB))
+	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, NB))
 	{
 		char *token = strtok((char *)module.rx_buff, " ");
 		if(token)
@@ -136,10 +146,10 @@ uint8_t mqtt_open(const char* broker_address, uint8_t port, uint8_t id)
 
 uint8_t mqtt_connect(uint8_t id, const char* client_id, BG77 module)
 {
-	char command [255];
+	char command [COMMAND_SIZE];
 	uint8_t ret [3];
 	sprintf(command, "AT+QMTCONN=%d,\"%s\"\r\n",id,client_id);
-	if(send_command(command, "OK\r\n", 1000, NB))
+	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, NB))
 	{
 		char *token = strtok((char *)module.rx_buff, " ");
 		if(token)
@@ -178,13 +188,13 @@ uint8_t mqtt_connect(uint8_t id, const char* client_id, BG77 module)
 	return FALSE;
 }
 
-uint8_t mqtt_disconnect(uint8_t id)
+uint8_t mqtt_disconnect(uint8_t id, BG77 module)
 {
-	char command [255];
+	char command [COMMAND_SIZE];
 	uint8_t ret [2];
 	uint8_t i = 0;
 	sprintf(command,"AT+QMTDISC=%d\r\n",id);
-	if(send_command(command, "OK\r\n", 1000, NB))
+	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, NB))
 	{
 		char *token = strtok((char *)module.rx_buff, " ");
 		if(token)
@@ -212,9 +222,9 @@ uint8_t mqtt_disconnect(uint8_t id)
 
 uint8_t mqtt_close(uint8_t id)
 {
-	char command [255];
+	char command [COMMAND_SIZE];
 	sprintf(command,"AT+QMTCLOSE=%d\r\n",id);
-	if(send_command(command, "OK\r\n", 1000, NB))
+	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, NB))
 	{
 		return TRUE;
 	}
@@ -223,9 +233,9 @@ uint8_t mqtt_close(uint8_t id)
 
 uint8_t mqtt_subscribe(uint8_t id, uint8_t msg_id, const char *topic, uint8_t qos)
 {
-	char command[255];
+	char command[COMMAND_SIZE];
 	sprintf(command, "AT+QMTSUB=%d,%d,\"%s\",%d\r\n",id, msg_id, topic, qos);
-	if(send_command(command, "OK\r\n", 1000, NB))
+	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, NB))
 	{
 		return TRUE;
 	}
@@ -234,9 +244,9 @@ uint8_t mqtt_subscribe(uint8_t id, uint8_t msg_id, const char *topic, uint8_t qo
 
 uint8_t mqtt_unsubscribe(uint8_t id, uint8_t msg_id, const char *topic, uint8_t qos)
 {
-	char command[255];
+	char command[COMMAND_SIZE];
 	sprintf(command, "AT+QMTUNS=%d,%d,\"%s\",%d\r\n",id, msg_id, topic, qos);
-	if(send_command(command, "OK\r\n", 1000, NB))
+	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, NB))
 	{
 		return TRUE;
 	}
@@ -245,10 +255,10 @@ uint8_t mqtt_unsubscribe(uint8_t id, uint8_t msg_id, const char *topic, uint8_t 
 
 uint8_t mqtt_publish(uint8_t id, uint8_t msg_id, uint8_t qos, uint8_t retain, const char *topic, const char *msg)
 {
-	char command[255];
+	char command[COMMAND_SIZE];
 	uint8_t msg_length = strlen(msg);
 	sprintf(command, "AT+QMTPUB=%d,%d,%d,%d,\"%s\",%d,\"%s\"\r\n",id, msg_id, qos, retain, topic, msg_length, msg);
-	if(send_command(command, "OK\r\n", 1000, NB))
+	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, NB))
 	{
 		return TRUE;
 	}
@@ -260,9 +270,9 @@ uint8_t mqtt_publish(uint8_t id, uint8_t msg_id, uint8_t qos, uint8_t retain, co
 /*********************************************************************************************/
 uint8_t acquire_position(BG77 module)
 {
-	if(send_command("AT+QGPS=1\r\n","OK\r\n", 1000, NB))
+	if(send_command("AT+QGPS=1\r\n","OK\r\n", DEFAULT_TIMEOUT, NB))
 	{
-		if(send_command("AT+QGPSLOC?\r\n", "OK\r\n", 1000, NB))
+		if(send_command("AT+QGPSLOC?\r\n", "OK\r\n", DEFAULT_TIMEOUT, NB))
 		{
 			parse_location(module);
 			return TRUE;
@@ -320,6 +330,7 @@ void parse_location(BG77 module)
 //TODO
 static uint8_t wake_up(void)
 {
+	uint8_t repeat = 0;
 	if(module.sleep == 1)
 	{
 		HAL_GPIO_WritePin(PON_TRIG_GPIO_Port, PON_TRIG_Pin, GPIO_PIN_SET);
@@ -327,11 +338,18 @@ static uint8_t wake_up(void)
 		HAL_GPIO_WritePin(PON_TRIG_GPIO_Port, PON_TRIG_Pin, GPIO_PIN_RESET);
 		HAL_Delay(100);
 	}
-	if(send_command("AT\r\n", "OK\r\n", 1000, NB))
+	while((send_command("AT\r\n", "OK\r\n", DEFAULT_TIMEOUT, NB)) != TRUE)
 	{
-		return TRUE;
+		if(repeat < MAX_REPEAT)
+		{
+			repeat++;
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
-	return FALSE;
+	return TRUE;
 }
 
 static void power_on(void)

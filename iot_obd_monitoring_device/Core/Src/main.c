@@ -110,8 +110,8 @@ int main(void)
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-  module.initialized = module_init();
-  module.rssi = check_signal();
+  module.initialized = module_init(module);
+  module.rssi = check_signal(module);
 
   /* USER CODE END 2 */
 

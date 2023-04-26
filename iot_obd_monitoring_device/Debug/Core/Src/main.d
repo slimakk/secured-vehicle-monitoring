@@ -35,7 +35,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD/OBD.h \
  C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77/bg77.h \
  ../Core/Inc/it_callbacks.h ../Core/Inc/main.h ../Core/Inc/adc.h \
- ../Core/Inc/can.h ../Core/Inc/dma.h ../Core/Inc/iwdg.h ../Core/Inc/tim.h \
+ C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD/can.h \
+ ../Core/Inc/dma.h ../Core/Inc/iwdg.h ../Core/Inc/tim.h \
  ../Core/Inc/usart.h \
  C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD/KLine.h \
  C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD/OBD.h \
@@ -79,7 +80,7 @@ C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monit
 ../Core/Inc/it_callbacks.h:
 ../Core/Inc/main.h:
 ../Core/Inc/adc.h:
-../Core/Inc/can.h:
+C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD/can.h:
 ../Core/Inc/dma.h:
 ../Core/Inc/iwdg.h:
 ../Core/Inc/tim.h:

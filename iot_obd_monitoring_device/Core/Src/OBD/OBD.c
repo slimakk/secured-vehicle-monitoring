@@ -6,7 +6,7 @@
  */
 #include "OBD.h"
 #include "OBD_PID.h"
-#include "CAN.h"
+#include "can.h"
 #include "KLine.h"
 #include <stdio.h>
 
