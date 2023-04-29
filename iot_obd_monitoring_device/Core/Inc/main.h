@@ -33,7 +33,6 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 #include "OBD.h"
 #include "bg77.h"
-#include "it_callbacks.h"
 #include <math.h>
 /* USER CODE END Includes */
 

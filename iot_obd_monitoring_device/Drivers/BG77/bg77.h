@@ -15,9 +15,11 @@
 #define BAUD 115200
 #define NB &huart2
 #define GPS &huart3
+#define NB_TIMER &htim2
 #define COMMAND_SIZE 255
 #define DEFAULT_TIMEOUT 1000
 #define MAX_REPEAT 10
+
 
 typedef struct{
 	double latitude;
@@ -52,9 +54,9 @@ void nb_rx_callback(void);
 uint8_t mqtt_open(const char* broker_address, uint8_t port, uint8_t id, BG77 module);
 uint8_t mqtt_connect(uint8_t id, const char* client_id, BG77 module);
 uint8_t mqtt_disconnect(uint8_t id, BG77 module);
-uint8_t mqtt_close(uint8_t id);
+uint8_t mqtt_close(uint8_t id, BG77 module);
 uint8_t mqtt_subscribe(uint8_t id, uint8_t msg_id, const char *topic, uint8_t qos);
-uint8_t mqtt_unsubscribe(uint8_t id, uint8_t msg_id, const char *topic, uint8_t qos);
+uint8_t mqtt_unsubscribe(uint8_t id, uint8_t msg_id, const char *topic);
 uint8_t mqtt_publish(uint8_t id, uint8_t msg_id, uint8_t qos, uint8_t retain, const char *topic, const char *msg);
 
 uint8_t acquire_position(BG77 module);

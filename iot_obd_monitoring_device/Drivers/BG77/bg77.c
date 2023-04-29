@@ -1,12 +1,13 @@
 /*
- * bg77.c
- *
+ *	bg77.c
+ *	Driver for Quectel BG77 Narrowband IoT module
  *  Created on: Mar 27, 2023
- *      Author: miros
+ *      Author: slimakk
  */
 #include "bg77.h"
 #include "gpio.h"
 #include "usart.h"
+#include "tim.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,41 +18,74 @@ static uint8_t wake_up(void);
 static void clear_rx_buff(void);
 static void power_on(void);
 static void power_off(void);
-//TODO
+
+/*
+ *	@brief Module intialization
+ *	Turns on the module with powerkey and checks if it is responding
+ *	@param module	BG77 struct
+ */
 uint8_t module_init(BG77 module)
 {
+	uint8_t repeat = 0;
 	power_on();
-	send_command("AT\r\n", "OK\r\n", DEFAULT_TIMEOUT, NB);
+	while(send_command("AT\r\n", "OK\r\n", DEFAULT_TIMEOUT, NB) != TRUE)
+	{
+		if(repeat > MAX_REPEAT)
+		{
+			return FALSE;
+		}
+		repeat++;
+	}
 	send_command("ATI\r\n", "OK\r\n", DEFAULT_TIMEOUT, NB);
-	return 1;
+	return TRUE;
 }
-
+/*
+ *	@brief Sends AT command and checks the reply
+ *	@param command		AT command to send
+ *	@param reply		Expected reply
+ *	@param timeout		Maximum time to send the command
+ *	@param interface	UART interface handle
+ *	@retval TRUE if reply matches the expected reply
+ */
 uint8_t send_command(char *command, char *reply, uint16_t timeout, UART_HandleTypeDef *interface)
 {
 	module.received = 0;
-//	wake_up();
 	clear_rx_buff();
 	uint8_t length = strlen(command);
 	HAL_UARTEx_ReceiveToIdle_DMA(interface, module.rx_buff, 200);
 	HAL_UART_Transmit(interface, (unsigned char *)command, length, timeout);
-
+	HAL_TIM_Base_Start_IT(NB_TIMER);
 	while(module.received == 0)
 	{
 		__NOP();
 	}
-	if(strstr((char *)module.rx_buff, reply) != NULL)
+	if(module.received == 1)
 	{
-		return TRUE;
+		if(strstr((char *)module.rx_buff, reply) != NULL)
+		{
+			return TRUE;
+		}
+		else
+		{
+			return FALSE;
+		}
 	}
 	return FALSE;
 
 }
-
+/*
+ *	@brief Module response Callback
+ *	@retval	none
+ */
 void nb_rx_callback(void)
 {
 	module.received = 1;
 }
-
+/*
+ *	@brief	Checks status of NB module
+ *	@param	module	BG77 struct
+ *	@retval	status according to  Quectel AT Commands Manual V2.0
+ */
 uint8_t check_status(BG77 module)
 {
 	wake_up();
@@ -76,6 +110,11 @@ uint8_t check_status(BG77 module)
 	}
 	return 9;
 }
+/*
+ *	@brief	Checks the RSSI for NB signal
+ *	@param	module	BG77 struct
+ *	@retval	rssi or FALSE if the the is no response
+ */
 uint8_t check_signal(BG77 module)
 {
 	if(send_command("AT+CSQ\r\n","OK\r\n",DEFAULT_TIMEOUT,NB))
@@ -94,7 +133,14 @@ uint8_t check_signal(BG77 module)
 	}
 	return FALSE;
 }
-
+/*
+ *	@brief	PSM setup
+ *	@param	module		BG77 struct
+ *	@param	tau	 		Requested extended periodic TAU value (T3412) in binary (One byte in 8 bits)
+ *	@param	active_time	Requested Active Time value (T3324) in binary (One byte in 8 bits)
+ *	@param	mode		Enable or Disable (1 or 0)
+ *	@retval	TRUE or FALSE depending on the response
+ */
 uint8_t set_psm(BG77 module, const char* tau, const char* active_time, uint8_t mode)
 {
 	char command[COMMAND_SIZE];
@@ -105,11 +151,17 @@ uint8_t set_psm(BG77 module, const char* tau, const char* active_time, uint8_t m
 	}
 	return FALSE;
 }
-
 /*********************************************************************************************/
 /****************************************MQTT*************************************************/
 /*********************************************************************************************/
-
+/*
+ *	@brief	Opens UDP connection to MQTT broker
+ *	@param	broker_address	IP Adress of desired MQTT broker
+ *	@param	port			Port of desired MQTT broker
+ *	@param	id				Connection ID (0-5)
+ *	@param	module			BG77 struct
+ *	@retval	TRUE or FALSE depending on the response
+ * */
 uint8_t mqtt_open(const char* broker_address, uint8_t port, uint8_t id, BG77 module)
 {
 	wake_up();
@@ -143,11 +195,19 @@ uint8_t mqtt_open(const char* broker_address, uint8_t port, uint8_t id, BG77 mod
 	}
 	return FALSE;
 }
-
+/*
+ * @brief	Connects to the MQTT broker
+ * @param	id			Connection ID (0-5)
+ * @param	client_id	Clients ID for the MQTT broker
+ * @param	module		BG77 struct
+ * @retval	return code for the command
+ */
+//TODO
 uint8_t mqtt_connect(uint8_t id, const char* client_id, BG77 module)
 {
 	char command [COMMAND_SIZE];
 	uint8_t ret [3];
+	uint8_t i = 0;
 	sprintf(command, "AT+QMTCONN=%d,\"%s\"\r\n",id,client_id);
 	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, NB))
 	{
@@ -155,39 +215,39 @@ uint8_t mqtt_connect(uint8_t id, const char* client_id, BG77 module)
 		if(token)
 		{
 			token = strtok(NULL, ",");
-			uint8_t i = 0;
 			while(token != NULL)
 			{
-				char* ptr;
+				char *ptr;
 				ret[i] = strtol(token, &ptr, 10);
-				token = strtok(NULL,",");
 				i++;
 			}
-			switch(ret[1])
+			if(ret[1] == (0 | 1))
 			{
-				case 0:
-					module.error = ret[2];
-					return TRUE;
-				case 1:
-					module.error = ret[2];
-					if(get_reply((char *)module.rx_buff, 3))
-					{
-						return TRUE;
-					}
-					else
-					{
-						return FALSE;
-					}
-				case 2:
-					module.error = ret[2];
-					return FALSE;
+				switch(ret[2])
+				{
+				 case 0:
+					 return TRUE;
+					 break;
+				 default:
+					 module.error = ret[2];
+					 return FALSE;
+				}
 			}
-
+			else
+			{
+				return FALSE;
+			}
 		}
+		return FALSE;
 	}
 	return FALSE;
 }
-
+/*
+ *	@brief	Disconnects for MQTT broker
+ *	@param	id	 	Connection ID (0-5)
+ *	@param	module	BG77 struct
+ *	@retval	TRUE if the disconnect is successful
+ */
 uint8_t mqtt_disconnect(uint8_t id, BG77 module)
 {
 	char command [COMMAND_SIZE];
@@ -219,18 +279,53 @@ uint8_t mqtt_disconnect(uint8_t id, BG77 module)
 	}
 	return FALSE;
 }
-
-uint8_t mqtt_close(uint8_t id)
+/*
+ *	@brief	Closes the UDP connection to the MQTT broker
+ *	@param	id	 	Connection ID (0-5)
+ *	@param	module	BG77 struct
+ *	@retval	TRUE if the closure is successful
+ */
+uint8_t mqtt_close(uint8_t id, BG77 module)
 {
 	char command [COMMAND_SIZE];
+	uint8_t i = 0;
 	sprintf(command,"AT+QMTCLOSE=%d\r\n",id);
 	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, NB))
 	{
-		return TRUE;
+		char *token = strtok((char *)module.rx_buff, " ");
+		if(token)
+		{
+			token = strtok(NULL, ",");
+			while(token != NULL)
+			{
+				if(i == 1)
+				{
+					char *ptr;
+					uint8_t res = strtol(token, &ptr, 10);
+					module.error = res;
+					if(res == 0)
+					{
+						return TRUE;
+					}
+					else
+					{
+						return FALSE;
+					}
+				}
+			}
+		}
+		return FALSE;
 	}
 	return FALSE;
 }
-
+/*
+ *	@brief	Subscribes to certain topic
+ *	@param	id	 	Connection ID (0-5)
+ *	@param	msg_id	Message ID (1-65535)
+ *	@param	topic	MQTT topic
+ *	@param	qos		MQTT QoS level (0-2)
+ *	@retval	TRUE if the subscription is successful
+ */
 uint8_t mqtt_subscribe(uint8_t id, uint8_t msg_id, const char *topic, uint8_t qos)
 {
 	char command[COMMAND_SIZE];
@@ -241,18 +336,33 @@ uint8_t mqtt_subscribe(uint8_t id, uint8_t msg_id, const char *topic, uint8_t qo
 	}
 	return FALSE;
 }
-
-uint8_t mqtt_unsubscribe(uint8_t id, uint8_t msg_id, const char *topic, uint8_t qos)
+/*
+ *	@brief	Unsubscribes from certain topic
+ *	@param	id	 	Connection ID (0-5)
+ *	@param	msg_id	Message ID (1-65535)
+ *	@param	topic	MQTT topic
+ *	@retval	TRUE if the unsubscription is successful
+ */
+uint8_t mqtt_unsubscribe(uint8_t id, uint8_t msg_id, const char *topic)
 {
 	char command[COMMAND_SIZE];
-	sprintf(command, "AT+QMTUNS=%d,%d,\"%s\",%d\r\n",id, msg_id, topic, qos);
+	sprintf(command, "AT+QMTUNS=%d,%d,\"%s\"\r\n",id, msg_id, topic);
 	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, NB))
 	{
 		return TRUE;
 	}
 	return FALSE;
 }
-
+/*
+ *	@brief	Publishes data to MQTT broker
+ *	@param	id	 	Connection ID (0-5)
+ *	@param	msg_id	Message ID (1-65535)
+ *	@param	qos		MQTT QoS level (0-2)
+ *	@param	retain	Data retention on the MQTT broker
+ *	@param	topic	MQTT topic
+ *	@param	msg		data to be published
+ *	@retval	TRUE if the publication is successful
+ */
 uint8_t mqtt_publish(uint8_t id, uint8_t msg_id, uint8_t qos, uint8_t retain, const char *topic, const char *msg)
 {
 	char command[COMMAND_SIZE];
@@ -268,8 +378,14 @@ uint8_t mqtt_publish(uint8_t id, uint8_t msg_id, uint8_t qos, uint8_t retain, co
 /*********************************************************************************************/
 /****************************************GNSS*************************************************/
 /*********************************************************************************************/
+/*
+ *	@brief	Acquires positional data from the GNSS portion of the module
+ *	@param	module	BG77 struct
+ *	@retval	TRUE if GNSS has a fix and responds with positional data
+ */
 uint8_t acquire_position(BG77 module)
 {
+	wake_up();
 	if(send_command("AT+QGPS=1\r\n","OK\r\n", DEFAULT_TIMEOUT, NB))
 	{
 		if(send_command("AT+QGPSLOC?\r\n", "OK\r\n", DEFAULT_TIMEOUT, NB))
@@ -282,7 +398,11 @@ uint8_t acquire_position(BG77 module)
 	}
 	return FALSE;
 }
-
+/*
+ *	@brief Splits received location string into individual variables from location struct
+ *	@param	module	BG77 struct
+ *	@retval	None
+ */
 void parse_location(BG77 module)
 {
 	char *token = strtok((char *)module.rx_buff, " ");
@@ -326,7 +446,11 @@ void parse_location(BG77 module)
 /*********************************************************************************************/
 /***************************************STATIC************************************************/
 /*********************************************************************************************/
-
+/*
+ *	@brief	Wakes up the module from sleep and checks its connection
+ *	@param	None
+ *	@retval	True if the module is responding
+ */
 //TODO
 static uint8_t wake_up(void)
 {
@@ -351,21 +475,33 @@ static uint8_t wake_up(void)
 	}
 	return TRUE;
 }
-
+/*
+ * @brief	Powers on the module
+ * @param 	None
+ * @retval	None
+ */
 static void power_on(void)
 {
 	HAL_GPIO_WritePin(IoT_PWR_GPIO_Port, IoT_PWR_Pin, GPIO_PIN_SET);
 	HAL_Delay(600);
 	HAL_GPIO_WritePin(IoT_PWR_GPIO_Port, IoT_PWR_Pin, GPIO_PIN_RESET);
 }
-
+/*
+ * @brief	Powers off the module
+ * @param 	None
+ * @retval	None
+ */
 static void power_off(void)
 {
 	HAL_GPIO_WritePin(IoT_PWR_GPIO_Port, IoT_PWR_Pin, GPIO_PIN_SET);
 	HAL_Delay(1000);
 	HAL_GPIO_WritePin(IoT_PWR_GPIO_Port, IoT_PWR_Pin, GPIO_PIN_RESET);
 }
-
+/*
+ * @brief	Clears the RX buffer before new reception
+ * @param 	None
+ * @retval	None
+ */
 static void clear_rx_buff(void)
 {
 	module.rx_index = 0;
