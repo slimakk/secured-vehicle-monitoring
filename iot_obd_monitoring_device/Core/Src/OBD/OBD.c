@@ -10,7 +10,6 @@
 #include "KLine.h"
 #include <stdio.h>
 
-//static obd_protocol used_protocol;
 extern DMA_HandleTypeDef hdma_usart1_rx;
 extern OBD obd_comm;
 extern char *pid_names[90];
@@ -20,25 +19,29 @@ static void OBD2_PID_Decode(uint8_t* rx_frame);
 
 static void OBD2_PID_Decode(uint8_t* rx_frame)
 {
-	int number = (rx_frame[3] << 24) | (rx_frame[4] << 16) | (rx_frame[5] << 8) | rx_frame[6];
-	int j = 0;
-	for(int i = 31; i >= 0; i--)
+	uint8_t number = (rx_frame[3] << 24) | (rx_frame[4] << 16) | (rx_frame[5] << 8) | rx_frame[6];
+	uint8_t j = 0;
+	uint8_t k = 32;
+	uint8_t l = 64;
+	for(uint8_t i = 31; i >= 0; i--)
 	{
-		int digit = number >> i;
+		uint8_t digit = number >> i;
 		digit &= 1;
 		if(obd_comm.pid == 0x00)
 		{
-			obd_comm.available_pids_1[j] = digit;
+			obd_comm.available_pids[j] = digit;
+			j++;
 		}
 		else if(obd_comm.pid == 0x20)
 		{
-			obd_comm.available_pids_2[j] = digit;
+			obd_comm.available_pids[k] = digit;
+			k++;
 		}
 		else
 		{
-			obd_comm.available_pids_3[j] = digit;
+			obd_comm.available_pids[l] = digit;
+			l++;
 		}
-		j++;
 	}
 }
 
@@ -240,7 +243,6 @@ obd_protocol OBD2_Init(void)
 		if(used_protocol == OBD_NONE)
 		{
 			used_protocol = OBD_PROTO_CAN;
-			//HAL_DMA_DeInit(&hdma_usart1_rx);
 			MX_CAN1_Init();
 			can_config();
 		}
@@ -248,3 +250,22 @@ obd_protocol OBD2_Init(void)
 	return used_protocol;
 }
 
+void OBD2_pid_check(OBD obd)
+{
+	obd.pid = 0x00;
+	OBD2_Request(obd);
+	obd.pid = 0x20;
+	OBD2_Request(obd);
+	obd.pid = 0x40;
+	OBD2_Request(obd);
+	uint8_t j = 1;
+	for(uint8_t i = 0; i < 96; i++)
+	{
+		if(obd.available_pids[i] == 1)
+		{
+			obd.pids[obd.pid_count] = j;
+			obd.pid_count++;
+		}
+		j++;
+	}
+}

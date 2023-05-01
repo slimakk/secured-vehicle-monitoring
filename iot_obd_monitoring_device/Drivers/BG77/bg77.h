@@ -41,6 +41,7 @@ typedef struct {
 	uint8_t status;
 	uint8_t error;
 	uint8_t rssi;
+	uint8_t mqtt_status;
 	location pos;
 }BG77;
 

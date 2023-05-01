@@ -25,10 +25,11 @@ typedef struct {
 	obd_protocol used_protocol;
 	uint8_t pid;
 	uint8_t pid_index;
-	uint8_t available_pids_1 [32];
-	uint8_t available_pids_2 [32];
-	uint8_t available_pids_3 [32];
-	uint8_t button_state;
+	uint8_t available_pids[96];
+//	uint8_t available_pids_2 [32];
+//	uint8_t available_pids_3 [32];
+	uint8_t pid_count;
+	uint8_t pids[96];
 	uint8_t msg_type;
 	float current_value;
 	float voltage;
@@ -41,6 +42,8 @@ float OBD2_PID_Parse(uint8_t *rx_frame);
 obd_protocol OBD2_Init(void);
 
 void OBD2_ShowOnDisplay(float value);
+
+void OBD2_pid_check(OBD obd);
 
 
 #endif /* INC_OBD_OBD_H_ */

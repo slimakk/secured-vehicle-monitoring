@@ -157,6 +157,8 @@ void can_send_msg(uint8_t *tx_frame)
 	tx_header.IDE = CAN_ID_STD;
 	tx_header.RTR = CAN_RTR_DATA;
 
+	obd_comm.msg_type = 1;
+
 	if(HAL_CAN_AddTxMessage(&hcan1, &tx_header, tx_frame, &tx_mailbox) != HAL_OK)
 	{
 		Error_Handler();
@@ -168,6 +170,8 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
 	CAN_RxHeaderTypeDef rx_header;
 	uint8_t rx_data[RX_DATA_LENGTH];
+
+	obd_comm.msg_type = 0;
 
 	HAL_CAN_GetRxMessage(&hcan1, CAN_RX_FIFO0, &rx_header, rx_data);
 

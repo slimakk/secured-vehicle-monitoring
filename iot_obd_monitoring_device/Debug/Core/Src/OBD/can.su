@@ -3,5 +3,5 @@
 ../Core/Src/OBD/can.c:100:6:HAL_CAN_MspDeInit	16	static
 ../Core/Src/OBD/can.c:127:6:can_config	48	static
 ../Core/Src/OBD/can.c:152:6:can_send_msg	40	static
-../Core/Src/OBD/can.c:167:6:HAL_CAN_RxFifo0MsgPendingCallback	56	static
-../Core/Src/OBD/can.c:179:6:HAL_CAN_ErrorCallback	16	static
+../Core/Src/OBD/can.c:169:6:HAL_CAN_RxFifo0MsgPendingCallback	56	static
+../Core/Src/OBD/can.c:183:6:HAL_CAN_ErrorCallback	16	static

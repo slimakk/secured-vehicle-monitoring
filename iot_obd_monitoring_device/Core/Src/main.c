@@ -50,8 +50,6 @@
 
 uint8_t uartBuf[10] = {0};
 
-uint16_t adc_buffer[64];
-
 OBD obd_comm;
 
 BG77 module;
@@ -62,11 +60,25 @@ BG77 module;
 void SystemClock_Config(void);
 static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
-
+static void acquire_vehicle_data(OBD obd, float buffer[][2]);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+static void acquire_vehicle_data(OBD obd, float buffer[][2])
+{
+	for(uint8_t i = 0; i < obd.pid_count; i++)
+	{
+		obd.pid = obd.pids[i];
+		OBD2_Request(obd);
+		while(obd.msg_type != 0)
+		{
+			__NOP();
+		}
+		buffer[i][0] = obd.pid;
+		buffer[i][1] = obd.current_value;
+	}
+}
 
 /* USER CODE END 0 */
 
@@ -77,6 +89,7 @@ static void MX_NVIC_Init(void);
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+	float mqtt_buf[96][2] = {0};
 
   /* USER CODE END 1 */
 
@@ -111,6 +124,9 @@ int main(void)
   /* USER CODE BEGIN 2 */
   module.initialized = module_init(module);
   module.rssi = check_signal(module);
+  obd_comm.used_protocol = OBD2_Init();
+
+  acquire_vehicle_data(obd_comm, mqtt_buf);
 
   /* USER CODE END 2 */
 
