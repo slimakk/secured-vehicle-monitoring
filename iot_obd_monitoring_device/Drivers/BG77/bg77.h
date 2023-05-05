@@ -35,6 +35,8 @@ typedef struct{
 typedef struct {
 	uint8_t rx_buff[1500];
 	uint8_t rx_index;
+	uint8_t expected_size;
+	uint8_t connected;
 	uint8_t initialized;
 	uint8_t received;
 	uint8_t sleep;
@@ -46,13 +48,13 @@ typedef struct {
 }BG77;
 
 uint8_t module_init(BG77 module);
-uint8_t send_command(char *command, char *reply, uint16_t timeout, UART_HandleTypeDef *interface);
+uint8_t send_command(char *command, char *reply, uint16_t timeout, uint8_t size, UART_HandleTypeDef *interface);
 uint8_t check_status(BG77 module);
 uint8_t check_signal(BG77 module);
 uint8_t set_psm(BG77 module, const char* tau, const char* active_time, uint8_t mode);
 void nb_rx_callback(void);
 
-uint8_t mqtt_open(const char* broker_address, uint8_t port, uint8_t id, BG77 module);
+uint8_t mqtt_open(const char* broker_address, uint16_t port, uint8_t id, BG77 module);
 uint8_t mqtt_connect(uint8_t id, const char* client_id, BG77 module);
 uint8_t mqtt_disconnect(uint8_t id, BG77 module);
 uint8_t mqtt_close(uint8_t id, BG77 module);

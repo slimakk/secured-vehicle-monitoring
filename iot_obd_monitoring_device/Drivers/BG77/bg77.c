@@ -14,6 +14,8 @@
 
 extern BG77 module;
 
+uint8_t rx_data = 0;
+
 static uint8_t wake_up(void);
 static void clear_rx_buff(void);
 static void power_on(void);
@@ -28,7 +30,7 @@ uint8_t module_init(BG77 module)
 {
 	uint8_t repeat = 0;
 	power_on();
-	while(send_command("AT\r\n", "OK\r\n", DEFAULT_TIMEOUT, NB) != TRUE)
+	while(send_command("AT\r\n", "OK\r\n", DEFAULT_TIMEOUT, 4, NB) != TRUE)
 	{
 		if(repeat > MAX_REPEAT)
 		{
@@ -36,7 +38,7 @@ uint8_t module_init(BG77 module)
 		}
 		repeat++;
 	}
-	send_command("ATI\r\n", "OK\r\n", DEFAULT_TIMEOUT, NB);
+	send_command("ATE0\r\n", "OK\r\n", DEFAULT_TIMEOUT, 4, NB);
 	return TRUE;
 }
 /*
@@ -47,12 +49,14 @@ uint8_t module_init(BG77 module)
  *	@param interface	UART interface handle
  *	@retval TRUE if reply matches the expected reply
  */
-uint8_t send_command(char *command, char *reply, uint16_t timeout, UART_HandleTypeDef *interface)
+uint8_t send_command(char *command, char *reply, uint16_t timeout, uint8_t size, UART_HandleTypeDef *interface)
 {
 	module.received = 0;
+	module.expected_size = size;
 	clear_rx_buff();
 	uint8_t length = strlen(command);
-	HAL_UARTEx_ReceiveToIdle_DMA(interface, module.rx_buff, 200);
+//	HAL_UART_Receive_DMA(interface, module.rx_buff, size+2);
+	HAL_UART_Receive_IT(interface, &rx_data, 1);
 	HAL_UART_Transmit(interface, (unsigned char *)command, length, timeout);
 	HAL_TIM_Base_Start_IT(NB_TIMER);
 	while(module.received == 0)
@@ -71,6 +75,15 @@ uint8_t send_command(char *command, char *reply, uint16_t timeout, UART_HandleTy
 		}
 	}
 	return FALSE;
+//	HAL_UART_Receive(interface, module.rx_buff, 100, 2000);
+//	if(strstr((char *)module.rx_buff, reply) != NULL)
+//	{
+//		return TRUE;
+//	}
+//	else
+//	{
+//		return FALSE;
+//	}
 
 }
 /*
@@ -79,7 +92,13 @@ uint8_t send_command(char *command, char *reply, uint16_t timeout, UART_HandleTy
  */
 void nb_rx_callback(void)
 {
-	module.received = 1;
+//	module.received = 1;
+	module.rx_buff[module.rx_index++] = rx_data;
+	if(module.rx_index > module.expected_size)
+	{
+		module.received = 1;
+	}
+	HAL_UART_Receive_IT(NB, &rx_data, 1);
 }
 /*
  *	@brief	Checks status of NB module
@@ -89,7 +108,7 @@ void nb_rx_callback(void)
 uint8_t check_status(BG77 module)
 {
 	wake_up();
-	if(send_command("AT+CEREG?\r\n", "OK\r\n", DEFAULT_TIMEOUT, NB))
+	if(send_command("AT+CEREG?\r\n", "OK\r\n", DEFAULT_TIMEOUT, 4, NB))
 	{
 		char *token = strtok((char *)module.rx_buff," ");
 		if(token)
@@ -117,7 +136,7 @@ uint8_t check_status(BG77 module)
  */
 uint8_t check_signal(BG77 module)
 {
-	if(send_command("AT+CSQ\r\n","OK\r\n",DEFAULT_TIMEOUT,NB))
+	if(send_command("AT+CSQ\r\n","OK\r\n",DEFAULT_TIMEOUT, 4, NB))
 	{
 		char *token = strtok((char *)module.rx_buff, " ");
 		if(token)
@@ -145,7 +164,7 @@ uint8_t set_psm(BG77 module, const char* tau, const char* active_time, uint8_t m
 {
 	char command[COMMAND_SIZE];
 	sprintf(command, "AT+CPSMS=%d,,,\"%s\",\"%s\"",mode, tau, active_time);
-	if(send_command(command, "OK\n\r", DEFAULT_TIMEOUT, NB))
+	if(send_command(command, "OK\n\r", DEFAULT_TIMEOUT, 4, NB))
 	{
 		return TRUE;
 	}
@@ -162,12 +181,12 @@ uint8_t set_psm(BG77 module, const char* tau, const char* active_time, uint8_t m
  *	@param	module			BG77 struct
  *	@retval	TRUE or FALSE depending on the response
  * */
-uint8_t mqtt_open(const char* broker_address, uint8_t port, uint8_t id, BG77 module)
+uint8_t mqtt_open(const char* broker_address, uint16_t port, uint8_t id, BG77 module)
 {
-	wake_up();
+//	wake_up();
 	char command [COMMAND_SIZE];
 	sprintf(command, "AT+QMTOPEN=%d,\"%s\",%d\r\n", id, broker_address, port);
-	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, NB))
+	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, 18, NB))
 	{
 		char *token = strtok((char *)module.rx_buff, " ");
 		if(token)
@@ -209,7 +228,7 @@ uint8_t mqtt_connect(uint8_t id, const char* client_id, BG77 module)
 	uint8_t ret [3];
 	uint8_t i = 0;
 	sprintf(command, "AT+QMTCONN=%d,\"%s\"\r\n",id,client_id);
-	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, NB))
+	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, 19, NB))
 	{
 		char *token = strtok((char *)module.rx_buff, " ");
 		if(token)
@@ -254,7 +273,7 @@ uint8_t mqtt_disconnect(uint8_t id, BG77 module)
 	uint8_t ret [2];
 	uint8_t i = 0;
 	sprintf(command,"AT+QMTDISC=%d\r\n",id);
-	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, NB))
+	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, 18, NB))
 	{
 		char *token = strtok((char *)module.rx_buff, " ");
 		if(token)
@@ -280,7 +299,7 @@ uint8_t mqtt_disconnect(uint8_t id, BG77 module)
 	return FALSE;
 }
 /*
- *	@brief	Closes the UDP connection to the MQTT broker
+ *	@brief	Closes the TCP connection to the MQTT broker
  *	@param	id	 	Connection ID (0-5)
  *	@param	module	BG77 struct
  *	@retval	TRUE if the closure is successful
@@ -290,7 +309,7 @@ uint8_t mqtt_close(uint8_t id, BG77 module)
 	char command [COMMAND_SIZE];
 	uint8_t i = 0;
 	sprintf(command,"AT+QMTCLOSE=%d\r\n",id);
-	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, NB))
+	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, 19, NB))
 	{
 		char *token = strtok((char *)module.rx_buff, " ");
 		if(token)
@@ -330,7 +349,7 @@ uint8_t mqtt_subscribe(uint8_t id, uint8_t msg_id, const char *topic, uint8_t qo
 {
 	char command[COMMAND_SIZE];
 	sprintf(command, "AT+QMTSUB=%d,%d,\"%s\",%d\r\n",id, msg_id, topic, qos);
-	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, NB))
+	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, 20, NB))
 	{
 		return TRUE;
 	}
@@ -347,7 +366,7 @@ uint8_t mqtt_unsubscribe(uint8_t id, uint8_t msg_id, const char *topic)
 {
 	char command[COMMAND_SIZE];
 	sprintf(command, "AT+QMTUNS=%d,%d,\"%s\"\r\n",id, msg_id, topic);
-	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, NB))
+	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, 20, NB))
 	{
 		return TRUE;
 	}
@@ -366,9 +385,8 @@ uint8_t mqtt_unsubscribe(uint8_t id, uint8_t msg_id, const char *topic)
 uint8_t mqtt_publish(uint8_t id, uint8_t msg_id, uint8_t qos, uint8_t retain, const char *topic, const char *msg)
 {
 	char command[COMMAND_SIZE];
-	uint8_t msg_length = strlen(msg);
-	sprintf(command, "AT+QMTPUB=%d,%d,%d,%d,\"%s\",%d,\"%s\"\r\n",id, msg_id, qos, retain, topic, msg_length, msg);
-	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, NB))
+	sprintf(command, "AT+QMTPUBEX=%d,%d,%d,%d,\"%s\",\"%s\"\r\n",id, msg_id, qos, retain, topic, msg);
+	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, 4, NB))
 	{
 		return TRUE;
 	}
@@ -386,9 +404,9 @@ uint8_t mqtt_publish(uint8_t id, uint8_t msg_id, uint8_t qos, uint8_t retain, co
 uint8_t acquire_position(BG77 module)
 {
 	wake_up();
-	if(send_command("AT+QGPS=1\r\n","OK\r\n", DEFAULT_TIMEOUT, NB))
+	if(send_command("AT+QGPS=1\r\n","OK\r\n", DEFAULT_TIMEOUT, 4,NB))
 	{
-		if(send_command("AT+QGPSLOC?\r\n", "OK\r\n", DEFAULT_TIMEOUT, NB))
+		if(send_command("AT+QGPSLOC?\r\n", "OK\r\n", DEFAULT_TIMEOUT, 4,NB))
 		{
 			parse_location(module);
 			return TRUE;
@@ -462,7 +480,7 @@ static uint8_t wake_up(void)
 		HAL_GPIO_WritePin(PON_TRIG_GPIO_Port, PON_TRIG_Pin, GPIO_PIN_RESET);
 		HAL_Delay(100);
 	}
-	while((send_command("AT\r\n", "OK\r\n", DEFAULT_TIMEOUT, NB)) != TRUE)
+	while((send_command("AT\r\n", "OK\r\n", DEFAULT_TIMEOUT, 4,NB)) != TRUE)
 	{
 		if(repeat < MAX_REPEAT)
 		{

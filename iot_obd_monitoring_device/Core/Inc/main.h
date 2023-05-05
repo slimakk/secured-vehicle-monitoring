@@ -107,6 +107,9 @@ void Error_Handler(void);
 /* USER CODE BEGIN Private defines */
 #define TRUE 1
 #define FALSE 0
+#define MQTT_IP "1"
+#define MQTT_PORT 1883
+#define OBD_TOPIC "topic/obd"
 
 /* USER CODE END Private defines */
 

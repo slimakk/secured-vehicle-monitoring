@@ -61,6 +61,8 @@ void SystemClock_Config(void);
 static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
 static void acquire_vehicle_data(OBD obd, float buffer[][2]);
+static uint8_t mqtt_start(BG77 module);
+static uint8_t mqtt_stop(BG77 module);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -80,6 +82,49 @@ static void acquire_vehicle_data(OBD obd, float buffer[][2])
 	}
 }
 
+static uint8_t mqtt_start(BG77 module)
+{
+//	if(mqtt_open(MQTT_IP,  MQTT_PORT, 0, module))
+//	{
+//		if(mqtt_connect(0,"obd", module))
+//		{
+//			return TRUE;
+//		}
+//		else
+//		{
+//			return FALSE;
+//		}
+//	}
+//	else
+//	{
+//		return FALSE;
+//	}
+	mqtt_open(MQTT_IP,  MQTT_PORT, 0, module);
+	HAL_Delay(10000);
+	mqtt_connect(0,"obd1", module);
+
+	return TRUE;
+}
+
+static uint8_t mqtt_stop(BG77 module)
+{
+	if(mqtt_disconnect(0, module))
+	{
+		if(mqtt_close(0, module))
+		{
+			return FALSE;
+		}
+		else
+		{
+			return TRUE;
+		}
+	}
+	else
+	{
+		return TRUE;
+	}
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -89,7 +134,9 @@ static void acquire_vehicle_data(OBD obd, float buffer[][2])
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	float mqtt_buf[96][2] = {0};
+//	float mqtt_buf[96][2] = {0};
+	uint8_t sent = 0;
+//	uint32_t timer;
 
   /* USER CODE END 1 */
 
@@ -119,14 +166,21 @@ int main(void)
 //  MX_IWDG_Init();
   MX_TIM6_Init();
   MX_TIM2_Init();
+
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
   module.initialized = module_init(module);
-  module.rssi = check_signal(module);
-  obd_comm.used_protocol = OBD2_Init();
+//  module.rssi = check_signal(module);
+//  obd_comm.used_protocol = OBD2_Init();
+//
+//  acquire_vehicle_data(obd_comm, mqtt_buf);
+  module.connected = mqtt_start(module);
 
-  acquire_vehicle_data(obd_comm, mqtt_buf);
+  mqtt_publish(0,0,0,0,OBD_TOPIC, "Hello v4");
+
+  module.connected = mqtt_stop(module);
+
 
   /* USER CODE END 2 */
 
@@ -134,6 +188,13 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+//	  if((HAL_GetTick() - timer) >= 10000)
+//	  {
+//		  if(mqtt_publish(0,0,OBD_TOPIC, 0))
+//		  {
+//		    sent++;
+//		  }
+//	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
