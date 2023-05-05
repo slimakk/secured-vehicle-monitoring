@@ -1,0 +1,351 @@
+2023-05-05 02:01:05,089 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 631615160 Bytes (827326464)
+2023-05-05 02:01:06,548 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 653679800 Bytes (827326464)
+2023-05-05 02:01:08,206 [INFO] UtilMem:75 - End SaveConfig() Used Memory: 702305000 Bytes (827326464)
+2023-05-05 02:01:08,675 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: NVIC
+2023-05-05 02:01:08,676 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: USART
+2023-05-05 02:01:08,676 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: USART
+2023-05-05 02:01:08,676 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: USART
+2023-05-05 02:01:08,676 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: IWDG
+2023-05-05 02:01:08,676 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: DMA
+2023-05-05 02:01:08,676 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: TIM6_7L4
+2023-05-05 02:01:08,676 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: TIM1_8L4
+2023-05-05 02:01:08,676 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: CAN
+2023-05-05 02:01:08,676 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: SYS
+2023-05-05 02:01:08,677 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: GPIO
+2023-05-05 02:01:08,677 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: ADC
+2023-05-05 02:01:08,677 [INFO] BlockDiagram:2759 - set Specific Code input for plugin: RCC
+2023-05-05 02:01:08,679 [INFO] CodeGenerator:793 - code generatio: config db path: C:\ST\STM32CubeIDE_1.10.1\STM32CubeIDE\plugins\com.st.stm32cube.common.mx_6.8.0.202302231600\\db\
+2023-05-05 02:01:08,689 [INFO] Argument:319 - Argument : hdmavalue: null
+2023-05-05 02:01:08,689 [INFO] Argument:321 - 	 sub Args: 
+2023-05-05 02:01:08,689 [INFO] Argument:319 - Argument : Instancevalue: DMA1_Channel1
+2023-05-05 02:01:08,689 [INFO] Argument:329 - Argument : Instancevalue: DMA1_Channel1
+2023-05-05 02:01:08,689 [INFO] Argument:319 - Argument : Initvalue: null
+2023-05-05 02:01:08,689 [INFO] Argument:321 - 	 sub Args: 
+2023-05-05 02:01:08,689 [INFO] Argument:319 - Argument : Requestvalue: DMA_REQUEST_0
+2023-05-05 02:01:08,689 [INFO] Argument:329 - Argument : Requestvalue: DMA_REQUEST_0
+2023-05-05 02:01:08,689 [INFO] Argument:319 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2023-05-05 02:01:08,689 [INFO] Argument:329 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2023-05-05 02:01:08,689 [INFO] Argument:319 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2023-05-05 02:01:08,689 [INFO] Argument:329 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2023-05-05 02:01:08,689 [INFO] Argument:319 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2023-05-05 02:01:08,689 [INFO] Argument:329 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2023-05-05 02:01:08,689 [INFO] Argument:319 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_HALFWORD
+2023-05-05 02:01:08,689 [INFO] Argument:329 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_HALFWORD
+2023-05-05 02:01:08,689 [INFO] Argument:319 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_HALFWORD
+2023-05-05 02:01:08,689 [INFO] Argument:329 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_HALFWORD
+2023-05-05 02:01:08,689 [INFO] Argument:319 - Argument : Modevalue: DMA_CIRCULAR
+2023-05-05 02:01:08,689 [INFO] Argument:329 - Argument : Modevalue: DMA_CIRCULAR
+2023-05-05 02:01:08,689 [INFO] Argument:319 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2023-05-05 02:01:08,689 [INFO] Argument:329 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2023-05-05 02:01:08,689 [INFO] Argument:319 - Argument : Lockvalue: null
+2023-05-05 02:01:08,689 [INFO] Argument:329 - Argument : Lockvalue: null
+2023-05-05 02:01:08,689 [INFO] Argument:319 - Argument : Statevalue: null
+2023-05-05 02:01:08,689 [INFO] Argument:329 - Argument : Statevalue: null
+2023-05-05 02:01:08,689 [INFO] Argument:319 - Argument : Parentvalue: null
+2023-05-05 02:01:08,689 [INFO] Argument:329 - Argument : Parentvalue: null
+2023-05-05 02:01:08,690 [INFO] Argument:319 - Argument : XferCpltCallbackvalue: null
+2023-05-05 02:01:08,690 [INFO] Argument:329 - Argument : XferCpltCallbackvalue: null
+2023-05-05 02:01:08,690 [INFO] Argument:319 - Argument : XferHalfCpltCallbackvalue: null
+2023-05-05 02:01:08,690 [INFO] Argument:329 - Argument : XferHalfCpltCallbackvalue: null
+2023-05-05 02:01:08,690 [INFO] Argument:319 - Argument : XferErrorCallbackvalue: null
+2023-05-05 02:01:08,690 [INFO] Argument:329 - Argument : XferErrorCallbackvalue: null
+2023-05-05 02:01:08,690 [INFO] Argument:319 - Argument : XferAbortCallbackvalue: null
+2023-05-05 02:01:08,690 [INFO] Argument:329 - Argument : XferAbortCallbackvalue: null
+2023-05-05 02:01:08,690 [INFO] Argument:319 - Argument : ErrorCodevalue: null
+2023-05-05 02:01:08,690 [INFO] Argument:329 - Argument : ErrorCodevalue: null
+2023-05-05 02:01:08,690 [INFO] Argument:319 - Argument : DmaBaseAddressvalue: null
+2023-05-05 02:01:08,690 [INFO] Argument:329 - Argument : DmaBaseAddressvalue: null
+2023-05-05 02:01:08,690 [INFO] Argument:319 - Argument : ChannelIndexvalue: null
+2023-05-05 02:01:08,690 [INFO] Argument:329 - Argument : ChannelIndexvalue: null
+2023-05-05 02:01:08,690 [INFO] Argument:319 - Argument : hdmavalue: null
+2023-05-05 02:01:08,690 [INFO] Argument:321 - 	 sub Args: 
+2023-05-05 02:01:08,690 [INFO] Argument:319 - Argument : Instancevalue: DMA1_Channel1
+2023-05-05 02:01:08,690 [INFO] Argument:329 - Argument : Instancevalue: DMA1_Channel1
+2023-05-05 02:01:08,690 [INFO] Argument:319 - Argument : Initvalue: null
+2023-05-05 02:01:08,690 [INFO] Argument:321 - 	 sub Args: 
+2023-05-05 02:01:08,690 [INFO] Argument:319 - Argument : Requestvalue: DMA_REQUEST_0
+2023-05-05 02:01:08,690 [INFO] Argument:329 - Argument : Requestvalue: DMA_REQUEST_0
+2023-05-05 02:01:08,690 [INFO] Argument:319 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2023-05-05 02:01:08,691 [INFO] Argument:329 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2023-05-05 02:01:08,691 [INFO] Argument:319 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2023-05-05 02:01:08,691 [INFO] Argument:329 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2023-05-05 02:01:08,691 [INFO] Argument:319 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2023-05-05 02:01:08,691 [INFO] Argument:329 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2023-05-05 02:01:08,691 [INFO] Argument:319 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_HALFWORD
+2023-05-05 02:01:08,691 [INFO] Argument:329 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_HALFWORD
+2023-05-05 02:01:08,691 [INFO] Argument:319 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_HALFWORD
+2023-05-05 02:01:08,691 [INFO] Argument:329 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_HALFWORD
+2023-05-05 02:01:08,691 [INFO] Argument:319 - Argument : Modevalue: DMA_CIRCULAR
+2023-05-05 02:01:08,691 [INFO] Argument:329 - Argument : Modevalue: DMA_CIRCULAR
+2023-05-05 02:01:08,691 [INFO] Argument:319 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2023-05-05 02:01:08,691 [INFO] Argument:329 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2023-05-05 02:01:08,691 [INFO] Argument:319 - Argument : Lockvalue: null
+2023-05-05 02:01:08,691 [INFO] Argument:329 - Argument : Lockvalue: null
+2023-05-05 02:01:08,691 [INFO] Argument:319 - Argument : Statevalue: null
+2023-05-05 02:01:08,691 [INFO] Argument:329 - Argument : Statevalue: null
+2023-05-05 02:01:08,691 [INFO] Argument:319 - Argument : Parentvalue: null
+2023-05-05 02:01:08,691 [INFO] Argument:329 - Argument : Parentvalue: null
+2023-05-05 02:01:08,691 [INFO] Argument:319 - Argument : XferCpltCallbackvalue: null
+2023-05-05 02:01:08,692 [INFO] Argument:329 - Argument : XferCpltCallbackvalue: null
+2023-05-05 02:01:08,692 [INFO] Argument:319 - Argument : XferHalfCpltCallbackvalue: null
+2023-05-05 02:01:08,692 [INFO] Argument:329 - Argument : XferHalfCpltCallbackvalue: null
+2023-05-05 02:01:08,692 [INFO] Argument:319 - Argument : XferErrorCallbackvalue: null
+2023-05-05 02:01:08,692 [INFO] Argument:329 - Argument : XferErrorCallbackvalue: null
+2023-05-05 02:01:08,692 [INFO] Argument:319 - Argument : XferAbortCallbackvalue: null
+2023-05-05 02:01:08,692 [INFO] Argument:329 - Argument : XferAbortCallbackvalue: null
+2023-05-05 02:01:08,692 [INFO] Argument:319 - Argument : ErrorCodevalue: null
+2023-05-05 02:01:08,692 [INFO] Argument:329 - Argument : ErrorCodevalue: null
+2023-05-05 02:01:08,692 [INFO] Argument:319 - Argument : DmaBaseAddressvalue: null
+2023-05-05 02:01:08,692 [INFO] Argument:329 - Argument : DmaBaseAddressvalue: null
+2023-05-05 02:01:08,692 [INFO] Argument:319 - Argument : ChannelIndexvalue: null
+2023-05-05 02:01:08,692 [INFO] Argument:329 - Argument : ChannelIndexvalue: null
+2023-05-05 02:01:08,692 [INFO] Argument:319 - Argument : pSyncConfigvalue: null
+2023-05-05 02:01:08,693 [INFO] Argument:321 - 	 sub Args: 
+2023-05-05 02:01:08,693 [INFO] Argument:319 - Argument : SyncSignalIDvalue: null
+2023-05-05 02:01:08,693 [INFO] Argument:329 - Argument : SyncSignalIDvalue: null
+2023-05-05 02:01:08,693 [INFO] Argument:319 - Argument : SyncPolarityvalue: null
+2023-05-05 02:01:08,693 [INFO] Argument:329 - Argument : SyncPolarityvalue: null
+2023-05-05 02:01:08,693 [INFO] Argument:319 - Argument : SyncEnablevalue: null
+2023-05-05 02:01:08,693 [INFO] Argument:329 - Argument : SyncEnablevalue: null
+2023-05-05 02:01:08,693 [INFO] Argument:319 - Argument : EventEnablevalue: null
+2023-05-05 02:01:08,693 [INFO] Argument:329 - Argument : EventEnablevalue: null
+2023-05-05 02:01:08,693 [INFO] Argument:319 - Argument : RequestNumbervalue: null
+2023-05-05 02:01:08,693 [INFO] Argument:329 - Argument : RequestNumbervalue: null
+2023-05-05 02:01:08,717 [INFO] Argument:319 - Argument : hdmavalue: null
+2023-05-05 02:01:08,717 [INFO] Argument:321 - 	 sub Args: 
+2023-05-05 02:01:08,717 [INFO] Argument:319 - Argument : Instancevalue: DMA1_Channel5
+2023-05-05 02:01:08,717 [INFO] Argument:329 - Argument : Instancevalue: DMA1_Channel5
+2023-05-05 02:01:08,717 [INFO] Argument:319 - Argument : Initvalue: null
+2023-05-05 02:01:08,717 [INFO] Argument:321 - 	 sub Args: 
+2023-05-05 02:01:08,717 [INFO] Argument:319 - Argument : Requestvalue: DMA_REQUEST_2
+2023-05-05 02:01:08,717 [INFO] Argument:329 - Argument : Requestvalue: DMA_REQUEST_2
+2023-05-05 02:01:08,717 [INFO] Argument:319 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2023-05-05 02:01:08,717 [INFO] Argument:329 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2023-05-05 02:01:08,717 [INFO] Argument:319 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2023-05-05 02:01:08,717 [INFO] Argument:329 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2023-05-05 02:01:08,717 [INFO] Argument:319 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2023-05-05 02:01:08,717 [INFO] Argument:329 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2023-05-05 02:01:08,718 [INFO] Argument:319 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_BYTE
+2023-05-05 02:01:08,718 [INFO] Argument:329 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_BYTE
+2023-05-05 02:01:08,718 [INFO] Argument:319 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_BYTE
+2023-05-05 02:01:08,718 [INFO] Argument:329 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_BYTE
+2023-05-05 02:01:08,718 [INFO] Argument:319 - Argument : Modevalue: DMA_NORMAL
+2023-05-05 02:01:08,718 [INFO] Argument:329 - Argument : Modevalue: DMA_NORMAL
+2023-05-05 02:01:08,718 [INFO] Argument:319 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2023-05-05 02:01:08,718 [INFO] Argument:329 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2023-05-05 02:01:08,718 [INFO] Argument:319 - Argument : Lockvalue: null
+2023-05-05 02:01:08,718 [INFO] Argument:329 - Argument : Lockvalue: null
+2023-05-05 02:01:08,718 [INFO] Argument:319 - Argument : Statevalue: null
+2023-05-05 02:01:08,718 [INFO] Argument:329 - Argument : Statevalue: null
+2023-05-05 02:01:08,718 [INFO] Argument:319 - Argument : Parentvalue: null
+2023-05-05 02:01:08,718 [INFO] Argument:329 - Argument : Parentvalue: null
+2023-05-05 02:01:08,718 [INFO] Argument:319 - Argument : XferCpltCallbackvalue: null
+2023-05-05 02:01:08,718 [INFO] Argument:329 - Argument : XferCpltCallbackvalue: null
+2023-05-05 02:01:08,718 [INFO] Argument:319 - Argument : XferHalfCpltCallbackvalue: null
+2023-05-05 02:01:08,718 [INFO] Argument:329 - Argument : XferHalfCpltCallbackvalue: null
+2023-05-05 02:01:08,718 [INFO] Argument:319 - Argument : XferErrorCallbackvalue: null
+2023-05-05 02:01:08,718 [INFO] Argument:329 - Argument : XferErrorCallbackvalue: null
+2023-05-05 02:01:08,718 [INFO] Argument:319 - Argument : XferAbortCallbackvalue: null
+2023-05-05 02:01:08,718 [INFO] Argument:329 - Argument : XferAbortCallbackvalue: null
+2023-05-05 02:01:08,718 [INFO] Argument:319 - Argument : ErrorCodevalue: null
+2023-05-05 02:01:08,718 [INFO] Argument:329 - Argument : ErrorCodevalue: null
+2023-05-05 02:01:08,718 [INFO] Argument:319 - Argument : DmaBaseAddressvalue: null
+2023-05-05 02:01:08,718 [INFO] Argument:329 - Argument : DmaBaseAddressvalue: null
+2023-05-05 02:01:08,718 [INFO] Argument:319 - Argument : ChannelIndexvalue: null
+2023-05-05 02:01:08,718 [INFO] Argument:329 - Argument : ChannelIndexvalue: null
+2023-05-05 02:01:08,719 [INFO] Argument:319 - Argument : hdmavalue: null
+2023-05-05 02:01:08,719 [INFO] Argument:321 - 	 sub Args: 
+2023-05-05 02:01:08,719 [INFO] Argument:319 - Argument : Instancevalue: DMA1_Channel5
+2023-05-05 02:01:08,719 [INFO] Argument:329 - Argument : Instancevalue: DMA1_Channel5
+2023-05-05 02:01:08,719 [INFO] Argument:319 - Argument : Initvalue: null
+2023-05-05 02:01:08,719 [INFO] Argument:321 - 	 sub Args: 
+2023-05-05 02:01:08,719 [INFO] Argument:319 - Argument : Requestvalue: DMA_REQUEST_2
+2023-05-05 02:01:08,719 [INFO] Argument:329 - Argument : Requestvalue: DMA_REQUEST_2
+2023-05-05 02:01:08,719 [INFO] Argument:319 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2023-05-05 02:01:08,719 [INFO] Argument:329 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2023-05-05 02:01:08,719 [INFO] Argument:319 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2023-05-05 02:01:08,719 [INFO] Argument:329 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2023-05-05 02:01:08,719 [INFO] Argument:319 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2023-05-05 02:01:08,719 [INFO] Argument:329 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2023-05-05 02:01:08,719 [INFO] Argument:319 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_BYTE
+2023-05-05 02:01:08,719 [INFO] Argument:329 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_BYTE
+2023-05-05 02:01:08,719 [INFO] Argument:319 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_BYTE
+2023-05-05 02:01:08,719 [INFO] Argument:329 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_BYTE
+2023-05-05 02:01:08,719 [INFO] Argument:319 - Argument : Modevalue: DMA_NORMAL
+2023-05-05 02:01:08,719 [INFO] Argument:329 - Argument : Modevalue: DMA_NORMAL
+2023-05-05 02:01:08,719 [INFO] Argument:319 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2023-05-05 02:01:08,719 [INFO] Argument:329 - Argument : Priorityvalue: DMA_PRIORITY_LOW
+2023-05-05 02:01:08,719 [INFO] Argument:319 - Argument : Lockvalue: null
+2023-05-05 02:01:08,719 [INFO] Argument:329 - Argument : Lockvalue: null
+2023-05-05 02:01:08,719 [INFO] Argument:319 - Argument : Statevalue: null
+2023-05-05 02:01:08,719 [INFO] Argument:329 - Argument : Statevalue: null
+2023-05-05 02:01:08,719 [INFO] Argument:319 - Argument : Parentvalue: null
+2023-05-05 02:01:08,719 [INFO] Argument:329 - Argument : Parentvalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:319 - Argument : XferCpltCallbackvalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:329 - Argument : XferCpltCallbackvalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:319 - Argument : XferHalfCpltCallbackvalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:329 - Argument : XferHalfCpltCallbackvalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:319 - Argument : XferErrorCallbackvalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:329 - Argument : XferErrorCallbackvalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:319 - Argument : XferAbortCallbackvalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:329 - Argument : XferAbortCallbackvalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:319 - Argument : ErrorCodevalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:329 - Argument : ErrorCodevalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:319 - Argument : DmaBaseAddressvalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:329 - Argument : DmaBaseAddressvalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:319 - Argument : ChannelIndexvalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:329 - Argument : ChannelIndexvalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:319 - Argument : pSyncConfigvalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:321 - 	 sub Args: 
+2023-05-05 02:01:08,720 [INFO] Argument:319 - Argument : SyncSignalIDvalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:329 - Argument : SyncSignalIDvalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:319 - Argument : SyncPolarityvalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:329 - Argument : SyncPolarityvalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:319 - Argument : SyncEnablevalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:329 - Argument : SyncEnablevalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:319 - Argument : EventEnablevalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:329 - Argument : EventEnablevalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:319 - Argument : RequestNumbervalue: null
+2023-05-05 02:01:08,720 [INFO] Argument:329 - Argument : RequestNumbervalue: null
+2023-05-05 02:01:08,723 [INFO] Argument:319 - Argument : hdmavalue: null
+2023-05-05 02:01:08,723 [INFO] Argument:321 - 	 sub Args: 
+2023-05-05 02:01:08,723 [INFO] Argument:319 - Argument : Instancevalue: DMA1_Channel6
+2023-05-05 02:01:08,723 [INFO] Argument:329 - Argument : Instancevalue: DMA1_Channel6
+2023-05-05 02:01:08,723 [INFO] Argument:319 - Argument : Initvalue: null
+2023-05-05 02:01:08,723 [INFO] Argument:321 - 	 sub Args: 
+2023-05-05 02:01:08,723 [INFO] Argument:319 - Argument : Requestvalue: DMA_REQUEST_2
+2023-05-05 02:01:08,723 [INFO] Argument:329 - Argument : Requestvalue: DMA_REQUEST_2
+2023-05-05 02:01:08,724 [INFO] Argument:319 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2023-05-05 02:01:08,724 [INFO] Argument:329 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2023-05-05 02:01:08,724 [INFO] Argument:319 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2023-05-05 02:01:08,724 [INFO] Argument:329 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2023-05-05 02:01:08,724 [INFO] Argument:319 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2023-05-05 02:01:08,724 [INFO] Argument:329 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2023-05-05 02:01:08,724 [INFO] Argument:319 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_BYTE
+2023-05-05 02:01:08,724 [INFO] Argument:329 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_BYTE
+2023-05-05 02:01:08,724 [INFO] Argument:319 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_BYTE
+2023-05-05 02:01:08,724 [INFO] Argument:329 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_BYTE
+2023-05-05 02:01:08,724 [INFO] Argument:319 - Argument : Modevalue: DMA_NORMAL
+2023-05-05 02:01:08,724 [INFO] Argument:329 - Argument : Modevalue: DMA_NORMAL
+2023-05-05 02:01:08,724 [INFO] Argument:319 - Argument : Priorityvalue: DMA_PRIORITY_HIGH
+2023-05-05 02:01:08,724 [INFO] Argument:329 - Argument : Priorityvalue: DMA_PRIORITY_HIGH
+2023-05-05 02:01:08,724 [INFO] Argument:319 - Argument : Lockvalue: null
+2023-05-05 02:01:08,724 [INFO] Argument:329 - Argument : Lockvalue: null
+2023-05-05 02:01:08,724 [INFO] Argument:319 - Argument : Statevalue: null
+2023-05-05 02:01:08,724 [INFO] Argument:329 - Argument : Statevalue: null
+2023-05-05 02:01:08,724 [INFO] Argument:319 - Argument : Parentvalue: null
+2023-05-05 02:01:08,724 [INFO] Argument:329 - Argument : Parentvalue: null
+2023-05-05 02:01:08,724 [INFO] Argument:319 - Argument : XferCpltCallbackvalue: null
+2023-05-05 02:01:08,724 [INFO] Argument:329 - Argument : XferCpltCallbackvalue: null
+2023-05-05 02:01:08,724 [INFO] Argument:319 - Argument : XferHalfCpltCallbackvalue: null
+2023-05-05 02:01:08,724 [INFO] Argument:329 - Argument : XferHalfCpltCallbackvalue: null
+2023-05-05 02:01:08,724 [INFO] Argument:319 - Argument : XferErrorCallbackvalue: null
+2023-05-05 02:01:08,724 [INFO] Argument:329 - Argument : XferErrorCallbackvalue: null
+2023-05-05 02:01:08,725 [INFO] Argument:319 - Argument : XferAbortCallbackvalue: null
+2023-05-05 02:01:08,725 [INFO] Argument:329 - Argument : XferAbortCallbackvalue: null
+2023-05-05 02:01:08,725 [INFO] Argument:319 - Argument : ErrorCodevalue: null
+2023-05-05 02:01:08,725 [INFO] Argument:329 - Argument : ErrorCodevalue: null
+2023-05-05 02:01:08,725 [INFO] Argument:319 - Argument : DmaBaseAddressvalue: null
+2023-05-05 02:01:08,725 [INFO] Argument:329 - Argument : DmaBaseAddressvalue: null
+2023-05-05 02:01:08,725 [INFO] Argument:319 - Argument : ChannelIndexvalue: null
+2023-05-05 02:01:08,725 [INFO] Argument:329 - Argument : ChannelIndexvalue: null
+2023-05-05 02:01:08,725 [INFO] Argument:319 - Argument : hdmavalue: null
+2023-05-05 02:01:08,725 [INFO] Argument:321 - 	 sub Args: 
+2023-05-05 02:01:08,725 [INFO] Argument:319 - Argument : Instancevalue: DMA1_Channel6
+2023-05-05 02:01:08,725 [INFO] Argument:329 - Argument : Instancevalue: DMA1_Channel6
+2023-05-05 02:01:08,725 [INFO] Argument:319 - Argument : Initvalue: null
+2023-05-05 02:01:08,725 [INFO] Argument:321 - 	 sub Args: 
+2023-05-05 02:01:08,725 [INFO] Argument:319 - Argument : Requestvalue: DMA_REQUEST_2
+2023-05-05 02:01:08,725 [INFO] Argument:329 - Argument : Requestvalue: DMA_REQUEST_2
+2023-05-05 02:01:08,725 [INFO] Argument:319 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2023-05-05 02:01:08,725 [INFO] Argument:329 - Argument : Directionvalue: DMA_PERIPH_TO_MEMORY
+2023-05-05 02:01:08,725 [INFO] Argument:319 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2023-05-05 02:01:08,725 [INFO] Argument:329 - Argument : PeriphIncvalue: DMA_PINC_DISABLE
+2023-05-05 02:01:08,725 [INFO] Argument:319 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2023-05-05 02:01:08,725 [INFO] Argument:329 - Argument : MemIncvalue: DMA_MINC_ENABLE
+2023-05-05 02:01:08,725 [INFO] Argument:319 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_BYTE
+2023-05-05 02:01:08,725 [INFO] Argument:329 - Argument : PeriphDataAlignmentvalue: DMA_PDATAALIGN_BYTE
+2023-05-05 02:01:08,725 [INFO] Argument:319 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_BYTE
+2023-05-05 02:01:08,725 [INFO] Argument:329 - Argument : MemDataAlignmentvalue: DMA_MDATAALIGN_BYTE
+2023-05-05 02:01:08,725 [INFO] Argument:319 - Argument : Modevalue: DMA_NORMAL
+2023-05-05 02:01:08,726 [INFO] Argument:329 - Argument : Modevalue: DMA_NORMAL
+2023-05-05 02:01:08,726 [INFO] Argument:319 - Argument : Priorityvalue: DMA_PRIORITY_HIGH
+2023-05-05 02:01:08,726 [INFO] Argument:329 - Argument : Priorityvalue: DMA_PRIORITY_HIGH
+2023-05-05 02:01:08,726 [INFO] Argument:319 - Argument : Lockvalue: null
+2023-05-05 02:01:08,726 [INFO] Argument:329 - Argument : Lockvalue: null
+2023-05-05 02:01:08,726 [INFO] Argument:319 - Argument : Statevalue: null
+2023-05-05 02:01:08,726 [INFO] Argument:329 - Argument : Statevalue: null
+2023-05-05 02:01:08,726 [INFO] Argument:319 - Argument : Parentvalue: null
+2023-05-05 02:01:08,726 [INFO] Argument:329 - Argument : Parentvalue: null
+2023-05-05 02:01:08,726 [INFO] Argument:319 - Argument : XferCpltCallbackvalue: null
+2023-05-05 02:01:08,726 [INFO] Argument:329 - Argument : XferCpltCallbackvalue: null
+2023-05-05 02:01:08,726 [INFO] Argument:319 - Argument : XferHalfCpltCallbackvalue: null
+2023-05-05 02:01:08,726 [INFO] Argument:329 - Argument : XferHalfCpltCallbackvalue: null
+2023-05-05 02:01:08,726 [INFO] Argument:319 - Argument : XferErrorCallbackvalue: null
+2023-05-05 02:01:08,726 [INFO] Argument:329 - Argument : XferErrorCallbackvalue: null
+2023-05-05 02:01:08,726 [INFO] Argument:319 - Argument : XferAbortCallbackvalue: null
+2023-05-05 02:01:08,726 [INFO] Argument:329 - Argument : XferAbortCallbackvalue: null
+2023-05-05 02:01:08,726 [INFO] Argument:319 - Argument : ErrorCodevalue: null
+2023-05-05 02:01:08,726 [INFO] Argument:329 - Argument : ErrorCodevalue: null
+2023-05-05 02:01:08,726 [INFO] Argument:319 - Argument : DmaBaseAddressvalue: null
+2023-05-05 02:01:08,726 [INFO] Argument:329 - Argument : DmaBaseAddressvalue: null
+2023-05-05 02:01:08,727 [INFO] Argument:319 - Argument : ChannelIndexvalue: null
+2023-05-05 02:01:08,727 [INFO] Argument:329 - Argument : ChannelIndexvalue: null
+2023-05-05 02:01:08,727 [INFO] Argument:319 - Argument : pSyncConfigvalue: null
+2023-05-05 02:01:08,727 [INFO] Argument:321 - 	 sub Args: 
+2023-05-05 02:01:08,727 [INFO] Argument:319 - Argument : SyncSignalIDvalue: null
+2023-05-05 02:01:08,727 [INFO] Argument:329 - Argument : SyncSignalIDvalue: null
+2023-05-05 02:01:08,727 [INFO] Argument:319 - Argument : SyncPolarityvalue: null
+2023-05-05 02:01:08,727 [INFO] Argument:329 - Argument : SyncPolarityvalue: null
+2023-05-05 02:01:08,727 [INFO] Argument:319 - Argument : SyncEnablevalue: null
+2023-05-05 02:01:08,727 [INFO] Argument:329 - Argument : SyncEnablevalue: null
+2023-05-05 02:01:08,727 [INFO] Argument:319 - Argument : EventEnablevalue: null
+2023-05-05 02:01:08,728 [INFO] Argument:329 - Argument : EventEnablevalue: null
+2023-05-05 02:01:08,728 [INFO] Argument:319 - Argument : RequestNumbervalue: null
+2023-05-05 02:01:08,728 [INFO] Argument:329 - Argument : RequestNumbervalue: null
+2023-05-05 02:01:08,957 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\MXTmpFiles\license.tmp_save
+2023-05-05 02:01:09,108 [INFO] CodeEngine:279 - Generated code: C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\MXTmpFiles\license.tmp
+2023-05-05 02:01:09,275 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Src\gpio.c_save
+2023-05-05 02:01:09,453 [INFO] CodeEngine:279 - Generated code: C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Src\gpio.c
+2023-05-05 02:01:09,476 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Inc\gpio.h_save
+2023-05-05 02:01:09,662 [INFO] CodeEngine:279 - Generated code: C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Inc\gpio.h
+2023-05-05 02:01:11,254 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Src\adc.c_save
+2023-05-05 02:01:11,405 [INFO] CodeEngine:279 - Generated code: C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Src\adc.c
+2023-05-05 02:01:11,425 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Inc\adc.h_save
+2023-05-05 02:01:11,541 [INFO] CodeEngine:279 - Generated code: C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Inc\adc.h
+2023-05-05 02:01:11,811 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Src\dma.c_save
+2023-05-05 02:01:11,964 [INFO] CodeEngine:279 - Generated code: C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Src\dma.c
+2023-05-05 02:01:11,986 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Inc\dma.h_save
+2023-05-05 02:01:12,215 [INFO] CodeEngine:279 - Generated code: C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Inc\dma.h
+2023-05-05 02:01:12,249 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Src\iwdg.c_save
+2023-05-05 02:01:12,472 [INFO] CodeEngine:279 - Generated code: C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Src\iwdg.c
+2023-05-05 02:01:12,483 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Inc\iwdg.h_save
+2023-05-05 02:01:12,613 [INFO] CodeEngine:279 - Generated code: C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Inc\iwdg.h
+2023-05-05 02:01:12,640 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Src\tim.c_save
+2023-05-05 02:01:12,777 [INFO] CodeEngine:279 - Generated code: C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Src\tim.c
+2023-05-05 02:01:12,786 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Inc\tim.h_save
+2023-05-05 02:01:12,917 [INFO] CodeEngine:279 - Generated code: C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Inc\tim.h
+2023-05-05 02:01:12,952 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Src\usart.c_save
+2023-05-05 02:01:13,137 [INFO] CodeEngine:279 - Generated code: C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Src\usart.c
+2023-05-05 02:01:13,159 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Inc\usart.h_save
+2023-05-05 02:01:13,267 [INFO] CodeEngine:279 - Generated code: C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Inc\usart.h
+2023-05-05 02:01:13,298 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Src\stm32l4xx_it.c_save
+2023-05-05 02:01:13,594 [INFO] CodeEngine:279 - Generated code: C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Src\stm32l4xx_it.c
+2023-05-05 02:01:13,619 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Inc\stm32l4xx_it.h_save
+2023-05-05 02:01:13,708 [INFO] CodeEngine:279 - Generated code: C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Inc\stm32l4xx_it.h
+2023-05-05 02:01:13,754 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Src\stm32l4xx_hal_msp.c_save
+2023-05-05 02:01:13,888 [INFO] CodeEngine:279 - Generated code: C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Src\stm32l4xx_hal_msp.c
+2023-05-05 02:01:13,901 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\MXTmpFiles\system.tmp_save
+2023-05-05 02:01:13,985 [INFO] CodeEngine:279 - Generated code: C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\MXTmpFiles\system.tmp
+2023-05-05 02:01:14,015 [INFO] CodeEngine:311 - oldGeneratedFile, C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Inc\stm32l4xx_hal_conf.h_save
+2023-05-05 02:01:14,125 [INFO] CodeEngine:335 - Generated code: C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Inc\stm32l4xx_hal_conf.h
+2023-05-05 02:01:14,181 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Inc\main.h_save
+2023-05-05 02:01:14,377 [INFO] CodeEngine:279 - Generated code: C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Inc\main.h
+2023-05-05 02:01:14,402 [INFO] CodeEngine:255 - oldGeneratedFile, C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Src\main.c_save
+2023-05-05 02:01:14,539 [INFO] CodeEngine:279 - Generated code: C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\Core\Src\main.c
+2023-05-05 02:01:15,990 [INFO] ProjectBuilder:2996 - Time for Copy HAL[1] : 641mS.
+2023-05-05 02:01:15,999 [INFO] ProjectBuilder:4304 - Project Generator version: 3.19.2
+2023-05-05 02:01:16,725 [INFO] ConfigFileManager:1483 - The Die is : DIE435
+2023-05-05 02:01:19,185 [INFO] ProjectBuilder:4505 - Time for Generating toolchain IDE Files: 3185mS.
+2023-05-05 02:01:19,186 [INFO] ProjectBuilder:2867 - Time for Copy CMSIS : 0mS.
+2023-05-05 02:01:19,191 [INFO] ProjectBuilder:2867 - Time for Copy CMSIS : 0mS.
