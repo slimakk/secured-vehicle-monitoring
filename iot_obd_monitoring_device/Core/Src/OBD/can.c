@@ -22,8 +22,9 @@
 #include "OBD.h"
 /* USER CODE BEGIN 0 */
 extern OBD obd_comm;
-extern IWDG_HandleTypeDef hiwdg;
+//extern IWDG_HandleTypeDef hiwdg;
 uint32_t tx_mailbox;
+uint8_t rx_mailbox[RX_DATA_LENGTH];
 
 /* USER CODE END 0 */
 
@@ -149,7 +150,7 @@ void can_config(void)
 	HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
 }
 
-void can_send_msg(uint8_t *tx_frame)
+uint8_t can_send_msg(uint8_t *tx_frame)
 {
 	CAN_TxHeaderTypeDef tx_header;
 	tx_header.StdId = 0x7DF;
@@ -158,26 +159,35 @@ void can_send_msg(uint8_t *tx_frame)
 	tx_header.RTR = CAN_RTR_DATA;
 
 	obd_comm.msg_type = 1;
-
+	HAL_TIM_Base_Start_IT(MSG_TIMER);
 	if(HAL_CAN_AddTxMessage(&hcan1, &tx_header, tx_frame, &tx_mailbox) != HAL_OK)
 	{
 		Error_Handler();
 	}
-
+	while((obd_comm.msg_type != 0) && (obd_comm.timeout != 1))
+	{
+		__NOP();
+	}
+	if(obd_comm.timeout == 1)
+	{
+		obd_comm.timeout = 0;
+		return (FALSE);
+	}
+	obd_comm.current_value = obd2_pid_parse(rx_mailbox);
+	return (TRUE);
 }
 
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
 	CAN_RxHeaderTypeDef rx_header;
-	uint8_t rx_data[RX_DATA_LENGTH];
 
 	obd_comm.msg_type = 0;
 
-	HAL_CAN_GetRxMessage(&hcan1, CAN_RX_FIFO0, &rx_header, rx_data);
+	HAL_CAN_GetRxMessage(&hcan1, CAN_RX_FIFO0, &rx_header, rx_mailbox);
 
-	obd_comm.current_value = obd2_pid_parse(rx_data);
+	HAL_TIM_Base_Stop_IT(MSG_TIMER);
 
-	HAL_IWDG_Refresh(&hiwdg);
+//	HAL_IWDG_Refresh(&hiwdg);
 }
 
 void HAL_CAN_ErrorCallback(CAN_HandleTypeDef *hcan)

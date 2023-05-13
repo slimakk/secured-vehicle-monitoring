@@ -27,6 +27,7 @@ extern "C" {
 
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "tim.h"
 
 /* USER CODE BEGIN Includes */
 
@@ -44,7 +45,7 @@ void MX_CAN1_Init(void);
 /* USER CODE BEGIN Prototypes */
 void can_config(void);
 
-void can_send_msg(uint8_t* tx_frame);
+uint8_t can_send_msg(uint8_t* tx_frame);
 /* USER CODE END Prototypes */
 
 #ifdef __cplusplus

@@ -1,8 +1,7 @@
-../Core/Src/usart.c:35:6:MX_USART1_UART_Init	8	static
-../Core/Src/usart.c:67:6:MX_USART2_UART_Init	8	static
-../Core/Src/usart.c:99:6:MX_USART3_UART_Init	8	static
-../Core/Src/usart.c:129:6:HAL_UART_MspInit	152	static
-../Core/Src/usart.c:286:6:HAL_UART_MspDeInit	16	static
-../Core/Src/usart.c:358:6:HAL_UART_RxCpltCallback	16	static
-../Core/Src/usart.c:370:6:HAL_UARTEx_RxEventCallback	16	static
-../Core/Src/usart.c:375:6:HAL_UART_TxCpltCallback	16	static,ignoring_inline_asm
+../Core/Src/usart.c:34:6:MX_USART1_UART_Init	8	static
+../Core/Src/usart.c:66:6:MX_USART2_UART_Init	8	static
+../Core/Src/usart.c:97:6:HAL_UART_MspInit	144	static
+../Core/Src/usart.c:220:6:HAL_UART_MspDeInit	16	static
+../Core/Src/usart.c:274:6:HAL_UART_RxCpltCallback	16	static
+../Core/Src/usart.c:286:6:HAL_UARTEx_RxEventCallback	16	static
+../Core/Src/usart.c:291:6:HAL_UART_TxCpltCallback	16	static,ignoring_inline_asm

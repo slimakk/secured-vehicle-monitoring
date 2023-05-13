@@ -9,8 +9,7 @@
 
 extern uint8_t uartBuf[10];
 extern OBD obd_comm;
-extern IWDG_HandleTypeDef hiwdg;
-extern TIM_HandleTypeDef htim6;
+//extern IWDG_HandleTypeDef hiwdg;
 uint8_t kline_rx_buf[16];
 
 uint8_t rx_frame[7];
@@ -95,7 +94,7 @@ obd_protocol kwp2000_fast_init(void)
 //	HAL_Delay(20);
 
 	HAL_UART_Receive_DMA(KLINE, uartBuf, 8);
-	HAL_TIM_Base_Start_IT(&htim6);
+	HAL_TIM_Base_Start_IT(KLINE_TIMER);
 
 	while((obd_comm.msg_type != 0) && (obd_comm.msg_type != 3))
 	{
@@ -145,7 +144,7 @@ static void uart_pin_state(uint8_t state)
 	}
 }
 
-void kline_send_msg(uint8_t *tx_frame)
+uint8_t kline_send_msg(uint8_t *tx_frame)
 {
 	uint8_t kline_msg[6] = {0x68, 0x6A, 0xF1, tx_frame[0], tx_frame[1], 0};
 
@@ -165,10 +164,31 @@ void kline_send_msg(uint8_t *tx_frame)
 
 	HAL_UART_Receive_DMA(KLINE, kline_rx_buf, pid_length + 4);
 
-	HAL_Delay(60);
+	HAL_TIM_Base_Start_IT(MSG_TIMER);
+
+	while((obd_comm.msg_type != 0) && (obd_comm.timeout != 1))
+	{
+		__NOP();
+	}
+	if(obd_comm.timeout == 1)
+	{
+		return (FALSE);
+	}
+	if(verify_checksum(kline_rx_buf, pid_length + 5))
+	{
+		uint8_t j = 0;
+		for(uint8_t i = 2; i <= pid_length + 4; i++)
+		{
+			rx_frame[j] = kline_rx_buf[i];
+			j++;
+		}
+		obd_comm.current_value = obd2_pid_parse(rx_frame);
+		return (TRUE);
+	}
+	return (FALSE);
 }
 
-void kwp2000_send_msg(uint8_t *tx_frame)
+uint8_t kwp2000_send_msg(uint8_t *tx_frame)
 {
 	uint8_t kwp_msg[] = {0xC2, 0x33, 0xF1, tx_frame[0], tx_frame[1], 0};
 
@@ -191,7 +211,28 @@ void kwp2000_send_msg(uint8_t *tx_frame)
 
 	HAL_UART_Receive_DMA(KLINE, kline_rx_buf, pid_length + 5);
 
-	HAL_Delay(60);
+	HAL_TIM_Base_Start_IT(MSG_TIMER);
+
+	while((obd_comm.msg_type != 0) && (obd_comm.timeout != 1))
+	{
+		__NOP();
+	}
+	if(obd_comm.timeout == 1)
+	{
+		return (FALSE);
+	}
+	if(verify_checksum(kline_rx_buf, pid_length + 5))
+	{
+		uint8_t j = 0;
+		for(uint8_t i = 2; i <= pid_length + 4; i++)
+		{
+			rx_frame[j] = kline_rx_buf[i];
+			j++;
+		}
+		obd_comm.current_value = obd2_pid_parse(rx_frame);
+		return (TRUE);
+	}
+	return (FALSE);
 }
 
 static uint8_t verify_checksum (uint8_t *data, uint8_t lenght)
@@ -213,22 +254,12 @@ void kline_rx_callback(void)
 {
 	if(obd_comm.msg_type == 1)
 	{
-		HAL_TIM_Base_Stop_IT(&htim6);
+		HAL_TIM_Base_Stop_IT(KLINE_TIMER);
 		obd_comm.msg_type = 0;
 	}
 	else if (obd_comm.msg_type == 2)
 	{
-		if(verify_checksum(kline_rx_buf, pid_length + 5))
-		{
-			uint8_t j = 0;
-			for(uint8_t i = 2; i <= pid_length + 4; i++)
-			{
-				rx_frame[j] = kline_rx_buf[i];
-				j++;
-			}
-			obd_comm.msg_type = 0;
-			obd_comm.current_value = obd2_pid_parse(rx_frame);
-			HAL_IWDG_Refresh(&hiwdg);
-		}
+		HAL_TIM_Base_Stop_IT(MSG_TIMER);
+		obd_comm.msg_type = 0;
 	}
 }

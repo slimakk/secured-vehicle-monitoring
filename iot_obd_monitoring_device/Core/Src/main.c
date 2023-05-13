@@ -20,7 +20,6 @@
 #include "main.h"
 #include "adc.h"
 #include "dma.h"
-#include "iwdg.h"
 #include "tim.h"
 #include "usart.h"
 #include "gpio.h"
@@ -50,6 +49,8 @@
 
 uint8_t uartBuf[10] = {0};
 
+uint16_t adc_buffer[64] = {0};
+
 OBD obd_comm;
 
 BG77 module;
@@ -60,36 +61,36 @@ BG77 module;
 void SystemClock_Config(void);
 static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
-static void acquire_vehicle_data(OBD obd, float buffer[][2]);
+static void acquire_vehicle_data(float buffer[][2]);
 static uint8_t mqtt_start(BG77 module);
 static uint8_t mqtt_stop(BG77 module);
-static void createJson(char buff[1000], float array[][2], int num_of_values);
+static void createJson(char buff[1000], float array[][2], float array_cpy[][2], int num_of_values);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-static void acquire_vehicle_data(OBD obd, float buffer[][2])
+static void acquire_vehicle_data(float buffer[][2])
 {
-	obd2_pid_check(obd);
-	for(uint8_t i = 0; i < obd.pid_count; i++)
+	uint8_t pids [3] = {0x5, 0xc, 0xd};
+	for(uint8_t i = 0; i < sizeof(pids); i++)
 	{
-		obd.pid = obd.pids[i];
-		obd2_request(obd);
-		while(obd.msg_type != 0)
+		obd_comm.pid = pids[i];
+		obd2_request(obd_comm);
+		if(obd2_request(obd_comm))
 		{
-			__NOP();
+			buffer[i][0] = obd_comm.pid;
+			buffer[i][1] = obd_comm.current_value;
 		}
-		buffer[i][0] = obd.pid;
-		buffer[i][1] = obd.current_value;
+
 	}
 }
 
-static void createJson(char buff[1000], float array[][2], int num_of_values)
+static void createJson(char buff[1000], float array[][2], float array_cpy[][2], int num_of_values)
 {
     char json_string [10] = "{\n";
     char temp[100];
     sprintf(buff, json_string);
-    for (int i = 0; i <= num_of_values - 1; i++)
+    for (uint8_t i = 0; i <= num_of_values - 1; i++)
     {
         if(i == num_of_values - 1)
         {
@@ -100,8 +101,9 @@ static void createJson(char buff[1000], float array[][2], int num_of_values)
         	sprintf(temp, "\"0x%x\":%.2f,\n", (uint8_t)array[i][0], array[i][1]);
         }
         strcat(buff, temp);
+        array_cpy[i][0] = array[i][0];
+        array_cpy[i][1] = array[i][1];
     }
-//    strcat(buff, "}\n");
 }
 
 static uint8_t mqtt_start(BG77 module)
@@ -112,7 +114,7 @@ static uint8_t mqtt_start(BG77 module)
 		return (FALSE);
 	}
 	HAL_Delay(10000);
-	if(mqtt_connect(0,"obd2", &module))
+	if(mqtt_connect(0,"obd5", &module))
 	{
 		return (TRUE);
 	}
@@ -147,12 +149,12 @@ static uint8_t mqtt_stop(BG77 module)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	float mqtt_buf[3][2] = {{0x05,75.0},{0x0C, 50.0},{0x0D, 1500}};
 	float obd_buf[99][2];
+	float obd_buf_cpy[99][2];
 	char buffer[1000];
 	uint32_t timer = 0;
-	uint32_t timer_t = 0;
-	uint8_t rand_or = 0;
+//	uint32_t timer_t = 0;
+	uint16_t counter = 0;
 
   /* USER CODE END 1 */
 
@@ -178,29 +180,31 @@ int main(void)
   MX_ADC1_Init();
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
-  MX_USART3_UART_Init();
-//  MX_IWDG_Init();
   MX_TIM6_Init();
   MX_TIM2_Init();
   MX_TIM7_Init();
+  MX_TIM16_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-  module.initialized = module_init(&module);
-  module.rssi = check_signal(module);
-  obd_comm.used_protocol = OBD2_Init();
+//  HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
+//  HAL_ADC_Start_DMA(&hadc1, adc_buffer, 64);
+//
+//  obd_comm.voltage = adc_avg(adc_buffer);
 
-  acquire_vehicle_data(obd_comm, obd_buf);
+  module.initialized = module_init(&module);
+  module.rssi = check_signal();
+  obd_comm.used_protocol = obd2_init();
+
+  acquire_vehicle_data(obd_buf);
   module.connected = mqtt_start(module);
 
-  createJson(buffer, obd_buf, obd_comm.pid_count);
-
-//  mqtt_publish(0,0,0,0,OBD_TOPIC, "Hello from the other side");
+  createJson(buffer, obd_buf, obd_buf_cpy,3);
 
   mqtt_publish(0,0,0,0,OBD_TOPIC, buffer);
 
-  module.connected = mqtt_stop(module);
+
 
   /* USER CODE END 2 */
 
@@ -210,32 +214,13 @@ int main(void)
   {
 	  if((HAL_GetTick() - timer) >= 5000)
 	  {
-		  if(rand_or == 0)
-		  {
-			  mqtt_buf[0][1] += 1;
-			  mqtt_buf[1][1] += 20.5;
-			  mqtt_buf[2][1] += 21.8;
-			  rand_or++;
-		  }
-		  else if(rand_or == 1)
-		  {
-			  mqtt_buf[0][1] += 2;
-			  mqtt_buf[1][1] += 12.2;
-			  mqtt_buf[2][1] += 54.7;
-			  rand_or++;
-		  }
-		  else
-		  {
-			  mqtt_buf[0][1] -= 5.5;
-			  mqtt_buf[1][1] -= 15.7;
-			  mqtt_buf[2][1] -= 28.9;
-			  rand_or = 0;
-		  }
-		  createJson(buffer, mqtt_buf, 3);
+		  acquire_vehicle_data(obd_buf);
+		  createJson(buffer, obd_buf, obd_buf_cpy,3);
 		  mqtt_publish(0,0,0,0,OBD_TOPIC, buffer);
+		  counter++;
 		  timer = HAL_GetTick();
 	  }
-	  if((HAL_GetTick() - timer_t) >= 1000000)
+	  if(counter >= 1000)
 	  {
 		  module.connected = mqtt_stop(module);
 	  }
@@ -265,9 +250,8 @@ void SystemClock_Config(void)
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_LSI|RCC_OSCILLATORTYPE_HSE;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
   RCC_OscInitStruct.HSEState = RCC_HSE_ON;
-  RCC_OscInitStruct.LSIState = RCC_LSI_ON;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
   RCC_OscInitStruct.PLL.PLLM = 1;
@@ -305,7 +289,7 @@ static void MX_NVIC_Init(void)
   HAL_NVIC_SetPriority(DMA1_Channel6_IRQn, 0, 0);
   HAL_NVIC_EnableIRQ(DMA1_Channel6_IRQn);
   /* USART2_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(USART2_IRQn, 0, 0);
+  HAL_NVIC_SetPriority(USART2_IRQn, 1, 0);
   HAL_NVIC_EnableIRQ(USART2_IRQn);
 }
 

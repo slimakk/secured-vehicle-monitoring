@@ -10,6 +10,8 @@
 
 #define TX_DATA_LENGTH    (8)
 #define RX_DATA_LENGTH    (8)
+#define MSG_TIMER &htim16
+#define MAX_REQ_REPEAT	10
 
 #include "main.h"
 
@@ -26,16 +28,15 @@ typedef struct {
 	uint8_t pid;
 	uint8_t pid_index;
 	uint8_t available_pids[96];
-//	uint8_t available_pids_2 [32];
-//	uint8_t available_pids_3 [32];
 	uint8_t pid_count;
 	uint8_t pids[96];
 	uint8_t msg_type;
+	uint8_t timeout;
 	float current_value;
 	float voltage;
 } OBD;
 
-void obd2_request(OBD obd);
+uint8_t obd2_request(OBD obd);
 
 float obd2_pid_parse(uint8_t *rx_frame);
 

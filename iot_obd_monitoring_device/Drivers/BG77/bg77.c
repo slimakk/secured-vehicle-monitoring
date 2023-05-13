@@ -197,10 +197,6 @@ uint8_t mqtt_open(const char* broker_address, uint16_t port, uint8_t id)
 		token = strtok(NULL, ",");
 		i++;
 	}
-	if(ret[1] == 0)
-	{
-		return (TRUE);
-	}
 	return (ret[1]);
 }
 /*

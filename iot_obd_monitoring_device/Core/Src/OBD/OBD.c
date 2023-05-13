@@ -42,26 +42,62 @@ static void obd2_pid_decode(uint8_t* rx_frame)
 	}
 }
 
-void obd2_request(OBD obd)
+uint8_t obd2_request(OBD obd)
 {
 	HAL_Delay(10);
+	uint8_t repeat = 0;
 	if(obd.used_protocol == OBD_PROTO_CAN)
 	{
 		uint8_t tx_data_CAN[TX_DATA_LENGTH] = {0x02, 0x01, obd.pid, 0x00, 0x00, 0x00, 0x00, 0x00};
-		can_send_msg(tx_data_CAN);
+		while (!(can_send_msg(tx_data_CAN)))
+		{
+			if(repeat < MAX_REQ_REPEAT)
+			{
+				repeat++;
+			}
+			else
+			{
+				return (FALSE);
+			}
+		}
+		return (TRUE);
 	}
 	else if(obd.used_protocol == OBD_PROTO_ISO9141 || OBD_PROTO_KWP2000_SLOW || OBD_PROTO_KWP2000_FAST)
 	{
 		uint8_t tx_data_ISO[2] = {0x01, obd.pid};
 		if(obd.used_protocol == OBD_PROTO_ISO9141)
 		{
-			kline_send_msg(tx_data_ISO);
+			while (!(kline_send_msg(tx_data_ISO)))
+			{
+			if(repeat < MAX_REQ_REPEAT)
+			{
+				repeat++;
+			}
+			else
+			{
+				return (FALSE);
+			}
+			}
+			return (TRUE);
 		}
 		else
 		{
-			kwp2000_send_msg(tx_data_ISO);
+			while (!(kwp2000_send_msg(tx_data_ISO)))
+			{
+			if(repeat < MAX_REQ_REPEAT)
+			{
+				repeat++;
+			}
+			else
+			{
+				return (FALSE);
+			}
+			}
+			return (TRUE);
 		}
+		return (FALSE);
 	}
+	return (FALSE);
 }
 
 float obd2_pid_parse(uint8_t* rx_frame)

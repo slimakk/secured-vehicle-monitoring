@@ -1,8 +1,8 @@
-main.c:71:13:acquire_vehicle_data	3
-main.c:86:13:createJson	3
-main.c:106:16:mqtt_start	1
-main.c:130:16:mqtt_stop	3
-main.c:155:5:main	5
-main.c:258:6:SystemClock_Config	4
-main.c:307:13:MX_NVIC_Init	1
-main.c:325:6:Error_Handler	1
+main.c:72:13:acquire_vehicle_data	3
+main.c:88:13:createJson	3
+main.c:109:16:mqtt_start	3
+main.c:124:16:mqtt_stop	3
+main.c:149:5:main	3
+main.c:238:6:SystemClock_Config	4
+main.c:286:13:MX_NVIC_Init	1
+main.c:304:6:Error_Handler	1
