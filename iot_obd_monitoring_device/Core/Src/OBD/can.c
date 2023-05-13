@@ -175,7 +175,7 @@ void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 
 	HAL_CAN_GetRxMessage(&hcan1, CAN_RX_FIFO0, &rx_header, rx_data);
 
-	obd_comm.current_value = OBD2_PID_Parse(rx_data);
+	obd_comm.current_value = obd2_pid_parse(rx_data);
 
 	HAL_IWDG_Refresh(&hiwdg);
 }

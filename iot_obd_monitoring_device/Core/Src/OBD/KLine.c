@@ -19,24 +19,24 @@ static uint8_t ecu_addr;
 static uint8_t pid_length;
 
 static void MX_GPIO_KLineUART_Init(void);
-static void UART_PIN_State(uint8_t state);
-static uint8_t Verify_Checksum (uint8_t *data, uint8_t lenght);
+static void uart_pin_state(uint8_t state);
+static uint8_t verify_checksum (uint8_t *data, uint8_t lenght);
 
-obd_protocol KLine_Init(void){
+obd_protocol kline_init(void){
 	MX_GPIO_KLineUART_Init();
 //	5 Baud address 0x33
 	HAL_Delay(3000);
-	UART_PIN_State(0); //0
+	uart_pin_state(0); //0
 	HAL_Delay(200);
-	UART_PIN_State(1);//11
+	uart_pin_state(1);//11
 	HAL_Delay(400);
-	UART_PIN_State(0);//00
+	uart_pin_state(0);//00
 	HAL_Delay(400);
-	UART_PIN_State(1);//11
+	uart_pin_state(1);//11
 	HAL_Delay(400);
-	UART_PIN_State(0);//00
+	uart_pin_state(0);//00
 	HAL_Delay(400);
-	UART_PIN_State(1);//1
+	uart_pin_state(1);//1
 
 	MX_USART1_UART_Init();
 
@@ -44,7 +44,7 @@ obd_protocol KLine_Init(void){
 
 	if(uartBuf[0] != 0x55)
 	{
-		return OBD_NONE;
+		return (OBD_NONE);
 	}
 	else if(uartBuf[1] == uartBuf[2])
 	{
@@ -57,7 +57,7 @@ obd_protocol KLine_Init(void){
 			__HAL_UART_SEND_REQ(KLINE, UART_RXDATA_FLUSH_REQUEST);
 			HAL_UART_Receive(KLINE, &ecu_addr, 1, 100);
 //			__HAL_UART_SEND_REQ(KLINE, UART_RXDATA_FLUSH_REQUEST);
-			return OBD_PROTO_ISO9141;
+			return (OBD_PROTO_ISO9141);
 		}
 	}
 	else
@@ -67,11 +67,12 @@ obd_protocol KLine_Init(void){
 		HAL_UART_Transmit(KLINE, &inv_kb, 1, 50);
 		__HAL_UART_SEND_REQ(KLINE, UART_RXDATA_FLUSH_REQUEST);
 		HAL_UART_Receive(KLINE, &ecu_addr, 1, 100);
-		return OBD_PROTO_KWP2000_SLOW;
+		return (OBD_PROTO_KWP2000_SLOW);
 	}
+	return (OBD_NONE);
 }
 
-obd_protocol KWP2000_Fast_Init(void)
+obd_protocol kwp2000_fast_init(void)
 {
 	uint8_t start_msg[5]={0xC1, 0x33, 0xF1, 0x81, 0x66};
 //	uint8_t resp_msg[7]={0};
@@ -81,9 +82,9 @@ obd_protocol KWP2000_Fast_Init(void)
 	HAL_UART_DeInit(KLINE);
 	HAL_Delay(3000);
 	MX_GPIO_KLineUART_Init();
-	UART_PIN_State(0);
+	uart_pin_state(0);
 	HAL_Delay(25);
-	UART_PIN_State(1);
+	uart_pin_state(1);
 	HAL_Delay(25);
 	if (HAL_UART_Init(KLINE) != HAL_OK)
 	{
@@ -110,13 +111,13 @@ obd_protocol KWP2000_Fast_Init(void)
 		if(checksum == uartBuf[7] && checksum != 0)
 		{
 			ecu_addr = uartBuf[3];
-			return OBD_PROTO_KWP2000_FAST;
+			return (OBD_PROTO_KWP2000_FAST);
 		}
 		else
-			return OBD_NONE;
+			return (OBD_NONE);
 	}
 	else
-		return OBD_NONE;
+		return (OBD_NONE);
 }
 
 static void MX_GPIO_KLineUART_Init(void)
@@ -129,7 +130,7 @@ static void MX_GPIO_KLineUART_Init(void)
 	HAL_GPIO_Init(K_Line_TX_GPIO_Port, &GPIO_InitStruct);
 }
 
-static void UART_PIN_State(uint8_t state)
+static void uart_pin_state(uint8_t state)
 {
 	/*KLine has inverted logic, HIGH = 0, LOW = 1*/
 	if(state == 1)
@@ -144,7 +145,7 @@ static void UART_PIN_State(uint8_t state)
 	}
 }
 
-void KLine_SEND_MESSAGE(uint8_t *tx_frame)
+void kline_send_msg(uint8_t *tx_frame)
 {
 	uint8_t kline_msg[6] = {0x68, 0x6A, 0xF1, tx_frame[0], tx_frame[1], 0};
 
@@ -167,7 +168,7 @@ void KLine_SEND_MESSAGE(uint8_t *tx_frame)
 	HAL_Delay(60);
 }
 
-void KWP2000_SEND_MESSAGE(uint8_t *tx_frame)
+void kwp2000_send_msg(uint8_t *tx_frame)
 {
 	uint8_t kwp_msg[] = {0xC2, 0x33, 0xF1, tx_frame[0], tx_frame[1], 0};
 
@@ -193,7 +194,7 @@ void KWP2000_SEND_MESSAGE(uint8_t *tx_frame)
 	HAL_Delay(60);
 }
 
-static uint8_t Verify_Checksum (uint8_t *data, uint8_t lenght)
+static uint8_t verify_checksum (uint8_t *data, uint8_t lenght)
 {
 	uint8_t checksum = 0;
 	for(int i = 0; i < lenght - 1; i++)
@@ -203,9 +204,9 @@ static uint8_t Verify_Checksum (uint8_t *data, uint8_t lenght)
 	checksum = checksum % 256;
 	if(data[lenght - 1] == checksum)
 	{
-		return 1;
+		return (TRUE);
 	}
-	return 0;
+	return (FALSE);
 }
 
 void kline_rx_callback(void)
@@ -217,7 +218,7 @@ void kline_rx_callback(void)
 	}
 	else if (obd_comm.msg_type == 2)
 	{
-		if(Verify_Checksum(kline_rx_buf, pid_length + 5))
+		if(verify_checksum(kline_rx_buf, pid_length + 5))
 		{
 			uint8_t j = 0;
 			for(uint8_t i = 2; i <= pid_length + 4; i++)
@@ -226,8 +227,7 @@ void kline_rx_callback(void)
 				j++;
 			}
 			obd_comm.msg_type = 0;
-			obd_comm.current_value = OBD2_PID_Parse(rx_frame);
-//			OBD2_ShowOnDisplay(obd_comm.current_value);
+			obd_comm.current_value = obd2_pid_parse(rx_frame);
 			HAL_IWDG_Refresh(&hiwdg);
 		}
 	}

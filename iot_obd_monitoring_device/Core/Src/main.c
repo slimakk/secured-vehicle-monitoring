@@ -63,16 +63,18 @@ static void MX_NVIC_Init(void);
 static void acquire_vehicle_data(OBD obd, float buffer[][2]);
 static uint8_t mqtt_start(BG77 module);
 static uint8_t mqtt_stop(BG77 module);
+static void createJson(char buff[1000], float array[][2], int num_of_values);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 static void acquire_vehicle_data(OBD obd, float buffer[][2])
 {
+	obd2_pid_check(obd);
 	for(uint8_t i = 0; i < obd.pid_count; i++)
 	{
 		obd.pid = obd.pids[i];
-		OBD2_Request(obd);
+		obd2_request(obd);
 		while(obd.msg_type != 0)
 		{
 			__NOP();
@@ -82,46 +84,57 @@ static void acquire_vehicle_data(OBD obd, float buffer[][2])
 	}
 }
 
+static void createJson(char buff[1000], float array[][2], int num_of_values)
+{
+    char json_string [10] = "{\n";
+    char temp[100];
+    sprintf(buff, json_string);
+    for (int i = 0; i <= num_of_values - 1; i++)
+    {
+        if(i == num_of_values - 1)
+        {
+        	sprintf(temp, "\"0x%x\":%.2f}\n", (uint8_t)array[i][0], array[i][1]);
+        }
+        else
+        {
+        	sprintf(temp, "\"0x%x\":%.2f,\n", (uint8_t)array[i][0], array[i][1]);
+        }
+        strcat(buff, temp);
+    }
+//    strcat(buff, "}\n");
+}
+
 static uint8_t mqtt_start(BG77 module)
 {
-//	if(mqtt_open(MQTT_IP,  MQTT_PORT, 0, module))
-//	{
-//		if(mqtt_connect(0,"obd", module))
-//		{
-//			return TRUE;
-//		}
-//		else
-//		{
-//			return FALSE;
-//		}
-//	}
-//	else
-//	{
-//		return FALSE;
-//	}
-	mqtt_open(MQTT_IP,  MQTT_PORT, 0, module);
+	module.mqtt_status = mqtt_open(MQTT_IP,  MQTT_PORT, 0);
+	if(module.mqtt_status != 0)
+	{
+		return (FALSE);
+	}
 	HAL_Delay(10000);
-	mqtt_connect(0,"obd1", module);
-
-	return TRUE;
+	if(mqtt_connect(0,"obd2", &module))
+	{
+		return (TRUE);
+	}
+	return (TRUE);
 }
 
 static uint8_t mqtt_stop(BG77 module)
 {
-	if(mqtt_disconnect(0, module))
+	if(mqtt_disconnect(0))
 	{
 		if(mqtt_close(0, module))
 		{
-			return FALSE;
+			return (FALSE);
 		}
 		else
 		{
-			return TRUE;
+			return (TRUE);
 		}
 	}
 	else
 	{
-		return TRUE;
+		return (TRUE);
 	}
 }
 
@@ -134,9 +147,12 @@ static uint8_t mqtt_stop(BG77 module)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-//	float mqtt_buf[96][2] = {0};
-	uint8_t sent = 0;
-//	uint32_t timer;
+	float mqtt_buf[3][2] = {{0x05,75.0},{0x0C, 50.0},{0x0D, 1500}};
+	float obd_buf[99][2];
+	char buffer[1000];
+	uint32_t timer = 0;
+	uint32_t timer_t = 0;
+	uint8_t rand_or = 0;
 
   /* USER CODE END 1 */
 
@@ -166,21 +182,25 @@ int main(void)
 //  MX_IWDG_Init();
   MX_TIM6_Init();
   MX_TIM2_Init();
+  MX_TIM7_Init();
 
   /* Initialize interrupts */
   MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
-  module.initialized = module_init(module);
-//  module.rssi = check_signal(module);
-//  obd_comm.used_protocol = OBD2_Init();
-//
-//  acquire_vehicle_data(obd_comm, mqtt_buf);
+  module.initialized = module_init(&module);
+  module.rssi = check_signal(module);
+  obd_comm.used_protocol = OBD2_Init();
+
+  acquire_vehicle_data(obd_comm, obd_buf);
   module.connected = mqtt_start(module);
 
-  mqtt_publish(0,0,0,0,OBD_TOPIC, "Hello v4");
+  createJson(buffer, obd_buf, obd_comm.pid_count);
+
+//  mqtt_publish(0,0,0,0,OBD_TOPIC, "Hello from the other side");
+
+  mqtt_publish(0,0,0,0,OBD_TOPIC, buffer);
 
   module.connected = mqtt_stop(module);
-
 
   /* USER CODE END 2 */
 
@@ -188,13 +208,37 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-//	  if((HAL_GetTick() - timer) >= 10000)
-//	  {
-//		  if(mqtt_publish(0,0,OBD_TOPIC, 0))
-//		  {
-//		    sent++;
-//		  }
-//	  }
+	  if((HAL_GetTick() - timer) >= 5000)
+	  {
+		  if(rand_or == 0)
+		  {
+			  mqtt_buf[0][1] += 1;
+			  mqtt_buf[1][1] += 20.5;
+			  mqtt_buf[2][1] += 21.8;
+			  rand_or++;
+		  }
+		  else if(rand_or == 1)
+		  {
+			  mqtt_buf[0][1] += 2;
+			  mqtt_buf[1][1] += 12.2;
+			  mqtt_buf[2][1] += 54.7;
+			  rand_or++;
+		  }
+		  else
+		  {
+			  mqtt_buf[0][1] -= 5.5;
+			  mqtt_buf[1][1] -= 15.7;
+			  mqtt_buf[2][1] -= 28.9;
+			  rand_or = 0;
+		  }
+		  createJson(buffer, mqtt_buf, 3);
+		  mqtt_publish(0,0,0,0,OBD_TOPIC, buffer);
+		  timer = HAL_GetTick();
+	  }
+	  if((HAL_GetTick() - timer_t) >= 1000000)
+	  {
+		  module.connected = mqtt_stop(module);
+	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

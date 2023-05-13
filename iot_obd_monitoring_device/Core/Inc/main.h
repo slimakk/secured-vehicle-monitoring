@@ -33,6 +33,9 @@ extern "C" {
 /* USER CODE BEGIN Includes */
 #include "OBD.h"
 #include "bg77.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include <math.h>
 /* USER CODE END Includes */
 

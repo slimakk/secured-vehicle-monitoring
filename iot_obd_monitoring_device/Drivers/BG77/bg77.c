@@ -15,6 +15,7 @@
 extern BG77 module;
 
 uint8_t rx_data = 0;
+uint8_t rx_buffer[100] = {0};
 
 static uint8_t wake_up(void);
 static void clear_rx_buff(void);
@@ -24,22 +25,25 @@ static void power_off(void);
 /*
  *	@brief Module intialization
  *	Turns on the module with powerkey and checks if it is responding
- *	@param module	BG77 struct
+ *	@param module	pointer to a BG77 struct
  */
-uint8_t module_init(BG77 module)
+uint8_t module_init(BG77 *module)
 {
 	uint8_t repeat = 0;
 	power_on();
-	while(send_command("AT\r\n", "OK\r\n", DEFAULT_TIMEOUT, 4, NB) != TRUE)
+	while(send_command("AT\r\n", "OK", DEFAULT_TIMEOUT, NB) != (TRUE))
 	{
 		if(repeat > MAX_REPEAT)
 		{
-			return FALSE;
+			return (FALSE);
 		}
 		repeat++;
 	}
-	send_command("ATE0\r\n", "OK\r\n", DEFAULT_TIMEOUT, 4, NB);
-	return TRUE;
+	if(send_command("ATE0\r\n", "OK", DEFAULT_TIMEOUT, NB))
+	{
+		return (TRUE);
+	}
+	return (FALSE);
 }
 /*
  *	@brief Sends AT command and checks the reply
@@ -47,44 +51,32 @@ uint8_t module_init(BG77 module)
  *	@param reply		Expected reply
  *	@param timeout		Maximum time to send the command
  *	@param interface	UART interface handle
- *	@retval TRUE if reply matches the expected reply
+ *	@retval (TRUE) if reply matches the expected reply
  */
-uint8_t send_command(char *command, char *reply, uint16_t timeout, uint8_t size, UART_HandleTypeDef *interface)
+uint8_t send_command(char *command, char *reply, uint16_t timeout, UART_HandleTypeDef *interface)
 {
 	module.received = 0;
-	module.expected_size = size;
 	clear_rx_buff();
+//	__HAL_UART_SEND_REQ(NB, UART_RXDATA_FLUSH_REQUEST);
 	uint8_t length = strlen(command);
-//	HAL_UART_Receive_DMA(interface, module.rx_buff, size+2);
 	HAL_UART_Receive_IT(interface, &rx_data, 1);
 	HAL_UART_Transmit(interface, (unsigned char *)command, length, timeout);
-	HAL_TIM_Base_Start_IT(NB_TIMER);
+//	HAL_TIM_Base_Start_IT(NB_TIMER);
+	__HAL_TIM_CLEAR_FLAG(UART_TIMER, TIM_SR_UIF);
+	HAL_TIM_Base_Start_IT(UART_TIMER);
 	while(module.received == 0)
 	{
 		__NOP();
 	}
-	if(module.received == 1)
+	if(module.received != 1)
 	{
-		if(strstr((char *)module.rx_buff, reply) != NULL)
-		{
-			return TRUE;
-		}
-		else
-		{
-			return FALSE;
-		}
+		return (FALSE);
 	}
-	return FALSE;
-//	HAL_UART_Receive(interface, module.rx_buff, 100, 2000);
-//	if(strstr((char *)module.rx_buff, reply) != NULL)
-//	{
-//		return TRUE;
-//	}
-//	else
-//	{
-//		return FALSE;
-//	}
-
+	if(strstr((char *)rx_buffer, reply) != NULL)
+	{
+		return (TRUE);
+	}
+	return (FALSE);
 }
 /*
  *	@brief Module response Callback
@@ -92,83 +84,84 @@ uint8_t send_command(char *command, char *reply, uint16_t timeout, uint8_t size,
  */
 void nb_rx_callback(void)
 {
-//	module.received = 1;
-	module.rx_buff[module.rx_index++] = rx_data;
-	if(module.rx_index > module.expected_size)
-	{
-		module.received = 1;
-	}
+	rx_buffer[module.rx_index++] = rx_data;
+	HAL_TIM_Base_Stop_IT(UART_TIMER);
+	__HAL_TIM_CLEAR_FLAG(UART_TIMER, TIM_SR_UIF);
+	HAL_TIM_Base_Start_IT(UART_TIMER);
 	HAL_UART_Receive_IT(NB, &rx_data, 1);
 }
 /*
  *	@brief	Checks status of NB module
- *	@param	module	BG77 struct
+ *	@param	module pointer to a BG77 struct
  *	@retval	status according to  Quectel AT Commands Manual V2.0
  */
-uint8_t check_status(BG77 module)
+//TODO
+uint8_t check_status(BG77 *module)
 {
 	wake_up();
-	if(send_command("AT+CEREG?\r\n", "OK\r\n", DEFAULT_TIMEOUT, 4, NB))
+	if(!(send_command("AT+CEREG?\r\n", "OK", DEFAULT_TIMEOUT, NB)))
 	{
-		char *token = strtok((char *)module.rx_buff," ");
+		return (FALSE);
+	}
+	char *token = strtok((char *)rx_buffer," ");
+	if(!token)
+	{
+		return (FALSE);
+	}
+	token = strtok(NULL,",");
+	if(token)
+	{
+		token = strtok(NULL,"\n");
 		if(token)
 		{
-			token = strtok(NULL,",");
-			if(token)
-			{
-				token = strtok(NULL,"\n");
-				if(token)
-				{
-					uint8_t status;
-					char *ptr;
-					status = strtol(token, &ptr, 10);
-					return status;
-				}
-			}
+			uint8_t status;
+			char *ptr;
+			status = strtol(token, &ptr, 10);
+			return (status);
 		}
 	}
-	return 9;
+	return (9);
 }
 /*
  *	@brief	Checks the RSSI for NB signal
- *	@param	module	BG77 struct
- *	@retval	rssi or FALSE if the the is no response
+ *	@retval	rssi or (FALSE) if the the is no response
  */
-uint8_t check_signal(BG77 module)
+uint8_t check_signal(void)
 {
-	if(send_command("AT+CSQ\r\n","OK\r\n",DEFAULT_TIMEOUT, 4, NB))
+	if(!(send_command("AT+CSQ\r\n","OK",DEFAULT_TIMEOUT, NB)))
 	{
-		char *token = strtok((char *)module.rx_buff, " ");
+		return (FALSE);
+	}
+	char *token = strtok((char *)rx_buffer, " ");
+	if(token)
+	{
+		token = strtok(NULL,",");
 		if(token)
 		{
-			token = strtok(NULL,",");
-			if(token)
-			{
-				char *ptr;
-				uint8_t rssi = strtol(token, &ptr, 10);
-				return rssi;
-			}
+			char *ptr;
+			uint8_t rssi = strtol(token, &ptr, 10);
+			return (rssi);
 		}
+		return (FALSE);
 	}
-	return FALSE;
+	return (FALSE);
 }
 /*
  *	@brief	PSM setup
- *	@param	module		BG77 struct
  *	@param	tau	 		Requested extended periodic TAU value (T3412) in binary (One byte in 8 bits)
  *	@param	active_time	Requested Active Time value (T3324) in binary (One byte in 8 bits)
  *	@param	mode		Enable or Disable (1 or 0)
- *	@retval	TRUE or FALSE depending on the response
+ *	@retval	(TRUE) or (FALSE) depending on the response
  */
-uint8_t set_psm(BG77 module, const char* tau, const char* active_time, uint8_t mode)
+uint8_t set_psm(const char* tau, const char* active_time, uint8_t mode)
 {
 	char command[COMMAND_SIZE];
 	sprintf(command, "AT+CPSMS=%d,,,\"%s\",\"%s\"",mode, tau, active_time);
-	if(send_command(command, "OK\n\r", DEFAULT_TIMEOUT, 4, NB))
+	if(send_command(command, "OK", DEFAULT_TIMEOUT, NB))
 	{
-		return TRUE;
+		return (TRUE);
 	}
-	return FALSE;
+	return (FALSE);
 }
 /*********************************************************************************************/
 /****************************************MQTT*************************************************/
@@ -178,164 +171,154 @@ uint8_t set_psm(BG77 module, const char* tau, const char* active_time, uint8_t m
  *	@param	broker_address	IP Adress of desired MQTT broker
  *	@param	port			Port of desired MQTT broker
  *	@param	id				Connection ID (0-5)
- *	@param	module			BG77 struct
- *	@retval	TRUE or FALSE depending on the response
+ *	@retval	(TRUE) or (FALSE) depending on the response
  * */
-uint8_t mqtt_open(const char* broker_address, uint16_t port, uint8_t id, BG77 module)
+uint8_t mqtt_open(const char* broker_address, uint16_t port, uint8_t id)
 {
 //	wake_up();
 	char command [COMMAND_SIZE];
+	uint8_t ret [2] = {255};
+	uint8_t i = 0;
 	sprintf(command, "AT+QMTOPEN=%d,\"%s\",%d\r\n", id, broker_address, port);
-	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, 18, NB))
+	if(!(send_command(command, "OK", DEFAULT_TIMEOUT, NB)))
 	{
-		char *token = strtok((char *)module.rx_buff, " ");
-		if(token)
-		{
-			token = strtok(NULL,",");
-			if(token)
-			{
-				token = strtok(NULL, "\n");
-				if(token)
-				{
-					char *ptr;
-					uint8_t status;
-					status = strtol(token, &ptr, 10);
-					if(status == 0)
-					{
-						return TRUE;
-					}
-					else
-					{
-						return FALSE;
-					}
-				}
-			}
-		}
+		return (FALSE);
 	}
-	return FALSE;
+	char *token = strtok((char*)rx_buffer, " ");
+	if(!token)
+	{
+		return (FALSE);
+	}
+	token = strtok(NULL, ",");
+	while(token != NULL)
+	{
+		char *ptr;
+		ret[i] = strtol(token, &ptr, 10);
+		token = strtok(NULL, ",");
+		i++;
+	}
+	if(ret[1] == 0)
+	{
+		return (TRUE);
+	}
+	return (ret[1]);
 }
 /*
  * @brief	Connects to the MQTT broker
  * @param	id			Connection ID (0-5)
  * @param	client_id	Clients ID for the MQTT broker
- * @param	module		BG77 struct
+ * @param	module		pointer to a BG77 struct
  * @retval	return code for the command
  */
 //TODO
-uint8_t mqtt_connect(uint8_t id, const char* client_id, BG77 module)
+uint8_t mqtt_connect(uint8_t id, const char* client_id, BG77 *module)
 {
 	char command [COMMAND_SIZE];
-	uint8_t ret [3];
+	uint8_t ret [3] = {255};
 	uint8_t i = 0;
 	sprintf(command, "AT+QMTCONN=%d,\"%s\"\r\n",id,client_id);
-	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, 19, NB))
+	if(!(send_command(command, "OK", DEFAULT_TIMEOUT, NB)))
 	{
-		char *token = strtok((char *)module.rx_buff, " ");
-		if(token)
-		{
-			token = strtok(NULL, ",");
-			while(token != NULL)
-			{
-				char *ptr;
-				ret[i] = strtol(token, &ptr, 10);
-				i++;
-			}
-			if(ret[1] == (0 | 1))
-			{
-				switch(ret[2])
-				{
-				 case 0:
-					 return TRUE;
-					 break;
-				 default:
-					 module.error = ret[2];
-					 return FALSE;
-				}
-			}
-			else
-			{
-				return FALSE;
-			}
-		}
-		return FALSE;
+		return (FALSE);
 	}
-	return FALSE;
+	char *token = strtok((char *)rx_buffer, " ");
+	if(!token)
+	{
+		return (FALSE);
+	}
+	token = strtok(NULL, ",");
+	while(token != NULL)
+	{
+		char *ptr;
+		ret[i] = strtol(token, &ptr, 10);
+		i++;
+		token = strtok(NULL, ",");
+	}
+	if(ret[1] == (0 | 1))
+	{
+		switch(ret[2])
+		{
+			case 0:
+				return (TRUE);
+				break;
+			default:
+				module->error = ret[2];
+				return (FALSE);
+		}
+	}
+	return (FALSE);
 }
 /*
  *	@brief	Disconnects for MQTT broker
  *	@param	id	 	Connection ID (0-5)
- *	@param	module	BG77 struct
- *	@retval	TRUE if the disconnect is successful
+ *	@retval	(TRUE) if the disconnect is successful
  */
-uint8_t mqtt_disconnect(uint8_t id, BG77 module)
+uint8_t mqtt_disconnect(uint8_t id)
 {
 	char command [COMMAND_SIZE];
-	uint8_t ret [2];
+	uint8_t ret [2] = {255};
 	uint8_t i = 0;
 	sprintf(command,"AT+QMTDISC=%d\r\n",id);
-	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, 18, NB))
+	if(!(send_command(command, "OK", DEFAULT_TIMEOUT, NB)))
 	{
-		char *token = strtok((char *)module.rx_buff, " ");
-		if(token)
-		{
-			token = strtok(NULL, ",");
-			while(token != NULL)
-			{
-				char *ptr;
-				ret[i] = strtol(token, &ptr, 10);
-				token = strtok(NULL, ",");
-				i++;
-			}
-			if(ret[1] == 0)
-			{
-				return TRUE;
-			}
-			else
-			{
-				return FALSE;
-			}
-		}
+		return (FALSE);
 	}
-	return FALSE;
+	char *token = strtok((char *)rx_buffer, " ");
+	if(!token)
+	{
+		return (FALSE);
+	}
+	token = strtok(NULL, ",");
+	while(token != NULL)
+	{
+		char *ptr;
+		ret[i] = strtol(token, &ptr, 10);
+		token = strtok(NULL, ",");
+		i++;
+	}
+	if(ret[1] == 0)
+	{
+		return (TRUE);
+	}
+	return (FALSE);
 }
 /*
  *	@brief	Closes the TCP connection to the MQTT broker
  *	@param	id	 	Connection ID (0-5)
  *	@param	module	BG77 struct
- *	@retval	TRUE if the closure is successful
+ *	@retval	0 if the closure is successful, else or 1
  */
 uint8_t mqtt_close(uint8_t id, BG77 module)
 {
 	char command [COMMAND_SIZE];
 	uint8_t i = 0;
+	uint8_t ret = 255;
 	sprintf(command,"AT+QMTCLOSE=%d\r\n",id);
-	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, 19, NB))
+	if((send_command(command, "OK", DEFAULT_TIMEOUT, NB)))
 	{
-		char *token = strtok((char *)module.rx_buff, " ");
-		if(token)
-		{
-			token = strtok(NULL, ",");
-			while(token != NULL)
-			{
-				if(i == 1)
-				{
-					char *ptr;
-					uint8_t res = strtol(token, &ptr, 10);
-					module.error = res;
-					if(res == 0)
-					{
-						return TRUE;
-					}
-					else
-					{
-						return FALSE;
-					}
-				}
-			}
-		}
-		return FALSE;
+		return (1);
 	}
-	return FALSE;
+	char *token = strtok((char *)rx_buffer, " ");
+	if(!token)
+	{
+		return (1);
+	}
+	token = strtok(NULL, ",");
+	while(token != NULL)
+	{
+		if(i == 1)
+		{
+			char *ptr;
+			ret = strtol(token, &ptr, 10);
+		}
+		token = strtok(NULL, ",");
+		i++;
+	}
+	if(ret == 0)
+	{
+		return (0);
+	}
+	return (1);
 }
 /*
  *	@brief	Subscribes to certain topic
@@ -343,34 +326,34 @@ uint8_t mqtt_close(uint8_t id, BG77 module)
  *	@param	msg_id	Message ID (1-65535)
  *	@param	topic	MQTT topic
  *	@param	qos		MQTT QoS level (0-2)
- *	@retval	TRUE if the subscription is successful
+ *	@retval	(TRUE) if the subscription is successful
  */
 uint8_t mqtt_subscribe(uint8_t id, uint8_t msg_id, const char *topic, uint8_t qos)
 {
 	char command[COMMAND_SIZE];
 	sprintf(command, "AT+QMTSUB=%d,%d,\"%s\",%d\r\n",id, msg_id, topic, qos);
-	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, 20, NB))
+	if(send_command(command, "OK", DEFAULT_TIMEOUT, NB))
 	{
-		return TRUE;
+		return (TRUE);
 	}
-	return FALSE;
+	return (FALSE);
 }
 /*
  *	@brief	Unsubscribes from certain topic
  *	@param	id	 	Connection ID (0-5)
  *	@param	msg_id	Message ID (1-65535)
  *	@param	topic	MQTT topic
- *	@retval	TRUE if the unsubscription is successful
+ *	@retval	(TRUE) if the unsubscription is successful
  */
 uint8_t mqtt_unsubscribe(uint8_t id, uint8_t msg_id, const char *topic)
 {
 	char command[COMMAND_SIZE];
 	sprintf(command, "AT+QMTUNS=%d,%d,\"%s\"\r\n",id, msg_id, topic);
-	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, 20, NB))
+	if(send_command(command, "OK", DEFAULT_TIMEOUT, NB))
 	{
-		return TRUE;
+		return (TRUE);
 	}
-	return FALSE;
+	return (FALSE);
 }
 /*
  *	@brief	Publishes data to MQTT broker
@@ -380,17 +363,17 @@ uint8_t mqtt_unsubscribe(uint8_t id, uint8_t msg_id, const char *topic)
  *	@param	retain	Data retention on the MQTT broker
  *	@param	topic	MQTT topic
  *	@param	msg		data to be published
- *	@retval	TRUE if the publication is successful
+ *	@retval	(TRUE) if the publication is successful
  */
 uint8_t mqtt_publish(uint8_t id, uint8_t msg_id, uint8_t qos, uint8_t retain, const char *topic, const char *msg)
 {
 	char command[COMMAND_SIZE];
 	sprintf(command, "AT+QMTPUBEX=%d,%d,%d,%d,\"%s\",\"%s\"\r\n",id, msg_id, qos, retain, topic, msg);
-	if(send_command(command, "OK\r\n", DEFAULT_TIMEOUT, 4, NB))
+	if(send_command(command, "OK", DEFAULT_TIMEOUT, NB))
 	{
-		return TRUE;
+		return (TRUE);
 	}
-	return FALSE;
+	return (FALSE);
 }
 
 /*********************************************************************************************/
@@ -399,22 +382,21 @@ uint8_t mqtt_publish(uint8_t id, uint8_t msg_id, uint8_t qos, uint8_t retain, co
 /*
  *	@brief	Acquires positional data from the GNSS portion of the module
  *	@param	module	BG77 struct
- *	@retval	TRUE if GNSS has a fix and responds with positional data
+ *	@retval	(TRUE) if GNSS has a fix and responds with positional data
  */
 uint8_t acquire_position(BG77 module)
 {
 	wake_up();
-	if(send_command("AT+QGPS=1\r\n","OK\r\n", DEFAULT_TIMEOUT, 4,NB))
+	if(!(send_command("AT+QGPS=1\r\n","OK", DEFAULT_TIMEOUT, NB)))
 	{
-		if(send_command("AT+QGPSLOC?\r\n", "OK\r\n", DEFAULT_TIMEOUT, 4,NB))
-		{
-			parse_location(module);
-			return TRUE;
-		}
-		else
-			return FALSE;
+		return (FALSE);
 	}
-	return FALSE;
+	if(send_command("AT+QGPSLOC?\r\n", "OK", DEFAULT_TIMEOUT, NB))
+	{
+		parse_location(module);
+		return (TRUE);
+	}
+	return (FALSE);
 }
 /*
  *	@brief Splits received location string into individual variables from location struct
@@ -423,7 +405,7 @@ uint8_t acquire_position(BG77 module)
  */
 void parse_location(BG77 module)
 {
-	char *token = strtok((char *)module.rx_buff, " ");
+	char *token = strtok((char *)rx_buffer, " ");
 	if(token)
 	{
 		token = strtok(NULL, ",");
@@ -467,7 +449,7 @@ void parse_location(BG77 module)
 /*
  *	@brief	Wakes up the module from sleep and checks its connection
  *	@param	None
- *	@retval	True if the module is responding
+ *	@retval	TRUE if the module is responding
  */
 //TODO
 static uint8_t wake_up(void)
@@ -480,7 +462,7 @@ static uint8_t wake_up(void)
 		HAL_GPIO_WritePin(PON_TRIG_GPIO_Port, PON_TRIG_Pin, GPIO_PIN_RESET);
 		HAL_Delay(100);
 	}
-	while((send_command("AT\r\n", "OK\r\n", DEFAULT_TIMEOUT, 4,NB)) != TRUE)
+	while((send_command("AT\r\n", "OK", DEFAULT_TIMEOUT, NB)) != TRUE)
 	{
 		if(repeat < MAX_REPEAT)
 		{
@@ -488,10 +470,10 @@ static uint8_t wake_up(void)
 		}
 		else
 		{
-			return FALSE;
+			return (FALSE);
 		}
 	}
-	return TRUE;
+	return (TRUE);
 }
 /*
  * @brief	Powers on the module
@@ -523,5 +505,5 @@ static void power_off(void)
 static void clear_rx_buff(void)
 {
 	module.rx_index = 0;
-	memset(module.rx_buff, 0, sizeof(module.rx_buff));
+	memset(rx_buffer, 0, sizeof(rx_buffer));
 }

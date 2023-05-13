@@ -207,14 +207,14 @@ static const uint8_t PID_LUT[256][1] = {
 
 uint8_t PID_Get_Lenght(uint8_t pid)
 {
-	return PID_LUT[pid][0];
+	return (PID_LUT[pid][0]);
 }
 
 uint8_t Get_PID(uint8_t index)
 {
-	return PID_list[index];
+	return (PID_list[index]);
 }
 void Get_Name(uint8_t index, char *name)
 {
-	name = pid_names[index];
+	name = &pid_names[index];
 }

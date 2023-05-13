@@ -14,13 +14,13 @@
 #include "OBD.h"
 #include "usart.h"
 
-obd_protocol KLine_Init(void);
+obd_protocol kline_init(void);
 
-obd_protocol KWP2000_Fast_Init(void);
+obd_protocol kwp2000_fast_init(void);
 
-void KLine_SEND_MESSAGE(uint8_t* tx_frame);
+void kline_send_msg(uint8_t* tx_frame);
 
-void KWP2000_SEND_MESSAGE(uint8_t* tx_frame);
+void kwp2000_send_msg(uint8_t* tx_frame);
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart);
 

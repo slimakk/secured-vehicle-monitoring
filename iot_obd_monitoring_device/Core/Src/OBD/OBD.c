@@ -10,14 +10,11 @@
 #include "KLine.h"
 #include <stdio.h>
 
-extern DMA_HandleTypeDef hdma_usart1_rx;
 extern OBD obd_comm;
-extern char *pid_names[90];
-extern uint32_t adc_buffer;
 
-static void OBD2_PID_Decode(uint8_t* rx_frame);
+static void obd2_pid_decode(uint8_t* rx_frame);
 
-static void OBD2_PID_Decode(uint8_t* rx_frame)
+static void obd2_pid_decode(uint8_t* rx_frame)
 {
 	uint8_t number = (rx_frame[3] << 24) | (rx_frame[4] << 16) | (rx_frame[5] << 8) | rx_frame[6];
 	uint8_t j = 0;
@@ -45,7 +42,7 @@ static void OBD2_PID_Decode(uint8_t* rx_frame)
 	}
 }
 
-void OBD2_Request(OBD obd)
+void obd2_request(OBD obd)
 {
 	HAL_Delay(10);
 	if(obd.used_protocol == OBD_PROTO_CAN)
@@ -58,22 +55,22 @@ void OBD2_Request(OBD obd)
 		uint8_t tx_data_ISO[2] = {0x01, obd.pid};
 		if(obd.used_protocol == OBD_PROTO_ISO9141)
 		{
-			KLine_SEND_MESSAGE(tx_data_ISO);
+			kline_send_msg(tx_data_ISO);
 		}
 		else
 		{
-			KWP2000_SEND_MESSAGE(tx_data_ISO);
+			kwp2000_send_msg(tx_data_ISO);
 		}
 	}
 }
 
-float OBD2_PID_Parse(uint8_t* rx_frame)
+float obd2_pid_parse(uint8_t* rx_frame)
 {
 	float value = 0;
 	switch(rx_frame[2])
 	{
 	case 0x00:
-		OBD2_PID_Decode(rx_frame);
+		obd2_pid_decode(rx_frame);
 		value = 0;
 		break;
 	case 0x04:
@@ -116,11 +113,12 @@ float OBD2_PID_Parse(uint8_t* rx_frame)
 		value = (rx_frame[3] << 8) | rx_frame[4];
 		break;
 	case 0x20:
-		OBD2_PID_Decode(rx_frame);
+		obd2_pid_decode(rx_frame);
 		value = 0;
 		break;
 	case 0x22:
 		value = ((rx_frame[3] << 8) | rx_frame[4])*0.079;
+		break;
 	case 0x23:
 		value = 10*((rx_frame[3] << 8) | rx_frame[4]);
 		break;
@@ -155,7 +153,7 @@ float OBD2_PID_Parse(uint8_t* rx_frame)
 		value = (((rx_frame[3] << 8) | rx_frame[4]) / 100) - 40;
 		break;
 	case 0x40:
-		OBD2_PID_Decode(rx_frame);
+		obd2_pid_decode(rx_frame);
 		value = 0;
 		break;
 	case 0x42:
@@ -230,16 +228,19 @@ float OBD2_PID_Parse(uint8_t* rx_frame)
 	case 0xA6:
 		value = ((rx_frame[3] << 24) | (rx_frame[4] << 16) | (rx_frame[5] << 8) | rx_frame[6]) * 0.1;
 		break;
+	default:
+		value = 255;
+		break;
 	}
-	return value;
+	return (value);
 }
 
-obd_protocol OBD2_Init(void)
+obd_protocol obd2_init(void)
 {
-	obd_protocol used_protocol = KLine_Init();
+	obd_protocol used_protocol = kline_init();
 	if(used_protocol == OBD_NONE)
 	{
-		used_protocol = KWP2000_Fast_Init();
+		used_protocol = kwp2000_fast_init();
 		if(used_protocol == OBD_NONE)
 		{
 			used_protocol = OBD_PROTO_CAN;
@@ -247,17 +248,17 @@ obd_protocol OBD2_Init(void)
 			can_config();
 		}
 	}
-	return used_protocol;
+	return (used_protocol);
 }
 
-void OBD2_pid_check(OBD obd)
+void obd2_pid_check(OBD obd)
 {
 	obd.pid = 0x00;
-	OBD2_Request(obd);
+	obd2_request(obd);
 	obd.pid = 0x20;
-	OBD2_Request(obd);
+	obd2_request(obd);
 	obd.pid = 0x40;
-	OBD2_Request(obd);
+	obd2_request(obd);
 	uint8_t j = 1;
 	for(uint8_t i = 0; i < 96; i++)
 	{

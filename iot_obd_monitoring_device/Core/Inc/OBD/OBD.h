@@ -35,15 +35,13 @@ typedef struct {
 	float voltage;
 } OBD;
 
-void OBD2_Request(OBD obd);
+void obd2_request(OBD obd);
 
-float OBD2_PID_Parse(uint8_t *rx_frame);
+float obd2_pid_parse(uint8_t *rx_frame);
 
-obd_protocol OBD2_Init(void);
+obd_protocol obd2_init(void);
 
-void OBD2_ShowOnDisplay(float value);
-
-void OBD2_pid_check(OBD obd);
+void obd2_pid_check(OBD obd);
 
 
 #endif /* INC_OBD_OBD_H_ */

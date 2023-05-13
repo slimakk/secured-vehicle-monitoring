@@ -1,30 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="USART"/>
+		<item key="selection" value="obd2_pid_decode"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="OBD2_PID_Decode"/>
+			<item value="Verify_Checksum"/>
+			<item value="UART_PIN_State"/>
+			<item value="TRUE"/>
+			<item value="FALSE"/>
+			<item value="1000"/>
+			<item value="rx_buff"/>
+			<item value="rx_ind"/>
+			<item value="rx_data"/>
 			<item value="USART"/>
 			<item value="voltage"/>
 			<item value="KLine_RX_Buf"/>
 			<item value="rxFrame"/>
 			<item value="txFrame"/>
 			<item value="canFilter"/>
-			<item value="txHeader"/>
-			<item value="txMailbox"/>
-			<item value="pidLenght"/>
-			<item value="KlineKB"/>
-			<item value="respCom"/>
-			<item value="startCom"/>
-			<item value="message_frame"/>
-			<item value="ECU_Addr"/>
-			<item value="messageFrame_KLine"/>
 		</list>
 		<list key="replacehistory">
+			<item value="obd2_pid_decode"/>
+			<item value="verify_checksum"/>
+			<item value="uart_pin_state"/>
+			<item value="(TRUE)"/>
+			<item value="(FALSE)"/>
+			<item value="DEFAULT_TIMEOUT"/>
+			<item value="module.rx_buff"/>
 			<item value="kline_rx_buf"/>
 			<item value="rx_frame"/>
 			<item value="tx_frame"/>
@@ -33,13 +40,6 @@
 			<item value="tx_mailbox"/>
 			<item value="pid_length"/>
 			<item value="kline_kb"/>
-			<item value="resp_msg"/>
-			<item value="start_msg"/>
-			<item value="kwp_msg"/>
-			<item value="ecu_addr"/>
-			<item value="kline_msg"/>
-			<item value="obd_comm"/>
-			<item value="used_protocol"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
