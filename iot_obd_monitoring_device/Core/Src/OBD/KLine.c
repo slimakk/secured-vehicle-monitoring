@@ -20,7 +20,11 @@ static uint8_t pid_length;
 static void MX_GPIO_KLineUART_Init(void);
 static void uart_pin_state(uint8_t state);
 static uint8_t verify_checksum (uint8_t *data, uint8_t lenght);
-
+/*
+ * @brief	ISO 9141 and ISO 14230 slow initialization procedure
+ * @param	None
+ * @retval	OBD_PROTO_ISO9141 or OBD_PROTO_KWP2000_SLOW if the initialization is successful, OBD_NONE if there is no response
+ * */
 obd_protocol kline_init(void){
 	MX_GPIO_KLineUART_Init();
 //	5 Baud address 0x33
@@ -70,7 +74,11 @@ obd_protocol kline_init(void){
 	}
 	return (OBD_NONE);
 }
-
+/*
+ * @brief	ISO 14230 fast initialization procedure
+ * @param	None
+ * @retval	OBD_PROTO_KWP2000_FAST if the initialization is successful, OBD_NONE if there is no response
+ * */
 obd_protocol kwp2000_fast_init(void)
 {
 	uint8_t start_msg[5]={0xC1, 0x33, 0xF1, 0x81, 0x66};
@@ -91,7 +99,6 @@ obd_protocol kwp2000_fast_init(void)
 	}
 	HAL_UART_Transmit(KLINE, start_msg, 5, 10);
 //	__HAL_UART_SEND_REQ(KLINE, UART_RXDATA_FLUSH_REQUEST);
-//	HAL_Delay(20);
 
 	HAL_UART_Receive_DMA(KLINE, uartBuf, 8);
 	HAL_TIM_Base_Start_IT(KLINE_TIMER);
@@ -118,7 +125,11 @@ obd_protocol kwp2000_fast_init(void)
 	else
 		return (OBD_NONE);
 }
-
+/*
+ * @brief	Initialization function for GPIO pins used by KLine UART interface
+ * @param	None
+ * @retval	None
+ * */
 static void MX_GPIO_KLineUART_Init(void)
 {
 	GPIO_InitTypeDef GPIO_InitStruct;
@@ -128,7 +139,11 @@ static void MX_GPIO_KLineUART_Init(void)
 	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
 	HAL_GPIO_Init(K_Line_TX_GPIO_Port, &GPIO_InitStruct);
 }
-
+/*
+ * @brief	Toggles K and L lines for slow address transmission -- inverted logic
+ * @param	state	Requested state 1 or 0
+ * @retval	None
+ * */
 static void uart_pin_state(uint8_t state)
 {
 	/*KLine has inverted logic, HIGH = 0, LOW = 1*/
@@ -143,7 +158,11 @@ static void uart_pin_state(uint8_t state)
 		HAL_GPIO_WritePin(L_Line_GPIO_Port, L_Line_Pin, GPIO_PIN_SET);
 	}
 }
-
+/*
+ * @brief	Sends OBD II message via ISO 9141 protocol and checks the response.
+ * @param	*tx_frame	Pointer to the requested TX frame
+ * @retval	TRUE if valid message has been received, else FALSE
+ * */
 uint8_t kline_send_msg(uint8_t *tx_frame)
 {
 	uint8_t kline_msg[6] = {0x68, 0x6A, 0xF1, tx_frame[0], tx_frame[1], 0};
@@ -185,9 +204,13 @@ uint8_t kline_send_msg(uint8_t *tx_frame)
 		obd_comm.current_value = obd2_pid_parse(rx_frame);
 		return (TRUE);
 	}
-	return (FALSE);
+		return (FALSE);
 }
-
+/*
+ * @brief	Sends OBD II message via ISO 14230 protocol and checks the response.
+ * @param	*tx_frame	Pointer to the requested TX frame
+ * @retval	TRUE if valid message has been received, else FALSE
+ * */
 uint8_t kwp2000_send_msg(uint8_t *tx_frame)
 {
 	uint8_t kwp_msg[] = {0xC2, 0x33, 0xF1, tx_frame[0], tx_frame[1], 0};
@@ -234,22 +257,31 @@ uint8_t kwp2000_send_msg(uint8_t *tx_frame)
 	}
 	return (FALSE);
 }
-
-static uint8_t verify_checksum (uint8_t *data, uint8_t lenght)
+/*
+ * @brief	Calculates checksum of received message and checks it against received checksum
+ * @param	*data	Received message
+ * @param	length	Expected lenght of the message based on its PID
+ * @retval	TRUE if the message has valid checksum
+ * */
+static uint8_t verify_checksum (uint8_t *data, uint8_t length)
 {
 	uint8_t checksum = 0;
-	for(int i = 0; i < lenght - 1; i++)
+	for(int i = 0; i < length - 1; i++)
 	{
 		checksum += data[i];
 	}
 	checksum = checksum % 256;
-	if(data[lenght - 1] == checksum)
+	if(data[length - 1] == checksum)
 	{
 		return (TRUE);
 	}
 	return (FALSE);
 }
-
+/*
+ * @brief	K line UART receive callback function
+ * @param	None
+ * @retval	None
+ * */
 void kline_rx_callback(void)
 {
 	if(obd_comm.msg_type == 1)

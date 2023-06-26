@@ -92,10 +92,6 @@ void Error_Handler(void);
 #define SWDIO_GPIO_Port GPIOA
 #define SWCLK_Pin GPIO_PIN_14
 #define SWCLK_GPIO_Port GPIOA
-#define GNSS_TX_Pin GPIO_PIN_10
-#define GNSS_TX_GPIO_Port GPIOC
-#define GNSS_RX_Pin GPIO_PIN_11
-#define GNSS_RX_GPIO_Port GPIOC
 #define CAN_S_Pin GPIO_PIN_2
 #define CAN_S_GPIO_Port GPIOD
 #define SWO_Pin GPIO_PIN_3
@@ -104,15 +100,15 @@ void Error_Handler(void);
 #define K_Line_TX_GPIO_Port GPIOB
 #define K_Line_RX_Pin GPIO_PIN_7
 #define K_Line_RX_GPIO_Port GPIOB
-#define BOOT0_Pin GPIO_PIN_3
-#define BOOT0_GPIO_Port GPIOH
 
 /* USER CODE BEGIN Private defines */
 #define TRUE 1
 #define FALSE 0
-#define MQTT_IP "1"
+#define MQTT_IP "147.229.148.103"
 #define MQTT_PORT 1883
 #define OBD_TOPIC "topic/obd"
+#define GPS_TOPIC "topic/gps"
+#define ADC_SAMPLE_TIME 1000
 
 /* USER CODE END Private defines */
 

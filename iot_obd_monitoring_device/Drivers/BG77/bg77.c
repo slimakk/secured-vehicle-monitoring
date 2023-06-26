@@ -14,6 +14,8 @@
 
 extern BG77 module;
 
+extern location pos;
+
 uint8_t rx_data = 0;
 uint8_t rx_buffer[100] = {0};
 
@@ -61,7 +63,6 @@ uint8_t send_command(char *command, char *reply, uint16_t timeout, UART_HandleTy
 	uint8_t length = strlen(command);
 	HAL_UART_Receive_IT(interface, &rx_data, 1);
 	HAL_UART_Transmit(interface, (unsigned char *)command, length, timeout);
-//	HAL_TIM_Base_Start_IT(NB_TIMER);
 	__HAL_TIM_CLEAR_FLAG(UART_TIMER, TIM_SR_UIF);
 	HAL_TIM_Base_Start_IT(UART_TIMER);
 	while(module.received == 0)
@@ -230,7 +231,7 @@ uint8_t mqtt_connect(uint8_t id, const char* client_id, BG77 *module)
 		i++;
 		token = strtok(NULL, ",");
 	}
-	if(ret[1] == (0 | 1))
+	if(ret[1] == (0 || 1))
 	{
 		switch(ret[2])
 		{
@@ -376,30 +377,64 @@ uint8_t mqtt_publish(uint8_t id, uint8_t msg_id, uint8_t qos, uint8_t retain, co
 /****************************************GNSS*************************************************/
 /*********************************************************************************************/
 /*
- *	@brief	Acquires positional data from the GNSS portion of the module
- *	@param	module	BG77 struct
+ *	@brief	Turns on the GNSS module and tries to get positional fix
  *	@retval	(TRUE) if GNSS has a fix and responds with positional data
  */
-uint8_t acquire_position(BG77 module)
+uint8_t gnss_turn_on(void)
 {
-	wake_up();
+	uint8_t repeat = 0;
 	if(!(send_command("AT+QGPS=1\r\n","OK", DEFAULT_TIMEOUT, NB)))
+	{
+//		return (FALSE);
+		__NOP();
+	}
+	while(!(send_command("AT+QGPSLOC?\r\n", "OK", DEFAULT_TIMEOUT, NB)))
+	{
+		if(repeat < MAX_REPEAT)
+		{
+			repeat++;
+		}
+		else
+		{
+			return (FALSE);
+		}
+		HAL_Delay(10000);
+	}
+	parse_location();
+	return (TRUE);
+}
+
+/*
+ *	@brief	Acquires positional data from the GNSS portion of the module
+ *	@retval	(TRUE) if GNSS has a fix and responds with positional data
+ */
+uint8_t get_position(void)
+{
+//	wake_up();
+	if(module.gps == 0)
+	{
+		return (FALSE);
+	}
+	if(!(send_command("AT+QGPSCFG=\"priority\",0\r\n","OK", DEFAULT_TIMEOUT, NB)))
 	{
 		return (FALSE);
 	}
 	if(send_command("AT+QGPSLOC?\r\n", "OK", DEFAULT_TIMEOUT, NB))
 	{
-		parse_location(module);
-		return (TRUE);
+		parse_location();
+		if(send_command("AT+QGPSCFG=\"priority\",1\r\n","OK", DEFAULT_TIMEOUT, NB))
+		{
+			return (TRUE);
+		}
+		return (FALSE);
 	}
 	return (FALSE);
 }
 /*
  *	@brief Splits received location string into individual variables from location struct
- *	@param	module	BG77 struct
  *	@retval	None
  */
-void parse_location(BG77 module)
+void parse_location(void)
 {
 	char *token = strtok((char *)rx_buffer, " ");
 	if(token)
@@ -412,24 +447,24 @@ void parse_location(BG77 module)
 			switch(i)
 			{
 				case 0:
-					module.pos.time = strtol(token, &ptr, 10);
+					pos.time = strtol(token, &ptr, 10);
 					break;
 				case 1:
-					module.pos.latitude = strtod(token, &ptr);
-					module.pos.lat_ort = ptr;
+					pos.latitude = strtod(token, &ptr);
+					pos.lat_ort = ptr;
 					break;
 				case 2:
-					module.pos.longitude = strtod(token, &ptr);
-					module.pos.long_ort = ptr;
+					pos.longitude = strtod(token, &ptr);
+					pos.long_ort = ptr;
 					break;
 				case 4:
-					module.pos.altitude = strtod(token, &ptr);
+					pos.altitude = strtod(token, &ptr);
 					break;
 				case 7:
-					module.pos.speed = strtod(token, &ptr);
+					pos.speed = strtod(token, &ptr);
 					break;
 				case 9:
-					module.pos.date = strtol(token, &ptr, 10);
+					pos.date = strtol(token, &ptr, 10);
 					break;
 				default:
 					break;

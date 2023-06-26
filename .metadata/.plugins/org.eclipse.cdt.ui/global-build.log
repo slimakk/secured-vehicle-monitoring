@@ -1,13 +1,202 @@
-01:40:35 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
+16:34:53 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
 make -j8 all 
-arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Drivers/BG77/bg77.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Drivers/BG77/bg77.d" -MT"Drivers/BG77/bg77.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Drivers/BG77/bg77.o"
+../Drivers/BG77/bg77.c:525:13: warning: 'power_off' defined but not used [-Wunused-function]
+  525 | static void power_off(void)
+      |             ^~~~~~~~~
 arm-none-eabi-gcc -o "iot_obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="iot_obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
 Finished building target: iot_obd_monitoring_device.elf
  
 arm-none-eabi-size   iot_obd_monitoring_device.elf 
 arm-none-eabi-objdump -h -S  iot_obd_monitoring_device.elf  > "iot_obd_monitoring_device.list"
    text	   data	    bss	    dec	    hex	filename
-  53976	    484	   2880	  57340	   dffc	iot_obd_monitoring_device.elf
+  61148	    488	   2872	  64508	   fbfc	iot_obd_monitoring_device.elf
+Finished building: default.size.stdout
+ 
+Finished building: iot_obd_monitoring_device.list
+ 
+16:35:58 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
+make -j8 all 
+arm-none-eabi-size   iot_obd_monitoring_device.elf 
+   text	   data	    bss	    dec	    hex	filename
+  61148	    488	   2872	  64508	   fbfc	iot_obd_monitoring_device.elf
+Finished building: default.size.stdout
+ 
+15:16:17 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/OBD/KLine.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/OBD/KLine.d" -MT"Core/Src/OBD/KLine.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/OBD/KLine.o"
+arm-none-eabi-gcc "../Core/Src/OBD/OBD.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/OBD/OBD.d" -MT"Core/Src/OBD/OBD.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/OBD/OBD.o"
+arm-none-eabi-gcc "../Core/Src/OBD/OBD_PID.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/OBD/OBD_PID.d" -MT"Core/Src/OBD/OBD_PID.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/OBD/OBD_PID.o"
+arm-none-eabi-gcc "../Core/Src/OBD/can.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/OBD/can.d" -MT"Core/Src/OBD/can.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/OBD/can.o"
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:190:11: warning: unused variable 'timer_adc' [-Wunused-variable]
+  190 |  uint32_t timer_adc = 0;
+      |           ^~~~~~~~~
+../Core/Src/main.c:188:11: warning: unused variable 'adc_buffer' [-Wunused-variable]
+  188 |  uint16_t adc_buffer[64] = {0};
+      |           ^~~~~~~~~~
+At top level:
+../Core/Src/main.c:161:14: warning: 'measure_avg_voltage' defined but not used [-Wunused-function]
+  161 | static float measure_avg_voltage(uint16_t *data)
+      |              ^~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:142:16: warning: 'mqtt_stop' defined but not used [-Wunused-function]
+  142 | static uint8_t mqtt_stop(BG77 module)
+      |                ^~~~~~~~~
+arm-none-eabi-gcc -o "iot_obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="iot_obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: iot_obd_monitoring_device.elf
+ 
+arm-none-eabi-size   iot_obd_monitoring_device.elf 
+arm-none-eabi-objdump -h -S  iot_obd_monitoring_device.elf  > "iot_obd_monitoring_device.list"
+   text	   data	    bss	    dec	    hex	filename
+  59164	    488	   2872	  62524	   f43c	iot_obd_monitoring_device.elf
+Finished building: default.size.stdout
+ 
+Finished building: iot_obd_monitoring_device.list
+ 
+15:17:53 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:190:11: warning: unused variable 'timer_adc' [-Wunused-variable]
+  190 |  uint32_t timer_adc = 0;
+      |           ^~~~~~~~~
+../Core/Src/main.c:188:11: warning: unused variable 'adc_buffer' [-Wunused-variable]
+  188 |  uint16_t adc_buffer[64] = {0};
+      |           ^~~~~~~~~~
+At top level:
+../Core/Src/main.c:161:14: warning: 'measure_avg_voltage' defined but not used [-Wunused-function]
+  161 | static float measure_avg_voltage(uint16_t *data)
+      |              ^~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:142:16: warning: 'mqtt_stop' defined but not used [-Wunused-function]
+  142 | static uint8_t mqtt_stop(BG77 module)
+      |                ^~~~~~~~~
+arm-none-eabi-gcc -o "iot_obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="iot_obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: iot_obd_monitoring_device.elf
+ 
+arm-none-eabi-size   iot_obd_monitoring_device.elf 
+arm-none-eabi-objdump -h -S  iot_obd_monitoring_device.elf  > "iot_obd_monitoring_device.list"
+   text	   data	    bss	    dec	    hex	filename
+  59148	    488	   2872	  62508	   f42c	iot_obd_monitoring_device.elf
+Finished building: default.size.stdout
+ 
+Finished building: iot_obd_monitoring_device.list
+ 
+15:20:49 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:190:11: warning: unused variable 'timer_adc' [-Wunused-variable]
+  190 |  uint32_t timer_adc = 0;
+      |           ^~~~~~~~~
+../Core/Src/main.c:188:11: warning: unused variable 'adc_buffer' [-Wunused-variable]
+  188 |  uint16_t adc_buffer[64] = {0};
+      |           ^~~~~~~~~~
+At top level:
+../Core/Src/main.c:161:14: warning: 'measure_avg_voltage' defined but not used [-Wunused-function]
+  161 | static float measure_avg_voltage(uint16_t *data)
+      |              ^~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:142:16: warning: 'mqtt_stop' defined but not used [-Wunused-function]
+  142 | static uint8_t mqtt_stop(BG77 module)
+      |                ^~~~~~~~~
+arm-none-eabi-gcc -o "iot_obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="iot_obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: iot_obd_monitoring_device.elf
+ 
+arm-none-eabi-size   iot_obd_monitoring_device.elf 
+arm-none-eabi-objdump -h -S  iot_obd_monitoring_device.elf  > "iot_obd_monitoring_device.list"
+   text	   data	    bss	    dec	    hex	filename
+  59028	    488	   2872	  62388	   f3b4	iot_obd_monitoring_device.elf
+Finished building: default.size.stdout
+ 
+Finished building: iot_obd_monitoring_device.list
+ 
+15:23:25 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:190:11: warning: unused variable 'timer_adc' [-Wunused-variable]
+  190 |  uint32_t timer_adc = 0;
+      |           ^~~~~~~~~
+../Core/Src/main.c:188:11: warning: unused variable 'adc_buffer' [-Wunused-variable]
+  188 |  uint16_t adc_buffer[64] = {0};
+      |           ^~~~~~~~~~
+At top level:
+../Core/Src/main.c:161:14: warning: 'measure_avg_voltage' defined but not used [-Wunused-function]
+  161 | static float measure_avg_voltage(uint16_t *data)
+      |              ^~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:142:16: warning: 'mqtt_stop' defined but not used [-Wunused-function]
+  142 | static uint8_t mqtt_stop(BG77 module)
+      |                ^~~~~~~~~
+arm-none-eabi-gcc -o "iot_obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="iot_obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: iot_obd_monitoring_device.elf
+ 
+arm-none-eabi-size   iot_obd_monitoring_device.elf 
+arm-none-eabi-objdump -h -S  iot_obd_monitoring_device.elf  > "iot_obd_monitoring_device.list"
+   text	   data	    bss	    dec	    hex	filename
+  59068	    488	   2872	  62428	   f3dc	iot_obd_monitoring_device.elf
+Finished building: default.size.stdout
+ 
+Finished building: iot_obd_monitoring_device.list
+ 
+15:23:50 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:190:11: warning: unused variable 'timer_adc' [-Wunused-variable]
+  190 |  uint32_t timer_adc = 0;
+      |           ^~~~~~~~~
+../Core/Src/main.c:188:11: warning: unused variable 'adc_buffer' [-Wunused-variable]
+  188 |  uint16_t adc_buffer[64] = {0};
+      |           ^~~~~~~~~~
+At top level:
+../Core/Src/main.c:161:14: warning: 'measure_avg_voltage' defined but not used [-Wunused-function]
+  161 | static float measure_avg_voltage(uint16_t *data)
+      |              ^~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:142:16: warning: 'mqtt_stop' defined but not used [-Wunused-function]
+  142 | static uint8_t mqtt_stop(BG77 module)
+      |                ^~~~~~~~~
+arm-none-eabi-gcc -o "iot_obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="iot_obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: iot_obd_monitoring_device.elf
+ 
+arm-none-eabi-size   iot_obd_monitoring_device.elf 
+arm-none-eabi-objdump -h -S  iot_obd_monitoring_device.elf  > "iot_obd_monitoring_device.list"
+   text	   data	    bss	    dec	    hex	filename
+  59068	    488	   2872	  62428	   f3dc	iot_obd_monitoring_device.elf
+Finished building: default.size.stdout
+ 
+Finished building: iot_obd_monitoring_device.list
+ 
+15:25:17 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
+make -j8 all 
+arm-none-eabi-size   iot_obd_monitoring_device.elf 
+   text	   data	    bss	    dec	    hex	filename
+  59068	    488	   2872	  62428	   f3dc	iot_obd_monitoring_device.elf
+Finished building: default.size.stdout
+ 
+15:26:54 **** Incremental Build of configuration Debug for project iot_obd_monitoring_device ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32L431xx -c -I../Core/Inc -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Drivers/BG77" -I"C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/iot_obd_monitoring_device/Core/Inc/OBD" -I../Drivers/STM32L4xx_HAL_Driver/Inc -I../Drivers/STM32L4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32L4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'main':
+../Core/Src/main.c:190:11: warning: unused variable 'timer_adc' [-Wunused-variable]
+  190 |  uint32_t timer_adc = 0;
+      |           ^~~~~~~~~
+../Core/Src/main.c:188:11: warning: unused variable 'adc_buffer' [-Wunused-variable]
+  188 |  uint16_t adc_buffer[64] = {0};
+      |           ^~~~~~~~~~
+At top level:
+../Core/Src/main.c:161:14: warning: 'measure_avg_voltage' defined but not used [-Wunused-function]
+  161 | static float measure_avg_voltage(uint16_t *data)
+      |              ^~~~~~~~~~~~~~~~~~~
+../Core/Src/main.c:142:16: warning: 'mqtt_stop' defined but not used [-Wunused-function]
+  142 | static uint8_t mqtt_stop(BG77 module)
+      |                ^~~~~~~~~
+arm-none-eabi-gcc -o "iot_obd_monitoring_device.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\miros\Desktop\bakalarka_latest\secured-vehicle-monitoring\iot_obd_monitoring_device\STM32L431RCTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="iot_obd_monitoring_device.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -u _printf_float -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: iot_obd_monitoring_device.elf
+ 
+arm-none-eabi-size   iot_obd_monitoring_device.elf 
+arm-none-eabi-objdump -h -S  iot_obd_monitoring_device.elf  > "iot_obd_monitoring_device.list"
+   text	   data	    bss	    dec	    hex	filename
+  59068	    488	   2872	  62428	   f3dc	iot_obd_monitoring_device.elf
 Finished building: default.size.stdout
  
 Finished building: iot_obd_monitoring_device.list

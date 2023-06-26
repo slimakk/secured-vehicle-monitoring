@@ -14,6 +14,11 @@ extern OBD obd_comm;
 
 static void obd2_pid_decode(uint8_t* rx_frame);
 
+/*
+ * @brief	Extracts supported OBD II pids from 0x00, 0x20 and 0x40 requests
+ * @param	*rx_frame	Pointer to the received frame
+ * @reval	None
+ * */
 static void obd2_pid_decode(uint8_t* rx_frame)
 {
 	uint8_t number = (rx_frame[3] << 24) | (rx_frame[4] << 16) | (rx_frame[5] << 8) | rx_frame[6];
@@ -41,7 +46,11 @@ static void obd2_pid_decode(uint8_t* rx_frame)
 		}
 	}
 }
-
+/*
+ * @brief	Sends an OBD II request via initialized protocol
+ * @param	obd		OBD struct
+ * @retval	TRUE if a response has been received
+ * */
 uint8_t obd2_request(OBD obd)
 {
 	HAL_Delay(10);
@@ -100,6 +109,11 @@ uint8_t obd2_request(OBD obd)
 	return (FALSE);
 }
 
+/*
+ * @brief	Extracts the value from received frame based on the PID of the response and its equation form ISO 15031-5
+ * @param	*rx_frame	Pointer to the received frame
+ * @retval  Value in float and human-readable format
+ * */
 float obd2_pid_parse(uint8_t* rx_frame)
 {
 	float value = 0;
@@ -270,7 +284,11 @@ float obd2_pid_parse(uint8_t* rx_frame)
 	}
 	return (value);
 }
-
+/*
+ * @brief 	Initializes communication with the vehicle - ISO 9141, ISO 14230 and ISO 15765
+ * @param	None
+ * @retval	Initialized obd_protocol
+ * */
 obd_protocol obd2_init(void)
 {
 	obd_protocol used_protocol = kline_init();
@@ -287,6 +305,11 @@ obd_protocol obd2_init(void)
 	return (used_protocol);
 }
 
+/*
+ * @brief	Checks for available pids from the vehicle
+ * @param	obd		OBD struct
+ * @retval	None
+ * */
 void obd2_pid_check(OBD obd)
 {
 	obd.pid = 0x00;

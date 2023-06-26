@@ -586,7 +586,7 @@
       "workbook_filename": ""
     },
     "page_layout_descr_file": "",
-    "plot_directory": "C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/Schematic/",
+    "plot_directory": "C:/Users/miros/Desktop/bakalarka_latest/secured-vehicle-monitoring/Schematic/new/final/",
     "spice_adjust_passive_values": false,
     "spice_current_sheet_as_root": false,
     "spice_external_command": "spice \"%I\"",

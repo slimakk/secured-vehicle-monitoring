@@ -15,7 +15,6 @@
 #define BAUD 115200
 #define NB &huart2
 #define GPS &huart3
-#define NB_TIMER &htim2
 #define UART_TIMER &htim7
 #define COMMAND_SIZE 255
 #define DEFAULT_TIMEOUT 1000
@@ -44,7 +43,8 @@ typedef struct {
 	uint8_t error;
 	uint8_t rssi;
 	uint8_t mqtt_status;
-	location pos;
+	uint8_t gps;
+//	location pos;
 }BG77;
 
 uint8_t module_init(BG77 *module);
@@ -62,7 +62,8 @@ uint8_t mqtt_subscribe(uint8_t id, uint8_t msg_id, const char *topic, uint8_t qo
 uint8_t mqtt_unsubscribe(uint8_t id, uint8_t msg_id, const char *topic);
 uint8_t mqtt_publish(uint8_t id, uint8_t msg_id, uint8_t qos, uint8_t retain, const char *topic, const char *msg);
 
-uint8_t acquire_position(BG77 module);
-void parse_location(BG77 module);
+uint8_t gnss_turn_on(void);
+uint8_t get_position(void);
+void parse_location(void);
 
 #endif /* BG77_BG77_H_ */

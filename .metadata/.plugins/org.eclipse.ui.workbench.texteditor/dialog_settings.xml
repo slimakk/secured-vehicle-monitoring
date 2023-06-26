@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
-		<item key="selection" value="obd2_pid_decode"/>
+		<item key="selection" value="uwTick"/>
 		<item key="wrap" value="true"/>
 		<item key="casesensitive" value="false"/>
 		<item key="wholeword" value="false"/>
 		<item key="incremental" value="false"/>
 		<item key="isRegEx" value="false"/>
 		<list key="findhistory">
+			<item value="uwTick"/>
+			<item value="createJson"/>
+			<item value="num"/>
+			<item value="number"/>
 			<item value="OBD2_PID_Decode"/>
 			<item value="Verify_Checksum"/>
 			<item value="UART_PIN_State"/>
@@ -19,12 +23,10 @@
 			<item value="rx_data"/>
 			<item value="USART"/>
 			<item value="voltage"/>
-			<item value="KLine_RX_Buf"/>
-			<item value="rxFrame"/>
-			<item value="txFrame"/>
-			<item value="canFilter"/>
 		</list>
 		<list key="replacehistory">
+			<item value="create_json"/>
+			<item value=""/>
 			<item value="obd2_pid_decode"/>
 			<item value="verify_checksum"/>
 			<item value="uart_pin_state"/>
@@ -38,8 +40,6 @@
 			<item value="can_filter"/>
 			<item value="tx_header"/>
 			<item value="tx_mailbox"/>
-			<item value="pid_length"/>
-			<item value="kline_kb"/>
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">

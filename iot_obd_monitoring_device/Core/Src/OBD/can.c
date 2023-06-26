@@ -149,7 +149,11 @@ void can_config(void)
 	}
 	HAL_CAN_ActivateNotification(&hcan1, CAN_IT_RX_FIFO0_MSG_PENDING);
 }
-
+/*
+ * @brief	Sends a message via ISO 15765 CAN
+ * @param	*tx_frame	Pointer to the requested TX frame
+ * @retval	TRUE if valid message has been received, else FALSE
+ * */
 uint8_t can_send_msg(uint8_t *tx_frame)
 {
 	CAN_TxHeaderTypeDef tx_header;
@@ -176,7 +180,11 @@ uint8_t can_send_msg(uint8_t *tx_frame)
 	obd_comm.current_value = obd2_pid_parse(rx_mailbox);
 	return (TRUE);
 }
-
+/*
+ * @brief	CAN receive callback function
+ * @param	hcan	CAN handle
+ * @retval	None
+ * */
 void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
 {
 	CAN_RxHeaderTypeDef rx_header;

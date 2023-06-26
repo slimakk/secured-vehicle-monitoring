@@ -55,21 +55,24 @@ OBD obd_comm;
 
 BG77 module;
 
+location pos;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
-static void MX_NVIC_Init(void);
 /* USER CODE BEGIN PFP */
-static void acquire_vehicle_data(float buffer[][2]);
+static void acquire_vehicle_data(float buffer[][2], float buffer_old[][2]);
 static uint8_t mqtt_start(BG77 module);
 static uint8_t mqtt_stop(BG77 module);
-static void createJson(char buff[1000], float array[][2], float array_cpy[][2], int num_of_values);
+static void create_json(char buff[1000], float array[][2], float array_cpy[][2], int num_of_values);
+static void acquire_position(char buff[1000]);
+static float measure_avg_voltage(uint16_t *data);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-static void acquire_vehicle_data(float buffer[][2])
+static void acquire_vehicle_data(float buffer[][2], float buffer_old[][2])
 {
 	uint8_t pids [3] = {0x5, 0xc, 0xd};
 	for(uint8_t i = 0; i < sizeof(pids); i++)
@@ -81,11 +84,15 @@ static void acquire_vehicle_data(float buffer[][2])
 			buffer[i][0] = obd_comm.pid;
 			buffer[i][1] = obd_comm.current_value;
 		}
-
+		else
+		{
+			buffer[i][0] = buffer_old[i][0];
+			buffer[i][1] = buffer_old[i][1];
+		}
 	}
 }
 
-static void createJson(char buff[1000], float array[][2], float array_cpy[][2], int num_of_values)
+static void create_json(char buff[1000], float array[][2], float array_cpy[][2], int num_of_values)
 {
     char json_string [10] = "{\n";
     char temp[100];
@@ -106,6 +113,17 @@ static void createJson(char buff[1000], float array[][2], float array_cpy[][2], 
     }
 }
 
+static void acquire_position(char buff[1000])
+{
+	if(get_position())
+	{
+		double lat = pos.latitude;
+		double lon = pos.longitude;
+
+		sprintf(buff, "{\"lat\":%f,\"lon\":%f}\n",lat, lon);
+	}
+}
+
 static uint8_t mqtt_start(BG77 module)
 {
 	module.mqtt_status = mqtt_open(MQTT_IP,  MQTT_PORT, 0);
@@ -114,7 +132,7 @@ static uint8_t mqtt_start(BG77 module)
 		return (FALSE);
 	}
 	HAL_Delay(10000);
-	if(mqtt_connect(0,"obd5", &module))
+	if(mqtt_connect(0,"obd10h", &module))
 	{
 		return (TRUE);
 	}
@@ -140,6 +158,20 @@ static uint8_t mqtt_stop(BG77 module)
 	}
 }
 
+static float measure_avg_voltage(uint16_t *data)
+{
+	float result = 0;
+	for(int i = 0; i < sizeof(data); i++)
+	{
+		result += data[i];
+	}
+	result = result / sizeof(data);
+	result = result * (3.3 / 4095);
+	result = (result * (100 + 27)) / 27;
+	result = roundf(result*100) / 100;
+	return result;
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -152,9 +184,10 @@ int main(void)
 	float obd_buf[99][2];
 	float obd_buf_cpy[99][2];
 	char buffer[1000];
+	char gnss_buffer[1000];
+	uint16_t adc_buffer[64] = {0};
 	uint32_t timer = 0;
-//	uint32_t timer_t = 0;
-	uint16_t counter = 0;
+	uint32_t timer_adc = 0;
 
   /* USER CODE END 1 */
 
@@ -181,30 +214,60 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   MX_TIM6_Init();
-  MX_TIM2_Init();
   MX_TIM7_Init();
   MX_TIM16_Init();
-
-  /* Initialize interrupts */
-  MX_NVIC_Init();
   /* USER CODE BEGIN 2 */
 //  HAL_ADCEx_Calibration_Start(&hadc1, ADC_SINGLE_ENDED);
 //  HAL_ADC_Start_DMA(&hadc1, adc_buffer, 64);
-//
-//  obd_comm.voltage = adc_avg(adc_buffer);
 
-  module.initialized = module_init(&module);
-  module.rssi = check_signal();
+//  obd_comm.voltage = measure_avg_voltage(adc_buffer);
+
+//  while(obd_comm.voltage <= 12.75)
+//  {
+//	  if((HAL_GetTick() - timer_adc) >= ADC_SAMPLE_TIME)
+//	  {
+//		  obd_comm.voltage = measure_avg_voltage(adc_buffer);
+//		  timer_adc = HAL_GetTick();
+//	  }
+//  }
+
+  while(!module.initialized)
+  {
+	  module.initialized = module_init(&module);
+  }
+
+//  module.gps = gnss_turn_on();
+//  while(!module.gps)
+//  {
+//
+//  }
+
   obd_comm.used_protocol = obd2_init();
 
-  acquire_vehicle_data(obd_buf);
+  acquire_vehicle_data(obd_buf, obd_buf_cpy);
+
+  create_json(buffer, obd_buf, obd_buf_cpy,3);
+
+  if(module.gps)
+  {
+	  acquire_position(gnss_buffer);
+  }
+
+  send_command("AT+QGPS=0\r\n","OK", DEFAULT_TIMEOUT, NB);
+
   module.connected = mqtt_start(module);
 
-  createJson(buffer, obd_buf, obd_buf_cpy,3);
+//  while(!module.connected)
+//  {
+//
+//  }
 
   mqtt_publish(0,0,0,0,OBD_TOPIC, buffer);
 
-
+  if(module.gps)
+  {
+	  mqtt_publish(0,0,0,0,GPS_TOPIC, gnss_buffer);
+  }
 
   /* USER CODE END 2 */
 
@@ -214,16 +277,22 @@ int main(void)
   {
 	  if((HAL_GetTick() - timer) >= 5000)
 	  {
-		  acquire_vehicle_data(obd_buf);
-		  createJson(buffer, obd_buf, obd_buf_cpy,3);
+		  acquire_vehicle_data(obd_buf, obd_buf_cpy);
+		  create_json(buffer, obd_buf, obd_buf_cpy,3);
 		  mqtt_publish(0,0,0,0,OBD_TOPIC, buffer);
-		  counter++;
+		  if(module.gps)
+		  {
+			  acquire_position(gnss_buffer);
+			  mqtt_publish(0,0,0,0,GPS_TOPIC, gnss_buffer);
+		  }
+//		  obd_comm.voltage = measure_avg_voltagee_avg_voltage(adc_buffer);
 		  timer = HAL_GetTick();
 	  }
-	  if(counter >= 1000)
-	  {
-		  module.connected = mqtt_stop(module);
-	  }
+//	  if(obd_comm.voltage >= 12.75)
+//	  {
+//		  mqtt_stop(module);
+//
+//	  }
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -279,21 +348,12 @@ void SystemClock_Config(void)
   }
 }
 
-/**
-  * @brief NVIC Configuration.
-  * @retval None
-  */
-static void MX_NVIC_Init(void)
-{
-  /* DMA1_Channel6_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel6_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel6_IRQn);
-  /* USART2_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(USART2_IRQn, 1, 0);
-  HAL_NVIC_EnableIRQ(USART2_IRQn);
-}
-
 /* USER CODE BEGIN 4 */
+
+//uint32_t HAL_GetTick(void)
+//{
+//	return TIM2->CNT;
+//}
 
 /* USER CODE END 4 */
 

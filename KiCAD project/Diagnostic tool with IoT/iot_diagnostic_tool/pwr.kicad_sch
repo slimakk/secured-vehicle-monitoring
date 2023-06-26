@@ -7,7 +7,7 @@
   (title_block
     (title "OBD Monitoring Device")
     (date "2023-02-27")
-    (company "VUT")
+    (company "FEKT VUT")
   )
 
   (lib_symbols
